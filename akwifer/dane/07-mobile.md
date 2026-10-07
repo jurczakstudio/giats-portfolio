@@ -13,3 +13,10 @@ Telefon to główny kanał (W1: klient pyta wieczorem z telefonu). Każda sekcja
 - **Pasek „strona wzorcowa”** — na telefonie statyczny na końcu strony, nie zasłania treści.
 
 Sprawdzone: zrzuty 390 i 1440 (`dane/zrzuty/`), bez poziomego scrolla strony, bez błędów konsoli; `kadr.mjs` testuje kartę, SMS, pamięć karty między stronami, tryb właściciela i kalkulator.
+
+## v3 „GŁĘBIEJ”
+- **Start** — linijka głębokości poziomo (0 m → 120 m) między nagłówkiem a przyrządem; cały przyrząd (gmina, metry, złotówki, papiery, dwa przyciski) mieści się w pierwszym ekranie 390×844 (W9).
+- **Gwarancja** — cztery zasady w siatce 2×2 z dużymi liczbami (W10).
+- **Zejście** — przypięte także na telefonie (nadpisanie reguły ruch.css): licznik na górze, kolumna gruntu 58 vh pod nim (W8).
+- **Pakiety** — karty jedna pod drugą, wyróżniony „Dom” bez przesunięcia (W10).
+- **Pasek akcji** — Zadzwoń · SMS z kartą · Wycena, wjeżdża po zejściu z pierwszego ekranu (W11).

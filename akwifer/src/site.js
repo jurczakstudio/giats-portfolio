@@ -230,6 +230,130 @@
     if (fig && svg) licz();
   });
 
+  // ================================================================ v3 „GŁĘBIEJ”
+  // ---- przyrząd w hero (W9): gmina → metry, złotówki, papiery + linijka 0–120 m
+  qa('[data-przyrzad]').forEach(function (f) {
+    var sel = f.querySelector('[data-gmina-hero]'), lin = document.querySelector('[data-linijka]');
+    var pokaz = function () {
+      var w = wycena(stan);
+      sel.value = stan.gmina;
+      f.querySelector('[data-h-m]').textContent = metry(w.lo) + '–' + metry(w.hi) + ' m';
+      f.querySelector('[data-h-zl]').textContent = zl(w.koszt[0]) + '–' + zl(w.koszt[1]) + ' zł';
+      f.querySelector('[data-h-f]').textContent = w.f[0];
+      if (lin) {
+        lin.style.setProperty('--lo', (w.lo / 120).toFixed(4));
+        lin.style.setProperty('--hi', (w.hi / 120).toFixed(4));
+        lin.querySelector('[data-h-med]').textContent = 'woda ~' + metry(w.hi) + ' m';
+      }
+    };
+    sel.addEventListener('change', function () { ustawGmine(sel.value); });
+    f.addEventListener('submit', function (ev) {
+      var cel = document.getElementById('karta');
+      if (!cel) return;
+      ev.preventDefault();
+      ustawGmine(sel.value);
+      cel.scrollIntoView({ behavior: root.classList.contains('ruch') ? 'smooth' : 'auto' });
+    });
+    poZmianie.push(pokaz);
+    pokaz();
+  });
+
+  // ---- zejście pod ziemię (W8): licznik schodzi do mediany wybranej gminy; na dnie woda
+  function warstwy(D) {   // to samo co warstwy() w build.py
+    var a = Math.max(3, Math.round(D * .3)), b = Math.max(6, Math.round(D * .55)), c = Math.max(9, Math.round(D * .82));
+    return [['gleba i korzenie', 0, 1, 'w-gleba'], ['glina zwałowa', 1, a, 'w-glina'], ['piaski i żwiry — sucho', a, b, 'w-piasek'],
+      ['iły — warstwa szczelna', b, c, 'w-il'], ['piaski wodonośne', c, D + 12, 'w-woda']];
+  }
+  qa('[data-zejscie]').forEach(function (sec) {
+    var swiat = sec.querySelector('[data-z-swiat]'), kol = sec.querySelector('.zejscie__kol');
+    var licz = sec.querySelector('[data-z-m]'), opis = sec.querySelector('[data-z-opis]'), gm = sec.querySelector('[data-z-gmina]');
+    var D = 40, H = 52, W = [];
+    var zbuduj = function () {
+      var g = gmina[stan.gmina] || gmina.mosina;
+      D = g.mediana; H = D + 12; W = warstwy(D);
+      var h = W.map(function (w) {
+        return '<div class="z__w ' + w[3] + '" style="top:' + (w[1] / H * 100) + '%;height:' + ((w[2] - w[1]) / H * 100) + '%"><span class="z__wn mono">' + w[0] + '<b>od ' + metry(w[1]) + ' m</b></span></div>';
+      }).join('');
+      if (D > 30) h += '<div class="z__30" style="top:' + (30 / H * 100) + '%"><span class="mono">30 m — granica formalności</span></div>';
+      for (var mm = 5; mm < H; mm += 5) h += '<div class="z__m" style="top:' + (mm / H * 100) + '%"><span>' + mm + '</span></div>';
+      h += '<div class="z__otwor" data-z-otwor></div>';
+      h += '<div class="z__lustro" style="top:' + (D / H * 100) + '%"></div>';
+      swiat.innerHTML = h;
+      gm.textContent = g.nazwa;
+      sec._g = g;
+      sec.style.setProperty('--zs', (D / H).toFixed(4));
+      klatka();
+    };
+    var zywe = root.classList.contains('ruch');
+    if (zywe) sec.classList.add('zejscie--zywe');
+    function klatka() {
+      if (!zywe) { licz.textContent = metry(D); return; }
+      var r = sec.getBoundingClientRect(), zakres = r.height - innerHeight;
+      var p = zakres > 0 ? Math.min(1, Math.max(0, -r.top / zakres)) : 1;
+      var m = Math.min(D, p / .86 * D);
+      var kh = kol.clientHeight, k = kh / 24;   // okno = ok. 24 m gruntu
+      swiat.style.height = (H * k) + 'px';
+      swiat.style.transform = 'translate3d(0,' + (kh * .58 - m * k).toFixed(1) + 'px,0)';
+      sec.style.setProperty('--z', (m / D).toFixed(4));
+      var ot = swiat.querySelector('[data-z-otwor]'); if (ot) ot.style.height = (m / H * 100) + '%';
+      licz.textContent = m >= D ? metry(D) : String(Math.floor(m));
+      var woda = m >= D - 0.01;
+      sec.classList.toggle('z--woda', woda);
+      if (woda) opis.textContent = 'Woda. Mediana ' + sec._g.otworow + ' otworów w rejestrze PIG.';
+      else {
+        var w = W.filter(function (x) { return m >= x[1] && m < x[2]; })[0];
+        opis.textContent = w ? w[0].charAt(0).toUpperCase() + w[0].slice(1) + (m > 30 && D > 30 ? ' · za granicą 30 m' : '') : '';
+      }
+    }
+    var czeka = false;
+    addEventListener('scroll', function () { if (!czeka) { czeka = true; requestAnimationFrame(function () { czeka = false; klatka(); }); } }, { passive: true });
+    addEventListener('resize', klatka);
+    poZmianie.push(zbuduj);
+    zbuduj();
+  });
+
+  // ---- pakiety (W10): przycisk ustawia cel w karcie
+  qa('[data-pakiet]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      stan.cel = b.getAttribute('data-cel');
+      qa('[data-karta] input[type="radio"]').forEach(function (r) { r.checked = r.value === stan.cel; });
+      ustawGmine(stan.gmina);
+      var cel = document.getElementById('karta');
+      if (cel) cel.scrollIntoView({ behavior: root.classList.contains('ruch') ? 'smooth' : 'auto' });
+    });
+  });
+
+  // ---- przepisy 2026 (W11): drzewko i licznik abolicji
+  qa('[data-drzewko]').forEach(function (f) {
+    var out = f.querySelector('[data-dz-wynik]');
+    var v = function (n) { var x = f.querySelector('input[name="' + n + '"]:checked'); return x ? x.value : ''; };
+    var licz = function () {
+      var g = v('dz-g'), q = v('dz-q'), c = v('dz-c'), t;
+      if (g === 'do30' && q === 'do5' && c === 'dom') t = '<b>Bez zgłoszeń i pozwoleń.</b> To „zwykłe korzystanie z wód” (Prawo wodne, art. 395). Wiercimy po oględzinach.';
+      else {
+        var r = [];
+        if (g === 'ponad') r.push('projekt robót geologicznych zatwierdzany przez starostę, a po wierceniu dokumentacja hydrogeologiczna');
+        if (q === 'ponad' || c === 'firma' || g === 'ponad') r.push('pozwolenie wodnoprawne');
+        t = '<b>Potrzebne: ' + r.join(' i ') + '.</b> Papiery przygotowujemy my — wliczamy je w wycenę przed wierceniem.';
+      }
+      out.innerHTML = t;
+    };
+    f.addEventListener('change', licz);
+    licz();
+  });
+  qa('[data-dni-do]').forEach(function (el) {
+    var d = new Date(el.getAttribute('data-dni-do') + 'T23:59:59');
+    el.textContent = Math.max(0, Math.ceil((d - new Date()) / 864e5));
+  });
+
+  // ---- pasek akcji na telefonie: pojawia się po zejściu z pierwszego ekranu
+  var pasek = document.querySelector('[data-pasek]');
+  if (pasek) {
+    var pas = function () { pasek.classList.toggle('pasek--on', scrollY > innerHeight * .7); };
+    addEventListener('scroll', pas, { passive: true });
+    pas();
+  }
+
   // ---- kalkulator dla firm
   qa('[data-kalk]').forEach(function (f) {
     var v = function (a) { var x = parseFloat(f.querySelector('[' + a + ']').value); return x > 0 ? x : 0; };

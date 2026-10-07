@@ -18,7 +18,8 @@ from pathlib import Path
 
 import brand
 from content import FIRMA as F, GMINY, SREDNIA_POWIATU, ZRODLO_PIG, RYNEK, ZUZYCIE_OS, CELE, ETAPY, PASZPORT
-from content import WODOCIAG, PRAD_M3, OGROD, BEZ_DANYCH
+from content import WODOCIAG, PRAD_M3, OGROD, BEZ_DANYCH, GWARANCJA, PAKIETY, ABOLICJA, NIZOWKA
+import datetime
 
 ROOT = Path(__file__).resolve().parent
 SITE = ROOT / 'site'
@@ -336,6 +337,78 @@ def faq(pytania):
     return '<div class="faq">%s</div>' % ''.join('<details><summary>%s</summary><p class="key">%s</p><p>%s</p></details>' % (e(q), e(a), e(b)) for q, a, b in pytania)
 
 
+
+# ---------------------------------------------------------------- v3 „GŁĘBIEJ”: przyrząd w hero (W9)
+def linijka(g):
+    """Linijka 0–120 m: pas widełek (najpłytsze–mediana), linia 30 m, znacznik wody na medianie."""
+    w = wycena(g)
+    podz = ''.join('<span class="linijka__t mono" style="top:%.2f%%;--t:%.2f">%d</span>' % (m / 120 * 100, m / 120 * 100, m) for m in range(0, 121, 10))
+    return ('<div class="linijka" data-linijka aria-hidden="true" style="--lo:%.4f;--hi:%.4f">'
+            '<div class="linijka__os">%s</div><div class="linijka__30"><span class="mono">30 m</span></div>'
+            '<div class="linijka__pas"></div><div class="linijka__wiertlo"></div>'
+            '<div class="linijka__woda"><span class="mono" data-h-med>woda ~%s m</span></div></div>'
+            % (w['lo'] / 120, w['hi'] / 120, podz, metry(w['hi'])))
+
+
+def przyrzad(g):
+    w = wycena(g)
+    opcje = ''.join('<option value="%s"%s>%s</option>' % (x['slug'], ' selected' if x['slug'] == g['slug'] else '', e(x['nazwa']))
+                    for x in sorted(GMINY, key=lambda x: x['nazwa']))
+    return f'''<form class="przyrzad" action="/#karta" data-przyrzad>
+<label class="przyrzad__g"><span class="mono">gmina działki</span><select name="gmina" data-gmina-hero>{opcje}</select></label>
+<dl class="przyrzad__w">
+<div><dt class="mono">wiercimy</dt><dd class="mono" data-h-m>{metry(w['lo'])}–{metry(w['hi'])} m</dd></div>
+<div><dt class="mono">kosztuje</dt><dd class="mono" data-h-zl>{zl(w['koszt'][0])}–{zl(w['koszt'][1])} zł</dd></div>
+<div><dt class="mono">papiery</dt><dd data-h-f>{e(w['formal'][0])}</dd></div>
+</dl>
+<div class="przyrzad__a"><button class="btn btn--sygnal btn--duzy" type="submit">Zarezerwuj oględziny {STRZALKA}</button><a class="btn btn--duzy btn--obrys" href="tel:{F['tel_e164']}">Zadzwoń · {F['tel']}</a></div>
+</form>'''
+
+
+# ---------------------------------------------------------------- zejście pod ziemię (W8, W9)
+def warstwy(D):
+    """Schemat poglądowy warstw do mediany D (m). Zwraca listę (nazwa, od, do, klasa). Ta sama funkcja w site.js."""
+    a, b, c = max(3, round(D * .3)), max(6, round(D * .55)), max(9, round(D * .82))
+    return [('gleba i korzenie', 0, 1, 'w-gleba'), ('glina zwałowa', 1, a, 'w-glina'), ('piaski i żwiry — sucho', a, b, 'w-piasek'),
+            ('iły — warstwa szczelna', b, c, 'w-il'), ('piaski wodonośne', c, D + 12, 'w-woda')]
+
+
+def zejscie(g):
+    D = g['mediana']
+    H = D + 12
+    ws = ''.join('<div class="z__w %s" style="top:%.3f%%;height:%.3f%%"><span class="z__wn mono">%s<b>od %s m</b></span></div>'
+                 % (k, od / H * 100, (do - od) / H * 100, n, metry(od)) for n, od, do, k in warstwy(D))
+    lin30 = '<div class="z__30" style="top:%.3f%%"><span class="mono">30 m — granica formalności</span></div>' % (30 / H * 100) if D > 30 else ''
+    lin30 += ''.join('<div class="z__m" style="top:%.3f%%"><span>%d</span></div>' % (m / H * 100, m) for m in range(5, int(H), 5))
+    lin30 += '<div class="z__otwor" style="height:%.3f%%"></div>' % (D / H * 100)
+    return f'''<section id="zejscie" class="zejscie" data-pin="340" data-zejscie style="--zs:{D / H:.4f}">
+<div class="pin__w zejscie__w">
+<div class="zejscie__t wrap">
+<p class="etyk mono">zejście · gmina <span data-z-gmina>{e(g['nazwa'])}</span></p>
+<p class="zejscie__licznik mono" aria-live="off"><span data-z-m>{metry(D)}</span><small>m</small></p>
+<p class="zejscie__opis" data-z-opis>Woda. Mediana {g['otworow']} otworów w rejestrze PIG.</p>
+</div>
+<div class="zejscie__kol" aria-hidden="true"><div class="z__swiat" data-z-swiat style="--H:{H}">{ws}{lin30}<div class="z__lustro" style="top:{D / H * 100:.3f}%"></div></div>
+<div class="z__zerdz"></div><svg class="schemat z__wiertlo" viewBox="0 0 120 120"><path d="M36 0h48v34l-10 40-14 46-14-46-10-40z" fill="currentColor"/><path d="M48 30l24 14M48 50l24 14" stroke="#111214" stroke-width="5"/></svg></div>
+<p class="zejscie__podpis mono">schemat poglądowy dla mediany gminy — prawdziwy profil zapisujemy co metr w karcie otworu</p>
+</div>
+</section>'''
+
+
+def pakiet(x):
+    cena = x['do'] * RYNEK['mb'][0] + RYNEK['osprzet'][0]
+    wyr = ' pak__k--wyr' if x['slug'] == 'dom' else ''
+    dop = '<p class="pak__dop mono">+ projekt i pozwolenie wg wyceny</p>' if x['do'] > 30 else '<p class="pak__dop mono">bez zgłoszeń</p>'
+    return ('<article class="pak__k%s"><p class="pak__do mono">do %d m</p><h3>%s</h3><p class="pak__c mono"><small>od</small> %s <small>zł</small></p>%s'
+            '<ul>%s</ul><button class="btn%s" type="button" data-pakiet="%s" data-cel="%s">Policz dla mojej gminy %s</button></article>'
+            % (wyr, x['do'], e(x['nazwa']), zl(cena), dop, ''.join('<li>%s</li>' % e(c) for c in x['co']),
+               ' btn--sygnal' if wyr else ' btn--obrys', x['slug'], x['cel'], STRZALKA))
+
+
+def dni_do(data):
+    return (datetime.date.fromisoformat(data) - datetime.date.today()).days
+
+
 # ---------------------------------------------------------------- powłoka
 NAV = [('/#karta', 'Wycena'), ('/#powiat', 'Mapa gmin'), ('/#ogrod', 'Rachunek ogrodu'), ('/paszport-studni/', 'Paszport studni'), ('/dla-firm/', 'Dla firm')]
 
@@ -354,7 +427,7 @@ def powloka(sciezka, tytul, opis, tresc, ld=None):
 {'<meta name="robots" content="noindex,nofollow">' if DEMO else ''}
 <link rel="canonical" href="{BASE + sciezka}">
 <meta property="og:title" content="{e(tytul)}"><meta property="og:description" content="{e(opis)}">
-<meta name="theme-color" content="#0e1316">
+<meta name="theme-color" content="#111214">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/assets/fonts/archivo-400-800-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/css/fonts.css?v={FV}">
@@ -373,6 +446,7 @@ def powloka(sciezka, tytul, opis, tresc, ld=None):
 <main id="tresc">
 {tresc}
 </main>
+<nav class="pasek" aria-label="Szybki kontakt" data-pasek><a href="tel:{F['tel_e164']}">Zadzwoń</a><a href="sms:{F['tel_e164']}" data-sms>SMS z kartą</a><a class="pasek__w" href="/#karta">Wycena</a></nav>
 <footer class="stopka">
 <div class="wrap stopka__kol">
 <div><p class="stopka__logo">{brand.SYGNET}<span>AKWIFER</span></p><p>Strona wzorcowa dla firm studniarskich. Firma, telefon ({F['tel']}), termin i paszport są przykładowe; dane gmin są prawdziwe.</p></div>
@@ -395,17 +469,35 @@ def strona_glowna():
     pz = PASZPORT
     R0 = rachunek_dane(PO_SLUGU['mosina'])
     tresc = f'''
-<section id="zmierzch" class="hero">
-<div class="hero__kadr" data-par=".08">{obraz('hero', 'hero', 'Wiertnica studni o zmierzchu na działce z domem w stanie surowym', '100vw', 'hero__img', eager=True, media=('hero-pion', '(max-width: 760px)'))}</div>
-<div class="hero__w wrap">
+<section id="start" class="hero3">
+<div class="hero3__tlo" data-par=".06">{obraz('hero', 'hero', 'Wiertnica studni o zmierzchu na działce z domem w stanie surowym', '100vw', 'hero3__img', eager=True, media=('hero-pion', '(max-width: 760px)'))}</div>
+<div class="wrap hero3__u">
+<div class="hero3__t">
 <p class="kicker mono">Studnie głębinowe · {F['baza']}</p>
-{split('Woda z własnej studni.', '<em>Wycena, zanim zadzwonisz.</em>', tag='h1')}
-<p class="lead">Wybierz gminę — pokażemy, ile metrów zwykle trzeba wiercić, ile to kosztuje, czy trzeba coś zgłaszać i kiedy możemy przyjechać.</p>
-<form class="hero__szybko" action="/#karta" data-szybko><label class="sr" for="h-gmina">Gmina</label><select id="h-gmina" name="gmina">{''.join('<option value="%s"%s>%s</option>' % (g['slug'], ' selected' if g['slug'] == 'mosina' else '', e(g['nazwa'])) for g in sorted(GMINY, key=lambda g: g['nazwa']))}</select><button class="btn btn--sygnal" type="submit">Pokaż wycenę {STRZALKA}</button></form>
+{split('Wiercimy', 'do wody.', '<em>Cenę znasz, zanim zadzwonisz.</em>', tag='h1')}
+{przyrzad(PO_SLUGU['mosina'])}
+<ul class="hero3__dowody mono"><li>cena za metr z góry</li><li>papiery powyżej 30 m po naszej stronie</li><li>oddzwaniamy w 15 min</li></ul>
 </div>
-<p class="hero__podpis mono">{'ilustracja poglądowa' if 'hero' in MAN else 'plansza zastępcza · docelowo kadr z Higgsfield'}</p>
-{notka('Klient wchodzi wieczorem z telefonu i <b>od razu dostaje odpowiedź na pytanie, z którym dziś dzwoni do pięciu firm</b>. Pierwszy ekran to nie hasło, tylko wycena — dokładnie to, co portale z zapytaniami robią za Ciebie i za co każą płacić.')}
+{linijka(PO_SLUGU['mosina'])}
+</div>
+<p class="hero3__podpis mono">{'ilustracja poglądowa' if 'hero' in MAN else 'plansza zastępcza · docelowo kadr z generatora'}</p>
+{notka('Klient wchodzi wieczorem z telefonu i <b>w pierwszym ekranie dostaje odpowiedź, z którą dziś dzwoni do pięciu firm</b>: ile metrów, ile złotych, czy są papiery. 93% klientów mówi, że natychmiastowa wycena wpływa na wybór wykonawcy — a żadna z 18 sprawdzonych polskich firm jej nie ma.')}
 </section>
+
+<section id="gwarancja" class="sek sek--gw">
+<div class="tlo tlo-siatka" aria-hidden="true"></div>
+<div class="wrap">
+<div class="sek__t sek__t--waski">
+{split('Gwarancja', '<em>przejrzystości.</em>')}
+<p class="key">Najczęstszy strach przy studni: planowałem 12 tysięcy, wyszło 40. Dlatego zasady piszemy przed wierceniem, nie po.</p>
+</div>
+<ol class="gw" data-seq="90">{''.join('<li><span class="gw__n mono">%s</span><b>%s</b><p>%s</p></li>' % (e(n), e(t), e(d)) for n, t, d in GWARANCJA)}</ol>
+<p class="zrodlo">Przykładowe zasady wzorca — firma wpisuje swoje. 200 zł/m to dolna granica średniej rynkowej (kb.pl, 08.2026); 100 zł/m za suchy otwór to praktyka jednej z krakowskich firm.</p>
+{notka('To odpowiedź na pytanie, które klient boi się zadać przez telefon. <b>Firma, która pisze zasady wprost, wygląda pewniej niż ta, która obiecuje „najniższe ceny”</b> — żadna z przebadanych firm w Polsce tego nie robi.')}
+</div>
+</section>
+
+{zejscie(PO_SLUGU['mosina'])}
 
 <section id="karta" class="sek sek--karta">
 <div class="wrap sek__uklad">
@@ -444,6 +536,18 @@ def strona_glowna():
 
 <section id="szybko" class="sek szybko" aria-label="Gminy — szybki wybór">
 <div class="wrap"><p class="etyk mono">Twoja gmina — mediana głębokości</p><div class="szybko__lista">{szybko}</div></div>
+</section>
+
+<section id="pakiety" class="sek sek--pak">
+<div class="wrap">
+<div class="sek__t sek__t--waski">
+{split('Pakiety.', '<em>Cena „od”, nie „do uzgodnienia”.</em>')}
+<p class="key">Trzy pakiety z ceną startową i stałą dopłatą za każdy metr ponad pakiet. Wybierz pakiet — karta przeliczy go dla Twojej gminy.</p>
+</div>
+<div class="pak" data-seq="90">{''.join(pakiet(x) for x in PAKIETY)}</div>
+<p class="zrodlo">Ceny przykładowe: metry pakietu × 200 zł + pompa i hydrofor od 2 500 zł (średnie rynkowe, kb.pl 08.2026). Dopłata za metr ponad pakiet: 200 zł. Firma wpisuje swój cennik.</p>
+{notka('Niemieckie firmy studniarskie sprzedają tak od lat: <b>trzy pakiety i cena za metr</b>. Klient wybiera, zamiast negocjować — a Ty dostajesz zgłoszenie z już zaakceptowaną ceną startową.')}
+</div>
 </section>
 
 <section id="robota" class="sek sek--robota">
@@ -486,6 +590,27 @@ def strona_glowna():
 {notka('Klient, który ma ogród, <b>sam sobie policzy, że studnia jest tańsza od wodociągu</b> — i przychodzi już przekonany. Ty nie musisz go namawiać, tylko potwierdzić widełki.')}
 </section>
 
+<section id="przepisy" class="sek sek--prawo">
+<div class="wrap sek__uklad">
+<div class="sek__t">
+{split('Przepisy 2026.', '<em>Trzy pytania zamiast urzędu.</em>')}
+<form class="drzewko" data-drzewko onsubmit="return false" aria-label="Czy potrzebuję pozwolenia na studnię">
+<fieldset><legend>Jak głęboka będzie studnia?</legend><label><input type="radio" name="dz-g" value="do30" checked><span>do 30 m</span></label><label><input type="radio" name="dz-g" value="ponad"><span>ponad 30 m</span></label></fieldset>
+<fieldset><legend>Ile wody na dobę?</legend><label><input type="radio" name="dz-q" value="do5" checked><span>do 5 m³</span></label><label><input type="radio" name="dz-q" value="ponad"><span>więcej</span></label></fieldset>
+<fieldset><legend>Na co?</legend><label><input type="radio" name="dz-c" value="dom" checked><span>dom i ogród</span></label><label><input type="radio" name="dz-c" value="firma"><span>działalność gospodarcza</span></label></fieldset>
+<output class="drzewko__w" data-dz-wynik><b>Bez zgłoszeń i pozwoleń.</b> To „zwykłe korzystanie z wód” (Prawo wodne, art. 395). Wiercimy po oględzinach.</output>
+</form>
+</div>
+<div class="prawo__karty">
+<article class="prawo__k prawo__k--ab"><p class="etyk mono">abolicja dla starych studni</p><p class="prawo__n mono"><span data-dni-do="{ABOLICJA['do']}">{dni_do(ABOLICJA['do'])}</span><small>dni</small></p>
+<p>Do 31.12.2027 zalegalizujesz studnię wykonaną bez zgody <b>bez opłaty {ABOLICJA['oplata']}</b> i bez kary. Operat i mapy dalej kosztują — przygotujemy je.</p><p class="zrodlo"><a href="{ABOLICJA['zrodlo']}" rel="noopener">{e(ABOLICJA['akt'])}</a></p></article>
+<article class="prawo__k prawo__k--su"><p class="etyk mono">susza 2026</p><p class="prawo__h">Płytkie studnie tracą wodę.</p>
+<p>Państwowa Służba Hydrogeologiczna ostrzegała przed niżówką w Wielkopolsce przez {e(NIZOWKA['miesiace'])}. Pogłębiamy stare kręgi i wiercimy obok.</p><p class="zrodlo"><a href="{NIZOWKA['zrodlo']}" rel="noopener">PIG-PIB, ostrzeżenie hydrogeologiczne nr {NIZOWKA['nr']}</a></p></article>
+</div>
+</div>
+{notka('Dwa prawdziwe powody do telefonu w tym roku: <b>abolicja</b> (nowa linia usług — legalizacja starych studni) i <b>susza</b> (pogłębianie). Licznik dni liczy się sam, a strona mówi o tym pierwsza w regionie.')}
+</section>
+
 <section id="paszport" class="sek sek--paszport">
 <div class="wrap sek__uklad">
 <div class="sek__t">
@@ -507,6 +632,7 @@ def strona_glowna():
 <div class="wrap sek__uklad">
 <div class="sek__t">
 {split('Zgłoszenie.', '<em>Jeden SMS zamiast formularza.</em>')}
+<p class="zgl__wielki mono"><a href="tel:{F['tel_e164']}">{F['tel']}</a></p>
 <p class="key">Karta, którą wypełniłeś na górze, jest gotowym zgłoszeniem — wysyłasz ją SMS-em ze swojego telefonu, bez pól na e-mail i zgód na pół ekranu.</p>
 <p class="mono zgl__tel">{F['tel']} · {F['godziny']} · numer przykładowy</p>
 {notka('Bez formularza, bez skrzynki, której nikt nie czyta. <b>SMS przychodzi na Twój telefon na budowie</b>, z gotową treścią — odpisujesz albo oddzwaniasz między dwoma metrami rury.')}
@@ -585,19 +711,21 @@ def strona_gminy(g):
 </div>
 </section>
 
+{zejscie(g)}
+
+<section id="pytania" class="sek">
+<div class="wrap sek__uklad">
+<div class="sek__t"><h2>Pytania o studnię w gminie {e(g['nazwa'])}</h2>{faq(pytania)}</div>
+<nav class="inne" aria-label="Inne gminy" data-seq="30"><p class="etyk mono">inne gminy powiatu</p>{inne}</nav>
+</div>
+</section>
+
 <section id="dane" class="sek sek--powiat">
 <div class="wrap">
 <div class="sek__t sek__t--waski"><h2>Liczby z rejestru</h2>
 <p class="key">{akap[1]}</p>
 {''.join('<p>%s</p>' % a for a in akap[2:])}</div>
 <div data-scrub>{wykres(akt=g['slug'], id_='w1')}</div>
-</div>
-</section>
-
-<section id="pytania" class="sek">
-<div class="wrap sek__uklad">
-<div class="sek__t"><h2>Pytania o studnię w gminie {e(g['nazwa'])}</h2>{faq(pytania)}</div>
-<nav class="inne" aria-label="Inne gminy" data-seq="30"><p class="etyk mono">inne gminy powiatu</p>{inne}</nav>
 </div>
 </section>
 '''

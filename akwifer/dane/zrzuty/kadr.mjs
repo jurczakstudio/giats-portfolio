@@ -14,7 +14,7 @@ const do_ = async (p, sel) => { await p.evaluate(s => document.querySelector(s).
 let p = await strona(390);
 await p.goto(B + '/', { waitUntil: 'load' }); await p.waitForTimeout(1500);
 await p.screenshot({ path: 'dane/zrzuty/kadr-390-hero.png' });
-await p.selectOption('#h-gmina', 'kornik'); await p.click('.hero__szybko button'); await p.waitForTimeout(1500);
+await p.selectOption('[data-gmina-hero]', 'kornik'); await p.click('.przyrzad button[type=submit]'); await p.waitForTimeout(1500);
 await p.screenshot({ path: 'dane/zrzuty/kadr-390-karta.png' });
 await do_(p, '#powiat'); await p.screenshot({ path: 'dane/zrzuty/kadr-390-powiat.png' });
 await do_(p, '#robota'); await p.screenshot({ path: 'dane/zrzuty/kadr-390-robota.png' });

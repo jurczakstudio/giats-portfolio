@@ -1,6 +1,9 @@
 # AKWIFER — strona wzorcowa zawodu „studnie głębinowe” (Jurczak Studio)
 
-**Koncept v2: ZLECENIE.** Strona, która przyjmuje zlecenia, zamiast tylko ładnie wyglądać.
+**Koncept v3: GŁĘBIEJ** (na bazie v2 „ZLECENIE”). Po researchu rynku PL i świata (`dane/research/`):
+wycena w pierwszym ekranie, czerń + żółć hi-vis, zejście pod ziemię przypięte do przewijania do mediany
+wybranej gminy, gwarancja przejrzystości, pakiety z dopłatą za metr, przepisy 2026 (abolicja, susza),
+pasek akcji na telefonie. Strona, która przyjmuje zlecenia — i wygląda jak marka z branży ciężkiej.
 Firma jest **fikcyjna** (telefon `000 000 000`, termin, paszport — przykłady, oznaczone na stronie);
 **dane gmin są prawdziwe**: rejestr PIG-PIB przez mapastudni.pl (14 gmin powiatu poznańskiego, 08.06.2026).
 

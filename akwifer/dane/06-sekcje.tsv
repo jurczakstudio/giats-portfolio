@@ -1,15 +1,20 @@
-# 06 — SEKCJE · AKWIFER v2. Tabulatory. Czytane przez audyt.py.
+# 06 — SEKCJE · AKWIFER v3 „GŁĘBIEJ”. Tabulatory. Czytane przez audyt.py.
 akt	podstrona	obiekt	ruch	mobil	typ	fraza	sygnatura
-Zmierzch	/	foto	rv:split+par	inna-kompozycja	kadr-z-wycena	studnia głębinowa powiat poznański	nie
+Start	/	foto	rv:split+par	inna-kompozycja	przyrzad-z-linijka	studnia głębinowa powiat poznański	nie
+Gwarancja	/	material	seq	inna-kompozycja	zasady-liczby	ile kosztuje metr studni	nie
+Zejście	/	rysunek	pin	inna-kompozycja	scena-przypieta	-	nie
 Karta	/	sterowanie	rv:up	inna-kompozycja	karta-zlecenia	ile kosztuje studnia głębinowa	tak
 Powiat	/	rysunek	rv:mask	inna-kompozycja	mapa-gmin	studnia głębinowa głębokość Poznań	nie
 Szybki wybór	/	sterowanie	brak	tylko-mobil	lista-gmin	-	nie
+Pakiety	/	sterowanie	seq	inna-kompozycja	pakiety-cenowe	studnia głębinowa cena pakiet	nie
 Robota	/	foto	rv:mask	inna-kompozycja	kadr-z-etapami	jak wygląda wiercenie studni	nie
 Rachunek ogrodu	/	sterowanie	rv:up	inna-kompozycja	kalkulator-z-wykresem	studnia czy wodociąg podlewanie koszt	nie
+Przepisy 2026	/	sterowanie	rv:split	inna-kompozycja	drzewko-decyzji	czy studnię trzeba zgłosić 2026	nie
 Paszport	/	material	rv:up	inna-kompozycja	dokument	-	nie
 Zgłoszenie	/	sterowanie	rv:split	inna-kompozycja	sms	-	tak
 Głowa	/gmina/*/	rysunek	rv:split	inna-kompozycja	liczba	studnia głębinowa <gmina>	nie
 Karta	/gmina/*/	sterowanie	rv:up	inna-kompozycja	karta-zlecenia	koszt studni <gmina>	tak
+Zejście	/gmina/*/	rysunek	pin	inna-kompozycja	scena-przypieta	na jakiej głębokości jest woda <gmina>	nie
 Dane	/gmina/*/	rysunek	scrub	inna-kompozycja	wykres	głębokość studni <gmina>	nie
 Pytania	/gmina/*/	sterowanie	seq	ta-sama:rozwijane pytania	faq	-	nie
 Głowa	/paszport-studni/	material	rv:split	inna-kompozycja	liczba	-	nie

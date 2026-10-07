@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
-"""AKWIFER v2 „ZLECENIE” — paleta, skala (tokeny --fs-*), sygnet. Decyzje: dane/04-kierunek.md."""
+"""AKWIFER v3 „GŁĘBIEJ” — paleta dwubarwna hi-vis, skala (tokeny --fs-*), sygnet. Decyzje: dane/04-kierunek.md."""
 
 PALETA = {
-    'noc': '#0e1316',        # tło — zmierzch (W5)
-    'noc-2': '#161d21',
-    'noc-3': '#222b30',
-    'kosc': '#ece6da',       # tekst
-    'popiol': '#a7a69f',     # tekst drugi
-    'sygnal': '#ff6b2c',     # JEDYNY akcent — lampy robocze wiertnicy (W1, W4)
-    'woda': '#7cc4d6',       # barwa informacyjna danych (W2), nigdy przycisk
-    'notka': '#f3d9a4',      # notki właściciela (W5)
+    'noc': '#111214',        # tło — czerń maszyny (W8)
+    'noc-2': '#1a1b1d',
+    'noc-3': '#2b2c2f',
+    'kosc': '#f3eee4',       # tekst i powierzchnie kart
+    'popiol': '#a5a49e',     # tekst drugi
+    'sygnal': '#ffd21f',     # JEDYNY akcent — żółć ostrzegawcza hi-vis, jak kamizelki i maszt wiertnicy (W8)
+    'woda': '#6ec6e6',       # woda — tylko dane i dno zejścia (W2, W9)
+    'notka': '#f3eee4',      # notki właściciela (W5)
 }
 
 SKALA = {
@@ -18,10 +18,11 @@ SKALA = {
     'fs-tekst': '1.0625rem',
     'fs-lead': 'clamp(1.125rem, 1rem + .45vw, 1.35rem)',
     'fs-h3': 'clamp(1.3rem, 1.1rem + .8vw, 1.75rem)',
-    'fs-h2': 'clamp(2.25rem, 1.4rem + 3.2vw, 4.25rem)',
-    'fs-h1': 'clamp(3rem, 1.6rem + 6vw, 7.5rem)',
+    'fs-h2': 'clamp(2.5rem, 1.2rem + 5vw, 6rem)',
+    'fs-h2-em': 'clamp(1.9rem, 1rem + 3.6vw, 4.3rem)',
+    'fs-h1': 'clamp(3.2rem, 1.4rem + 7.4vw, 9rem)',
     'fs-liczba': 'clamp(2rem, 1.4rem + 2.6vw, 3.5rem)',
-    'fs-gigant': 'clamp(5rem, 2rem + 14vw, 15rem)',
+    'fs-gigant': 'clamp(5.5rem, 2rem + 16vw, 17rem)',
 }
 
 
@@ -37,10 +38,10 @@ def css_root():
 
 # Sygnet: rura studni z kroplą — prosty, czytelny w 16 px.
 SYGNET = ('<svg class="sygnet" viewBox="0 0 32 32" aria-hidden="true"><rect x="13" y="2" width="6" height="20" rx="1" fill="#ece6da"/>'
-          '<path d="M16 19c3 4 5 6.4 5 8.4a5 5 0 0 1-10 0c0-2 2-4.4 5-8.4z" fill="#ff6b2c"/></svg>')
-FAVICON = ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#0e1316"/>'
+          '<path d="M16 19c3 4 5 6.4 5 8.4a5 5 0 0 1-10 0c0-2 2-4.4 5-8.4z" fill="#ffd21f"/></svg>')
+FAVICON = ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#111214"/>'
            '<rect x="13" y="3" width="6" height="18" rx="1" fill="#ece6da"/>'
-           '<path d="M16 18c3 4 5 6.4 5 8.4a5 5 0 0 1-10 0c0-2 2-4.4 5-8.4z" fill="#ff6b2c"/></svg>')
+           '<path d="M16 18c3 4 5 6.4 5 8.4a5 5 0 0 1-10 0c0-2 2-4.4 5-8.4z" fill="#ffd21f"/></svg>')
 
 
 def _lum(h):

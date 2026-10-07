@@ -1,21 +1,22 @@
 :root {
-  --noc: #0e1316;
-  --noc-2: #161d21;
-  --noc-3: #222b30;
-  --kosc: #ece6da;
-  --popiol: #a7a69f;
-  --sygnal: #ff6b2c;
-  --woda: #7cc4d6;
-  --notka: #f3d9a4;
+  --noc: #111214;
+  --noc-2: #1a1b1d;
+  --noc-3: #2b2c2f;
+  --kosc: #f3eee4;
+  --popiol: #a5a49e;
+  --sygnal: #ffd21f;
+  --woda: #6ec6e6;
+  --notka: #f3eee4;
   --fs-mini: 0.875rem;
   --fs-maly: 0.9375rem;
   --fs-tekst: 1.0625rem;
   --fs-lead: clamp(1.125rem, 1rem + .45vw, 1.35rem);
   --fs-h3: clamp(1.3rem, 1.1rem + .8vw, 1.75rem);
-  --fs-h2: clamp(2.25rem, 1.4rem + 3.2vw, 4.25rem);
-  --fs-h1: clamp(3rem, 1.6rem + 6vw, 7.5rem);
+  --fs-h2: clamp(2.5rem, 1.2rem + 5vw, 6rem);
+  --fs-h2-em: clamp(1.9rem, 1rem + 3.6vw, 4.3rem);
+  --fs-h1: clamp(3.2rem, 1.4rem + 7.4vw, 9rem);
   --fs-liczba: clamp(2rem, 1.4rem + 2.6vw, 3.5rem);
-  --fs-gigant: clamp(5rem, 2rem + 14vw, 15rem);
+  --fs-gigant: clamp(5.5rem, 2rem + 16vw, 17rem);
   --sans: 'Archivo', system-ui, sans-serif;
   --serif: 'Source Serif 4', Georgia, serif;
   --mono: 'DM Mono', ui-monospace, monospace;
@@ -182,7 +183,7 @@
 .ruch-off [data-pin] { height: auto; }
 .ruch-off [data-pin] > .pin__w { position: static; height: auto; }
 
-/* ================================================================ AKWIFER v2 „ZLECENIE”
+/* ================================================================ AKWIFER v3 „GŁĘBIEJ” (na bazie v2 „ZLECENIE”)
    Rejestr: warsztat o zmierzchu (W5). Jedyny akcent — lampy wiertnicy (--sygnal, W1/W4).
    --woda tylko w danych (W2). Notki właściciela tylko w trybie właściciela (W5).       */
 
@@ -200,8 +201,10 @@ h1, h2, h3 { margin: 0; font-weight: 800; font-stretch: 72%; line-height: .95; l
 h1 { font-size: var(--fs-h1); }
 h2 { font-size: var(--fs-h2); margin-bottom: .45em; }
 h3 { font-size: var(--fs-h3); font-stretch: 85%; line-height: 1.1; }
-h1 em, h2 em { font: italic 400 1em/1 var(--serif); letter-spacing: -.02em; color: var(--popiol); }
+h1, h2 { text-transform: uppercase; letter-spacing: -.005em; }
+h1 em, h2 em { font: italic 400 1em/1 var(--serif); letter-spacing: -.02em; color: var(--popiol); text-transform: none; }
 h1 .w, h2 .w { display: block; }
+h2 em { font-size: var(--fs-h2-em); line-height: 1.02; }
 .w > i { font-style: normal; }
 h1, h2 { font-variation-settings: 'wdth' 72; }
 h3, .co__lista b, .karta__rubryki dd:not(.mono) { font-variation-settings: 'wdth' 85; }
@@ -228,8 +231,8 @@ b, strong { font-weight: 650; }
   transition: background var(--ruch-czas-mikro), transform var(--ruch-czas-mikro), box-shadow var(--ruch-czas-mikro);
 }
 .btn:hover { transform: translateY(-1px); }
-.btn--sygnal { background: var(--sygnal); border-color: var(--sygnal); color: var(--noc); box-shadow: 0 0 0 0 rgba(255, 107, 44, .5); }
-.btn--sygnal:hover { box-shadow: 0 8px 30px -6px rgba(255, 107, 44, .65); }
+.btn--sygnal { background: var(--sygnal); border-color: var(--sygnal); color: var(--noc); box-shadow: 0 0 0 0 rgba(255, 210, 31, .5); }
+.btn--sygnal:hover { box-shadow: 0 8px 30px -6px rgba(255, 210, 31, .65); }
 .link { display: inline-flex; align-items: center; gap: .5rem; color: var(--kosc); font-weight: 600; text-decoration: none; border-bottom: 1px solid var(--sygnal); padding-bottom: .15rem; }
 .link:hover .ikona { transform: translateX(3px); }
 .link .ikona { transition: transform var(--ruch-czas-mikro); }
@@ -261,7 +264,7 @@ b, strong { font-weight: 650; }
 /* ---------------------------------------------------------------- notki właściciela (W5) */
 .notka { display: none; }
 html.wl .notka {
-  display: block; position: relative; max-width: 30rem; margin: 1.6rem 0;
+  display: block; border-left: 6px solid var(--sygnal); position: relative; max-width: 30rem; margin: 1.6rem 0;
   padding: 1rem 1.15rem 1.1rem 1.25rem; border-radius: 4px 14px 14px 14px;
   background: var(--notka); color: #2a2216; font: 400 var(--fs-maly)/1.5 var(--sans);
   box-shadow: 0 18px 40px -18px rgba(0, 0, 0, .8);
@@ -269,7 +272,7 @@ html.wl .notka {
 }
 html.wl .notka p { margin: 0; color: #2a2216; }
 html.wl .notka b { font-weight: 700; }
-.notka__t { font-size: var(--fs-mini); text-transform: uppercase; letter-spacing: .08em; margin-bottom: .35rem !important; color: #6b4b12 !important; }
+.notka__t { font-size: var(--fs-mini); text-transform: uppercase; letter-spacing: .08em; margin-bottom: .35rem !important; color: #6b5a12 !important; }
 .notka__t::before { content: "✎ "; }
 @keyframes notka-wjazd { from { opacity: 0; transform: translateY(8px) rotate(-1deg); } }
 html.wl [data-sygnatura] { outline: 1px dashed var(--notka); outline-offset: 8px; }
@@ -305,7 +308,7 @@ select { appearance: none; padding-right: 2.5rem; cursor: pointer;
 .tlo { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
 .tekstura-noc {
   background:
-    radial-gradient(60% 80% at 85% 10%, rgba(255, 107, 44, .10), transparent 60%),
+    radial-gradient(60% 80% at 85% 10%, rgba(255, 210, 31, .10), transparent 60%),
     repeating-linear-gradient(0deg, rgba(236, 230, 218, .035) 0 1px, transparent 1px 3.5rem),
     var(--noc);
 }
@@ -350,7 +353,7 @@ select { appearance: none; padding-right: 2.5rem; cursor: pointer;
 .karta__rubryki dd:not(.mono) { font-weight: 800; font-stretch: 80%; }
 .karta__rubryki small { display: block; font-size: var(--fs-mini); line-height: 1.4; color: #4a4f50; }
 .karta__rubryki dd.miga { animation: miga .6s ease; }
-@keyframes miga { 0% { background: rgba(255, 107, 44, .35); } 100% { background: transparent; } }
+@keyframes miga { 0% { background: rgba(255, 210, 31, .35); } 100% { background: transparent; } }
 .karta__zuzycie { font-size: var(--fs-mini); color: #3b4143; margin-bottom: 1.2rem; }
 .karta__akcje { display: flex; flex-wrap: wrap; gap: .6rem; margin-bottom: 1.2rem; }
 .karta .btn:not(.btn--sygnal) { background: transparent; color: var(--noc); border-color: var(--noc); }
@@ -372,7 +375,7 @@ select { appearance: none; padding-right: 2.5rem; cursor: pointer;
 .w__pas { fill: var(--woda); opacity: .3; transform-box: fill-box; transform-origin: left center; }
 .w__med { fill: var(--woda); }
 .wykres .w__v { fill: var(--woda); }
-.w__wiersz--akt .w__tlo { fill: rgba(255, 107, 44, .08); }
+.w__wiersz--akt .w__tlo { fill: rgba(255, 210, 31, .08); }
 .wykres .w__wiersz--akt .w__n, .wykres .w__wiersz--akt .w__v { fill: var(--sygnal); }
 .w__wiersz--akt .w__pas { fill: var(--sygnal); opacity: .55; transform: scaleX(calc(.15 + var(--p, 1) * .85)); }
 .w__wiersz--akt .w__med { fill: var(--sygnal); }
@@ -581,6 +584,162 @@ path.m__g--brak { fill: var(--noc-2); stroke: var(--noc-3); }
 .ogrod__w figcaption a { color: var(--kosc); }
 .sek--ogrod > .notka { margin-left: max(1.25rem, calc((100% - 78rem) / 2)); }
 
+
+/* ================================================================ v3 „GŁĘBIEJ” (W8–W11) */
+/* ziarno na całej stronie — materiał zamiast płaskiej czerni (W8) */
+body::after {
+  content: ""; position: fixed; inset: 0; z-index: 60; pointer-events: none; opacity: .07; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.tlo-siatka {
+  background:
+    linear-gradient(rgba(243, 238, 228, .05) 1px, transparent 1px) 0 0 / 2.5rem 2.5rem,
+    linear-gradient(90deg, rgba(243, 238, 228, .05) 1px, transparent 1px) 0 0 / 2.5rem 2.5rem,
+    var(--noc);
+}
+.btn--duzy { min-height: 3.6rem; padding: .9rem 1.6rem; font-size: var(--fs-tekst); }
+.btn--obrys { background: transparent; border-color: rgba(243, 238, 228, .35); }
+.btn--obrys:hover { border-color: var(--kosc); }
+.btn--sygnal { font-weight: 700; }
+
+/* ---------------------------------------------------------------- hero = przyrząd (W9) */
+.hero3 { position: relative; isolation: isolate; min-height: 100svh; padding: 7.5rem 0 4rem; overflow: hidden; display: flex; align-items: center; }
+.hero3__tlo { position: absolute; inset: -6% 0; z-index: -2; }
+.hero3__tlo picture, .hero3__img { width: 100%; height: 100%; }
+.hero3__img { object-fit: cover; object-position: 70% 50%; opacity: .38; filter: grayscale(.35) contrast(1.1); }
+.hero3::after { content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(90deg, var(--noc) 0%, rgba(17, 18, 20, .82) 45%, rgba(17, 18, 20, .35) 100%), linear-gradient(0deg, var(--noc), rgba(17, 18, 20, 0) 30%); }
+.hero3__u { display: grid; grid-template-columns: minmax(0, 1fr) 15rem; gap: clamp(2rem, 6vw, 7rem); align-items: stretch; }
+.hero3 h1 { margin-bottom: .5em; }
+.hero3 h1 .w:nth-child(2) i { color: var(--sygnal); }
+.hero3 h1 em { display: block; font-size: var(--fs-h3); color: var(--kosc); margin-top: .5em; }
+.hero3__podpis { position: absolute; right: clamp(1.25rem, 3vw, 2.5rem); bottom: 1rem; margin: 0; font-size: var(--fs-mini); color: var(--popiol); }
+html.wl .hero3 > .notka { position: absolute; right: clamp(1.25rem, 3vw, 2.5rem); top: 6.5rem; margin: 0; max-width: 22rem; z-index: 3; }
+
+.przyrzad { max-width: 46rem; border: 1px solid rgba(243, 238, 228, .18); border-radius: 18px; background: rgba(17, 18, 20, .72); backdrop-filter: blur(6px); padding: clamp(1rem, 2.5vw, 1.6rem); }
+.przyrzad__g { display: grid; gap: .45rem; margin-bottom: 1.1rem; }
+.przyrzad__g > span, .przyrzad__w dt { font-size: var(--fs-mini); text-transform: uppercase; letter-spacing: .1em; color: var(--popiol); }
+.przyrzad__g select { font-size: var(--fs-lead); font-weight: 700; min-height: 3.6rem; border-color: var(--sygnal); }
+.przyrzad__w { display: grid; grid-template-columns: 1fr 1.3fr 1fr; margin: 0 0 1.2rem; border-top: 1px solid var(--noc-3); }
+.przyrzad__w > div { padding: .9rem .8rem .2rem 0; }
+.przyrzad__w > div + div { padding-left: .9rem; border-left: 1px solid var(--noc-3); }
+.przyrzad__w dd { margin: .3rem 0 0; font-size: var(--fs-h3); color: var(--sygnal); line-height: 1.1; }
+.przyrzad__w dd:not(.mono) { color: var(--kosc); font-weight: 700; font-size: var(--fs-tekst); }
+.przyrzad__a { display: flex; flex-wrap: wrap; gap: .7rem; }
+.hero3__dowody { list-style: none; display: flex; flex-wrap: wrap; gap: .5rem 1.6rem; padding: 0; margin: 1.4rem 0 0; font-size: var(--fs-mini); color: var(--kosc); }
+.hero3__dowody li::before { content: "✓"; color: var(--sygnal); margin-right: .5em; font-weight: 700; }
+
+/* linijka głębokości 0–120 m */
+.linijka { position: relative; min-height: 32rem; margin: 1rem 0 2rem; }
+.linijka__os { position: absolute; inset: 0 auto 0 0; width: 3.4rem; border-right: 2px solid var(--kosc);
+  background: repeating-linear-gradient(180deg, var(--kosc) 0 1px, transparent 1px 4.1666%) right top / .6rem 100% no-repeat; }
+.linijka__t { position: absolute; right: .9rem; transform: translateY(-50%); font-size: var(--fs-mini); color: var(--popiol); }
+.linijka__30 { position: absolute; left: 0; right: 0; top: 25%; border-top: 2px dashed var(--sygnal); }
+.linijka__30 span { position: absolute; right: 0; top: -1.6rem; font-size: var(--fs-mini); color: var(--sygnal); }
+.linijka__pas, .linijka__wiertlo { position: absolute; left: 4.6rem; transition: top .7s var(--ruch-krzywa), height .7s var(--ruch-krzywa); }
+.linijka__pas { width: 3rem; top: calc(var(--lo) * 100%); height: calc((var(--hi) - var(--lo)) * 100% + 2px); background: var(--sygnal); border-radius: 3px; }
+.linijka__wiertlo { left: 5.9rem; width: .4rem; top: 0; height: calc(var(--hi) * 100%); background: var(--kosc); }
+.linijka__woda { position: absolute; left: 3.4rem; right: 0; top: calc(var(--hi) * 100%); height: 3px; background: var(--woda); transition: top .7s var(--ruch-krzywa); }
+.linijka__woda::after { content: ""; position: absolute; left: 0; right: 0; top: 3px; height: 2.5rem; background: linear-gradient(rgba(110, 198, 230, .35), transparent); }
+.linijka__woda span { position: absolute; right: 0; top: .5rem; font-size: var(--fs-mini); color: var(--woda); white-space: nowrap; }
+
+/* ---------------------------------------------------------------- gwarancja (W10) */
+.sek--gw { border-top: 0; }
+.gw { list-style: none; margin: 0 0 2rem; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); border-top: 2px solid var(--sygnal); }
+.gw li { padding: 1.6rem 1.4rem 1.4rem 0; display: grid; align-content: start; gap: .5rem; }
+.gw li + li { padding-left: 1.4rem; border-left: 1px solid var(--noc-3); }
+.gw__n { font-size: var(--fs-h2); line-height: .95; color: var(--sygnal); letter-spacing: -.04em; }
+.gw b { font-size: var(--fs-tekst); text-transform: uppercase; letter-spacing: .02em; }
+.gw p { margin: 0; color: var(--popiol); font-size: var(--fs-maly); }
+
+/* ---------------------------------------------------------------- zejście pod ziemię (W8, W9) */
+.zejscie { position: relative; background: var(--noc); border-top: 1px solid var(--noc-3); }
+.zejscie__w { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; min-height: 80vh; padding: 5rem 0; }
+.zejscie--zywe .zejscie__w { padding: 0; }
+.zejscie__t { width: auto; margin: 0; padding-left: max(1.25rem, calc((100vw - 78rem) / 2)); }
+.zejscie__licznik { margin: 0; line-height: .8; color: var(--sygnal); font-variant-numeric: tabular-nums; }
+.zejscie__licznik span { font-size: var(--fs-gigant); letter-spacing: -.03em; }
+.zejscie__licznik small { font-size: var(--fs-h2); margin-left: .2em; color: var(--kosc); }
+.z--woda .zejscie__licznik { color: var(--woda); }
+.zejscie__opis { margin-top: 1.4rem; font-size: var(--fs-h3); font-weight: 800; font-stretch: 80%; font-variation-settings: 'wdth' 80; text-transform: uppercase; min-height: 2.6em; }
+.zejscie__kol { position: relative; height: 80vh; overflow: hidden; width: min(100%, 34rem); justify-self: end; margin-right: max(1.25rem, calc((100vw - 78rem) / 2)); border-radius: 14px; border: 1px solid var(--noc-3); }
+.z__swiat { position: absolute; left: 0; right: 0; top: 0; height: 100%; will-change: transform; }
+.z__w { position: absolute; left: 0; right: 0; border-top: 1px solid rgba(17, 18, 20, .5); }
+.z__wn { position: absolute; left: 1rem; top: .6rem; font-size: var(--fs-mini); color: var(--noc); text-transform: uppercase; letter-spacing: .06em; }
+.z__wn b { display: block; font-weight: 500; opacity: .7; text-transform: none; }
+.w-gleba { background: #3a2c22; }
+.w-gleba .z__wn { color: var(--kosc); }
+.w-glina { background: repeating-linear-gradient(135deg, #8a6a4a 0 6px, #81633f 6px 12px); }
+.w-piasek { background: radial-gradient(circle at 30% 30%, rgba(0, 0, 0, .12) 1px, transparent 1.5px) 0 0 / 7px 7px, #d8c497; }
+.w-il { background: repeating-linear-gradient(0deg, #5b5f5c 0 9px, #545856 9px 18px); }
+.w-il .z__wn { color: var(--kosc); }
+.w-woda { background: radial-gradient(circle at 40% 40%, rgba(255, 255, 255, .25) 1px, transparent 2px) 0 0 / 9px 9px, #2f8fb3; }
+.w-woda .z__wn { color: var(--kosc); }
+.z__30 { position: absolute; left: 0; right: 0; border-top: 3px dashed var(--sygnal); }
+.z__30 span { position: absolute; right: 1rem; top: .4rem; background: var(--noc); color: var(--sygnal); padding: .15rem .5rem; font-size: var(--fs-mini); }
+.z__lustro { position: absolute; left: 0; right: 0; height: 4px; background: var(--woda); box-shadow: 0 0 24px 6px rgba(110, 198, 230, .6); }
+.z__zerdz { position: absolute; left: 50%; top: 0; width: .7rem; height: calc(58% - 2.4rem); transform: translateX(-50%); background: var(--sygnal); box-shadow: 0 0 18px rgba(255, 210, 31, .4); }
+.z__wiertlo { position: absolute; left: 50%; top: calc(58% - 2.6rem); width: 2.6rem; height: 2.6rem; transform: translateX(-50%); color: var(--sygnal); filter: drop-shadow(0 0 12px rgba(255, 210, 31, .45)); }
+.zejscie:not(.zejscie--zywe) .z__zerdz { height: calc(var(--zs, .77) * 100% - 2.4rem); }
+.zejscie:not(.zejscie--zywe) .z__wiertlo { top: calc(var(--zs, .77) * 100% - 2.6rem); }
+.zejscie__podpis { position: absolute; right: max(1.25rem, calc((100vw - 78rem) / 2)); bottom: 1.2rem; margin: 0; font-size: var(--fs-mini); color: var(--popiol); }
+.z--woda .zejscie__kol { border-color: var(--woda); box-shadow: 0 0 0 1px var(--woda), 0 0 60px -10px rgba(110, 198, 230, .5); }
+html:not(.ruch) .zejscie[data-pin], .ruch-off .zejscie[data-pin] { height: auto; }
+
+/* ---------------------------------------------------------------- pakiety (W10) */
+.pak { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem; align-items: stretch; }
+.pak__k { display: grid; grid-template-rows: auto auto auto auto 1fr auto; gap: .4rem; padding: 1.8rem 1.6rem; border: 1px solid var(--noc-3); border-radius: 16px; background: var(--noc-2); }
+.pak__k--wyr { background: var(--kosc); color: var(--noc); border-color: var(--kosc); transform: translateY(-.8rem); box-shadow: 0 30px 60px -30px rgba(255, 210, 31, .4); }
+.pak__do { margin: 0; font-size: var(--fs-mini); text-transform: uppercase; letter-spacing: .1em; color: var(--popiol); }
+.pak__k--wyr .pak__do, .pak__k--wyr .pak__dop { color: #4a4f50; }
+.pak__k h3 { font-size: var(--fs-h2); text-transform: uppercase; font-stretch: 72%; font-variation-settings: 'wdth' 72; line-height: .9; }
+.pak__c { margin: .6rem 0 0; font-size: var(--fs-liczba); line-height: 1; letter-spacing: -.03em; }
+.pak__c small { font-size: var(--fs-maly); letter-spacing: 0; }
+.pak__dop { margin: 0 0 .8rem; font-size: var(--fs-mini); color: var(--popiol); }
+.pak__k ul { list-style: none; padding: 0; margin: 0 0 1.4rem; display: grid; gap: .45rem; font-size: var(--fs-maly); }
+.pak__k li::before { content: "—"; color: var(--sygnal); margin-right: .55em; }
+.pak__k--wyr li::before { color: var(--noc); }
+.pak__k .btn { justify-content: center; }
+.pak__k--wyr .btn--sygnal { background: var(--noc); border-color: var(--noc); color: var(--sygnal); }
+
+/* ---------------------------------------------------------------- przepisy 2026 (W11) */
+.drzewko { display: grid; gap: 1rem; margin-top: 2rem; }
+.drzewko fieldset { border: 0; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: .5rem; }
+.drzewko legend { width: 100%; font-size: var(--fs-mini); text-transform: uppercase; letter-spacing: .08em; color: var(--popiol); margin-bottom: .5rem; padding: 0; }
+.drzewko label { position: relative; cursor: pointer; }
+.drzewko input { position: absolute; opacity: 0; }
+.drzewko label span { display: inline-block; padding: .6rem 1.1rem; border: 1px solid var(--noc-3); border-radius: 999px; font-weight: 600; font-size: var(--fs-maly); transition: background var(--ruch-czas-mikro); }
+.drzewko input:checked + span { background: var(--sygnal); border-color: var(--sygnal); color: var(--noc); }
+.drzewko input:focus-visible + span { outline: 2px solid var(--kosc); outline-offset: 2px; }
+.drzewko__w { display: block; margin-top: .6rem; padding: 1.2rem 1.3rem; border-left: 6px solid var(--sygnal); background: var(--noc-2); font-size: var(--fs-tekst); line-height: 1.5; }
+.drzewko__w b { display: block; font-size: var(--fs-lead); margin-bottom: .3rem; }
+.prawo__karty { display: grid; gap: 1rem; }
+.prawo__k { padding: 1.6rem; border-radius: 16px; border: 1px solid var(--noc-3); background: var(--noc-2); }
+.prawo__k--ab { background: var(--sygnal); color: var(--noc); border-color: var(--sygnal); }
+.prawo__k--ab .etyk, .prawo__k--ab .zrodlo, .prawo__k--ab a { color: #3d3a1c; }
+.prawo__n { margin: 0 0 .6rem; line-height: .85; font-variant-numeric: tabular-nums; }
+.prawo__n span { font-size: var(--fs-gigant); letter-spacing: -.06em; }
+.prawo__n small { font-size: var(--fs-h3); margin-left: .2em; }
+.prawo__h { font-size: var(--fs-h3); font-weight: 800; text-transform: uppercase; font-stretch: 80%; font-variation-settings: 'wdth' 80; margin-bottom: .6rem; }
+.prawo__k p { max-width: 34em; }
+.prawo__k .zrodlo { font-size: var(--fs-mini); margin: 0; }
+.prawo__k--su { border-left: 6px solid var(--woda); }
+
+/* duże liczby: wąskie Archivo zamiast DM Mono (zero z ukośnikiem źle wygląda w skali plakatu) */
+.zejscie__licznik, .gw__n, .pak__c, .prawo__n, .zgl__wielki, .glowa__liczba, .przyrzad__w dd.mono, .ogrod__zw dd, .kalk__wynik dd {
+  font-family: var(--sans); font-weight: 800; font-stretch: 75%; font-variation-settings: 'wdth' 75; font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
+.gw__n, .przyrzad__w dd { white-space: nowrap; }
+.linijka__t:nth-child(4) { visibility: hidden; }
+.z__m { position: absolute; left: 0; width: 2.6rem; border-top: 1px solid rgba(17, 18, 20, .55); font-size: var(--fs-mini); }
+.z__m span { position: absolute; left: .35rem; top: .1rem; font-family: var(--mono); color: var(--noc); opacity: .75; }
+.z__otwor { position: absolute; left: 50%; width: 2.2rem; transform: translateX(-50%); top: 0; background: rgba(17, 18, 20, .55); box-shadow: inset 0 0 0 2px rgba(243, 238, 228, .25); }
+.z__wn { left: 3.2rem; }
+
+/* ---------------------------------------------------------------- zgłoszenie: ogromny numer, pasek akcji */
+.zgl__wielki { margin: 1rem 0 1.5rem; font-size: var(--fs-h1); line-height: .9; letter-spacing: -.05em; }
+.zgl__wielki a { color: var(--sygnal); text-decoration: none; }
+.pasek { display: none; }
+
 /* ================================================================ telefon — osobne kompozycje (06-sekcje.tsv) */
 @media (max-width: 960px) {
   .nag__menu { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; gap: 0; padding: .5rem 1.25rem 1.2rem; background: rgba(14, 19, 22, .97); border-bottom: 1px solid var(--noc-3); }
@@ -663,6 +822,53 @@ path.m__g--brak { fill: var(--noc-2); stroke: var(--noc-3); }
   .kalk, .kalk__wynik { grid-template-columns: 1fr; }
   .co__lista { grid-template-columns: 1fr; }
   .stopka__kol { grid-template-columns: 1fr; }
+
+  /* v3 — telefon */
+  .hero3 { min-height: auto; display: block; padding: 5.5rem 0 3rem; }
+  .hero3__u { grid-template-columns: 1fr; gap: 0; }
+  .hero3__img { opacity: .28; }
+  .przyrzad__w { grid-template-columns: 1fr 1fr; }
+  .przyrzad__w > div:nth-child(3) { grid-column: 1 / -1; border-left: 0; padding-left: 0; border-top: 1px solid var(--noc-3); }
+  .przyrzad__a .btn { flex: 1 1 100%; justify-content: center; }
+  /* linijka poziomo, między nagłówkiem a przyrządem: 0 m po lewej, 120 m po prawej */
+  .linijka { order: -1; min-height: 0; height: 3.4rem; margin: 0 0 1.2rem; }
+  .linijka__30 span, .linijka__woda span { display: none; }
+  .hero3__t { display: contents; }
+  .hero3__t > .kicker { order: -3; } .hero3 h1 { order: -2; }
+  .linijka__os { inset: 0 0 auto 0; width: auto; height: 1.6rem; border-right: 0; border-bottom: 2px solid var(--kosc);
+    background: repeating-linear-gradient(90deg, var(--kosc) 0 1px, transparent 1px 4.1666%) left bottom / 100% .5rem no-repeat; }
+  .linijka__t { right: auto; top: 0 !important; left: calc(var(--t) * 1%); transform: translateX(-50%); }
+  .linijka__t:nth-child(even) { visibility: hidden; }
+  .linijka__30 { top: 0; bottom: 0; left: 25%; right: auto; border-top: 0; border-left: 2px dashed var(--sygnal); }
+  .linijka__pas { top: 2rem; left: calc(var(--lo) * 100%); width: calc((var(--hi) - var(--lo)) * 100% + 2px); height: 1rem; transition: left .7s var(--ruch-krzywa), width .7s var(--ruch-krzywa); }
+  .linijka__wiertlo { top: 2.4rem; left: 0; width: calc(var(--hi) * 100%); height: .2rem; }
+  .linijka__woda { top: 1.6rem; bottom: 0; left: calc(var(--hi) * 100%); right: auto; width: 3px; height: auto; transition: left .7s var(--ruch-krzywa); }
+  .linijka__woda::after { display: none; }
+  .hero3__podpis { position: static; display: block; padding: 1rem 1.25rem 0; text-align: right; }
+  html.wl .hero3 > .notka { position: static; margin: 1.5rem 1.25rem 0; }
+  .gw { grid-template-columns: 1fr 1fr; }
+  .gw li { padding: 1.3rem .8rem 1.1rem 0; }
+  .gw li + li { padding-left: 0; border-left: 0; }
+  .gw li:nth-child(even) { padding-left: .9rem; border-left: 1px solid var(--noc-3); }
+  .gw li:nth-child(n+3) { border-top: 1px solid var(--noc-3); }
+  .ruch .zejscie[data-pin] { height: var(--pin, 340vh); }
+  .ruch .zejscie[data-pin] > .pin__w { position: sticky; top: 0; height: 100svh; }
+  .zejscie__w { grid-template-columns: 1fr; grid-template-rows: auto 1fr; align-content: start; padding-top: 5rem; }
+  .zejscie--zywe .zejscie__w { padding: 4.6rem 0 1rem; }
+  .zejscie__t { padding: 0 1.25rem; }
+  .zejscie__opis { margin: .6rem 0 1rem; min-height: 0; font-size: var(--fs-tekst); }
+  .zejscie__kol { height: 58vh; margin: 0 1rem; width: auto; justify-self: stretch; }
+  .zejscie__podpis { display: none; }
+  .pak { grid-template-columns: 1fr; }
+  .pak__k--wyr { transform: none; }
+  .prawo__n span { font-size: var(--fs-h1); }
+  .pasek { display: grid; grid-template-columns: 1fr 1fr 1.2fr; position: fixed; left: .6rem; right: .6rem; bottom: .6rem; z-index: 40; gap: .4rem;
+    padding: .4rem; border-radius: 16px; background: rgba(26, 27, 29, .96); border: 1px solid var(--noc-3);
+    transform: translateY(140%); transition: transform .35s var(--ruch-krzywa); }
+  .pasek.pasek--on { transform: none; }
+  .pasek a { display: grid; place-items: center; min-height: 3rem; border-radius: 12px; text-decoration: none; font-weight: 700; font-size: var(--fs-maly); background: var(--noc-3); }
+  .pasek .pasek__w { background: var(--sygnal); color: var(--noc); }
+  .stopka { padding-bottom: 7rem; }
   .wzor { position: static; display: block; border-radius: 0; text-align: center; padding: .8rem 1rem 1.2rem; background: var(--noc-2); }
 }
 

@@ -40,3 +40,21 @@ Wszystkie założenia (dawka, sezon, prąd pompy) widoczne i edytowalne — nie 
 Konsekwencja projektowa: na stronie głównej mapa powiatu z prawdziwych granic gmin, barwiona
 medianą głębokości; kliknięcie gminy ustawia kartę zlecenia. Na podstronie gminy mała mapa
 pokazuje, gdzie ta gmina leży. Gminy bez danych — szare i podpisane, nie ukryte.
+
+## v3 „GŁĘBIEJ” — po researchu (dane/research/)
+
+**W8. F24 + ocena Szymona („nudna”) → Strona ma wyglądać jak marka z branży ciężkiej, nie jak panel danych.**
+Konsekwencja: dwie barwy — czerń maszyny i żółć ostrzegawcza hi-vis; nagłówki wersalikami w skali plakatu;
+ziarno i siatka kreślarska jako materiał; jedna scena przypięta do przewijania jako „wow”.
+
+**W9. F20 + F13 → Wycena musi być pierwszym ekranem, a nie sekcją niżej.**
+Konsekwencja: hero = przyrząd: wybór gminy od razu pokazuje metry, złotówki i formalności na żywej
+linijce głębokości. Zejście pod ziemię prowadzi do mediany wybranej gminy — personalizowane, nie ozdobne.
+
+**W10. F21 → Największa obawa klienta to cena, która rośnie w trakcie wiercenia.**
+Konsekwencja: „Gwarancja przejrzystości” (cena za metr dodatkowy z góry, punkt zatrzymania, koszt suchego
+otworu) i trzy pakiety z dopłatą za metr — przykładowe zasady, które firma wpisuje swoje.
+
+**W11. F22 + F23 → Rok 2026 daje dwa prawdziwe powody do telefonu: abolicja dla starych studni i susza.**
+Konsekwencja: sekcja „Przepisy 2026” — drzewko „czy potrzebuję pozwolenia”, licznik dni do 31.12.2027,
+ostrzeżenie PIG-PIB z ofertą pogłębienia. Na telefonie stały pasek: Zadzwoń · SMS · Wycena.

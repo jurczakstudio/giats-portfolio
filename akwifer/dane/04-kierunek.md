@@ -37,3 +37,14 @@
 - Baner „strona wzorcowa · firma fikcyjna”; telefon `000 000 000` (nie da się połączyć) (W5).
 - Dane gmin z rejestru PIG z zastrzeżeniem, że mediany są zawyżone (W2).
 - Brak opinii — nie zmyślamy; notka właściciela mówi, gdzie pojawią się prawdziwe (W5).
+
+## v3 „GŁĘBIEJ” (zastępuje paletę i hero z v2)
+- Paleta: czerń `#111214` + żółć hi-vis `#ffd21f` jako jedyny akcent; krem `#f3eee4` tylko na kartach i tekście (W8).
+- Nagłówki wersalikami, Archivo w szerokości 72 i wadze 800, skala plakatu do 9 rem; kursywa szeryfowa jako kontrapunkt (W8).
+- Ziarno (feTurbulence) na całej stronie i siatka kreślarska w sekcjach technicznych (W8).
+- Hero: wybór gminy + żywa linijka głębokości 0–120 m z pasem widełek, linią 30 m i medianą (W9).
+- Zejście pod ziemię: sekcja przypięta, licznik metrów rośnie do mediany wybranej gminy, na dnie woda (W8, W9).
+- Gwarancja przejrzystości: cztery zasady z dużymi liczbami (W10, W4).
+- Pakiety: Ogród / Dom / Głęboko z ceną „od” ze średnich rynkowych i dopłatą za metr (W10, W4).
+- Przepisy 2026: drzewko decyzji, licznik abolicji, ostrzeżenie PIG-PIB (W11, W3).
+- Telefon: stały pasek akcji po zejściu z hero; desktop: stopka z ogromnym numerem (W11, W3).

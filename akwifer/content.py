@@ -56,3 +56,27 @@ OGROD = {'m2': 300, 'dawka': 20, 'tygodnie': 20}   # ZAŁOŻENIA domyślne, edyt
 # Mapa (W7, F19): granice OSM (ODbL) z dane/00-gminy-granice.json; gminy bez danych PIG w zestawie
 BEZ_DANYCH = {'kostrzyn': 'Kostrzyn', 'murowana-goslina': 'Murowana Goślina', 'pobiedziska': 'Pobiedziska',
               'puszczykowo': 'Puszczykowo'}
+
+# v3 — Gwarancja przejrzystości (W10, F21). PRZYKŁADOWE zasady firmy fikcyjnej; wartości rynkowe tam, gdzie są.
+GWARANCJA = [
+    ('200 zł', 'za każdy metr ponad pakiet', 'Cenę metra znasz przed wierceniem. Nie rośnie, gdy wiertło idzie głębiej.'),
+    ('+10 m', 'i telefon do Ciebie', 'Jeśli po 10 m ponad prognozę nie ma wody, zatrzymujemy się i dzwonimy. Dalej wiercimy tylko za Twoją zgodą.'),
+    ('100 zł/m', 'za suchy otwór', 'Nie trafimy na wodę — płacisz tylko za metry, bez pompy, osprzętu i dojazdu.'),
+    ('15 min', 'na oddzwonienie', 'Pn–sob 7–19. Kartę z SMS-a mamy przed oczami, kiedy dzwonimy.'),
+]
+
+# Pakiety (W10) — cena „od” = metry pakietu × 200 zł/m + osprzęt od 2 500 zł (rynek, F8). PRZYKŁAD.
+PAKIETY = [
+    {'slug': 'ogrod', 'nazwa': 'Ogród', 'do': 15, 'cel': 'nawadnianie',
+     'co': ['wiercenie do 15 m', 'pompa do podlewania', 'zawór i przyłącze ogrodowe', 'karta otworu']},
+    {'slug': 'dom', 'nazwa': 'Dom', 'do': 30, 'cel': 'dom',
+     'co': ['wiercenie do 30 m — bez zgłoszeń', 'pompa głębinowa i hydrofor', 'próbne pompowanie', 'badanie wody', 'paszport studni']},
+    {'slug': 'gleboko', 'nazwa': 'Głęboko', 'do': 60, 'cel': 'dom',
+     'co': ['wiercenie do 60 m', 'projekt robót geologicznych', 'dokumentacja i pozwolenie wodnoprawne', 'pompa, hydrofor, badanie wody', 'paszport studni']},
+]
+
+# Przepisy 2026 (W11)
+ABOLICJA = {'do': '2027-12-31', 'oplata': '6\u00a0601,67\u00a0zł', 'akt': 'Dz.U. 2026 poz. 1033, art. 524a — w mocy od 18.08.2026',
+            'zrodlo': 'https://nieruchomosci.infor.pl/7635786,masz-niezgloszona-studnie-mozna-uniknac-oplaty-legalizacyjnej-i-kary.html'}
+NIZOWKA = {'nr': '8/2026', 'miesiace': 'lipiec, sierpień i wrzesień 2026 (ostrzeżenia nr 6, 7 i 8/2026)',
+           'zrodlo': 'https://www.pgi.gov.pl/psh/psh-2/aktualna-sytuacja-hydrogeologiczna/11982-ostrzezenie-hydrogeologiczne-psg-nr-8-2026/file.html'}

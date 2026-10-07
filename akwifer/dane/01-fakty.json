@@ -128,6 +128,36 @@
    "tresc": "Granice 18 gmin powiatu poznańskiego i Poznania są dostępne jako otwarte dane OpenStreetMap (ODbL, wymaga podpisu „© współtwórcy OpenStreetMap”). Dla 4 gmin (Kostrzyn, Murowana Goślina, Pobiedziska, Puszczykowo) nie mamy w zestawie danych PIG.",
    "status": "POTWIERDZONE",
    "zrodlo": "nominatim.openstreetmap.org, pobranie 07.10.2026 (mapa_pobierz.py → dane/00-gminy-granice.json)"
+  },
+  {
+   "id": "F20",
+   "tresc": "93% właścicieli domów mówi, że natychmiastowa wycena wpływa na wybór wykonawcy; 77% irytują ukryte koszty (Housecall Pro 2025, n=1040). 69% szukało cen online, tylko 15% znalazło jasne (Mantel 2025). Żadna z 18 przebadanych polskich stron studniarskich nie ma interaktywnej wyceny; ceny publikują 4 z 18.",
+   "status": "POTWIERDZONE",
+   "zrodlo": "dane/research/03-konwersja-wyglad.md (tabela, wiersze 10,16,19); dane/research/02-polska.md"
+  },
+  {
+   "id": "F21",
+   "tresc": "Lęk rynku: „planowałem 12 tys., wyszło 40 tys.” po trafieniu na skałę / brak wody (kb.pl 07–08/2026). Żadna firma nie podaje wprost zasad: cena za metr dodatkowy, punkt zatrzymania, koszt suchego otworu (wyjątek: 100 zł/mb „bez wody” — studniekrakow).",
+   "status": "POTWIERDZONE",
+   "zrodlo": "dane/research/02-polska.md (G2)"
+  },
+  {
+   "id": "F22",
+   "tresc": "Prawo wodne, nowelizacja Dz.U. 2026 poz. 1033 (art. 524a), w mocy od 18.08.2026: studnie wykonane bez wymaganej zgody można zalegalizować bez opłaty legalizacyjnej (6 601,67 zł w 2026) i bez kary — kompletny wniosek do 31.12.2027. Koszty operatu, map i hydrogeologii nie są zwolnione.",
+   "status": "POTWIERDZONE",
+   "zrodlo": "infor.pl 17.08.2026; farmer.pl 26.08.2026 (dane/research/02-polska.md)"
+  },
+  {
+   "id": "F23",
+   "tresc": "PIG-PIB wydał ostrzeżenia hydrogeologiczne nr 6, 7 i 8/2026 (lipiec–wrzesień) o niżówce obejmujące województwo wielkopolskie; zagrożone głównie płytkie studnie przydomowe.",
+   "status": "POTWIERDZONE",
+   "zrodlo": "pgi.gov.pl — ostrzeżenie hydrogeologiczne PSH nr 8/2026"
+  },
+  {
+   "id": "F24",
+   "tresc": "Zwycięzcy Awwwards 2025–26 z branż przemysł/energia/budownictwo używają dwóch barw (ciemna lub kremowa baza + jeden głośny akcent), narracji przypiętej do przewijania (przekroje, odwierty), ogromnych liczb. RapidKert (lokalna firma nawadniająca, HU, Awwwards HM 08.2026) łączy zejście pod ziemię z prostą konwersją.",
+   "status": "POTWIERDZONE (metadane Awwwards, nie oglądane w przeglądarce)",
+   "zrodlo": "dane/research/03-konwersja-wyglad.md §3"
   }
  ],
  "pytania_do_klienta": [
