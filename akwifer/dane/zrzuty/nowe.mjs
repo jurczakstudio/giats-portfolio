@@ -1,0 +1,42 @@
+// Mapa powiatu i rachunek ogrodu: interakcje + kadry 1440/390. node dane/zrzuty/nowe.mjs
+import { chromium } from '/opt/node22/lib/node_modules/playwright/index.mjs';
+const B = 'http://127.0.0.1:8788', bl = [];
+const b = await chromium.launch();
+const nowa = async (w) => { const p = await b.newPage({ viewport: { width: w, height: w < 500 ? 844 : 900 }, isMobile: w < 500, hasTouch: w < 500 });
+  p.on('pageerror', e => bl.push(e.message)); p.on('console', m => m.type() === 'error' && bl.push(m.text())); return p; };
+const do_ = async (p, sel) => { await p.evaluate(s => document.querySelector(s).scrollIntoView({ block: 'start' }), sel); await p.waitForTimeout(1400); };
+
+let p = await nowa(1440);
+await p.goto(B + '/', { waitUntil: 'load' }); await p.waitForTimeout(800);
+await do_(p, '#powiat'); await p.evaluate(() => scrollBy(0, 330)); await p.waitForTimeout(600);
+await p.hover('.m__g[data-g="kornik"]'); await p.waitForTimeout(500);
+await p.screenshot({ path: 'dane/zrzuty/kadr-1440-mapa.png' });
+const info = await p.textContent('[data-mi-n]');
+await p.click('[data-mi-karta]'); await p.waitForTimeout(1200);
+const karta = await p.inputValue('#karta [data-gmina]');
+await do_(p, '#ogrod'); await p.evaluate(() => scrollBy(0, 60));
+await p.screenshot({ path: 'dane/zrzuty/kadr-1440-ogrod.png' });
+const z1 = await p.textContent('[data-o-zwrot]'), g1 = await p.textContent('[data-o-gmina]');
+await p.fill('[data-o-m2]', '800'); await p.dispatchEvent('[data-o-m2]', 'input'); await p.waitForTimeout(300);
+const z2 = await p.textContent('[data-o-zwrot]');
+await p.uncheck('[data-o-scieki]'); await p.waitForTimeout(300);
+const z3 = await p.textContent('[data-o-zwrot]'), rok3 = await p.textContent('[data-o-rok]');
+console.log('mapa→info:', info, '| karta po przeniesieniu:', karta, '| ogród gmina:', g1);
+console.log('zwrot 300 m² z kanalizacją:', z1, '| 800 m²:', z2, '| 800 m² z podlicznikiem:', z3, rok3);
+await p.goto(B + '/gmina/kleszczewo/', { waitUntil: 'load' }); await p.waitForTimeout(1500);
+await p.screenshot({ path: 'dane/zrzuty/kadr-1440-gmina.png' });
+await p.close();
+
+p = await nowa(390);
+await p.goto(B + '/', { waitUntil: 'load' }); await p.waitForTimeout(800);
+await do_(p, '#powiat'); await p.evaluate(() => scrollBy(0, 380)); await p.waitForTimeout(500);
+await p.tap('.m__g[data-g="swarzedz"]'); await p.waitForTimeout(500);
+const url = p.url();
+await p.screenshot({ path: 'dane/zrzuty/kadr-390-mapa.png' });
+await do_(p, '#ogrod'); await p.screenshot({ path: 'dane/zrzuty/kadr-390-ogrod.png' });
+await p.goto(B + '/gmina/kleszczewo/', { waitUntil: 'load' }); await p.waitForTimeout(1500);
+await p.screenshot({ path: 'dane/zrzuty/kadr-390-gmina.png' });
+const sw = await p.evaluate(() => document.documentElement.scrollWidth);
+console.log('telefon: pierwsze dotknięcie nie przechodzi na podstronę:', url === B + '/', '| scrollWidth', sw);
+console.log('błędy:', bl.join(' | ') || 'brak');
+await b.close();

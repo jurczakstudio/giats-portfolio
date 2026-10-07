@@ -2,12 +2,13 @@
 akt	podstrona	obiekt	ruch	mobil	typ	fraza	sygnatura
 Zmierzch	/	foto	rv:split+par	inna-kompozycja	kadr-z-wycena	studnia głębinowa powiat poznański	nie
 Karta	/	sterowanie	rv:up	inna-kompozycja	karta-zlecenia	ile kosztuje studnia głębinowa	tak
-Powiat	/	rysunek	seq	inna-kompozycja	wykres-gmin	studnia głębinowa głębokość Poznań	nie
+Powiat	/	rysunek	rv:mask	inna-kompozycja	mapa-gmin	studnia głębinowa głębokość Poznań	nie
 Szybki wybór	/	sterowanie	brak	tylko-mobil	lista-gmin	-	nie
 Robota	/	foto	rv:mask	inna-kompozycja	kadr-z-etapami	jak wygląda wiercenie studni	nie
+Rachunek ogrodu	/	sterowanie	rv:up	inna-kompozycja	kalkulator-z-wykresem	studnia czy wodociąg podlewanie koszt	nie
 Paszport	/	material	rv:up	inna-kompozycja	dokument	-	nie
 Zgłoszenie	/	sterowanie	rv:split	inna-kompozycja	sms	-	tak
-Głowa	/gmina/*/	material	rv:split	inna-kompozycja	liczba	studnia głębinowa <gmina>	nie
+Głowa	/gmina/*/	rysunek	rv:split	inna-kompozycja	liczba	studnia głębinowa <gmina>	nie
 Karta	/gmina/*/	sterowanie	rv:up	inna-kompozycja	karta-zlecenia	koszt studni <gmina>	tak
 Dane	/gmina/*/	rysunek	scrub	inna-kompozycja	wykres	głębokość studni <gmina>	nie
 Pytania	/gmina/*/	sterowanie	seq	ta-sama:rozwijane pytania	faq	-	nie
@@ -17,4 +18,4 @@ Karta	/paszport-studni/	sterowanie	rv:up	ta-sama:karta w kolumnie	karta-zlecenia
 Głowa	/dla-firm/	material	rv:split	inna-kompozycja	liczba	strona dla firmy studniarskiej	nie
 Droga zgłoszenia	/dla-firm/	rysunek	seq	inna-kompozycja	schemat	-	tak
 Rachunek	/dla-firm/	sterowanie	rv:up	inna-kompozycja	kalkulator	-	nie
-Co dostajesz	/dla-firm/	material	rv:mask	ta-sama:lista	lista	-	nie
+Co dostajesz	/dla-firm/	material	seq	ta-sama:lista	lista	-	nie

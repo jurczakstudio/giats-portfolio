@@ -16,7 +16,10 @@
 - Przycisk „Wyślij zgłoszenie” składa SMS z rubryk karty — firma dostaje gotowe zlecenie (W1).
 
 ## Struktura
-- `/` — hero z wyceną → karta → gminy (wykres) → przebieg ze zdjęciem → paszport studni → zgłoszenie (W1–W4).
+- `/` — hero z wyceną → karta → mapa powiatu → przebieg ze zdjęciem → rachunek ogrodu → paszport studni → zgłoszenie (W1–W4, W6, W7).
+- Mapa powiatu: granice OSM, barwa = mediana głębokości (skala `--woda`), szare gminy bez danych, podpis ODbL (W7).
+- Rachunek ogrodu: wykres skumulowanego kosztu wodociągu przecina pas kosztu studni — punkt zwrotu w latach (W6).
+- Podstrona gminy: mała mapa z podświetloną gminą obok liczby mediany (W2, W7).
 - `/gmina/<slug>/` ×14 — dane PIG gminy, karta wypełniona, pytania lokalne, sąsiednie gminy (W2).
 - `/paszport-studni/` — przykładowy paszport po odbiorze: dane studni, badanie wody, przeglądy (W5).
 - `/dla-firm/` — oferta dla właściciela firmy: co robi każda część strony (W5).

@@ -29,3 +29,14 @@ Konsekwencja projektowa: przełącznik „Oczami właściciela” odsłania przy
 co ta sekcja robi dla firmy; osobna podstrona `/dla-firm/` zbiera to w ofertę.
 Zdjęcia: dwa kadry generowane (wiertnica o zmierzchu, woda z nowej studni) — podpisane jako
 poglądowe; żadnych przekrojów warstw (były w VIJACH i v1).
+
+**W6. F18 + F8 → Najmocniejszy argument za studnią to rachunek za podlewanie: z kranu bez
+podlicznika każdy metr sześcienny kosztuje 16,18 zł, bo płaci się też za ścieki, których nie ma.**
+Konsekwencja projektowa: kalkulator „Rachunek ogrodu” — powierzchnia, dawka, sezon → m³ na rok,
+koszt z wodociągu i liczba lat, po której studnia się zwraca (z widełek karty dla wybranej gminy).
+Wszystkie założenia (dawka, sezon, prąd pompy) widoczne i edytowalne — nie zgadujemy za klienta.
+
+**W7. F19 + W2 → Klient myśli o działce na mapie, nie w tabeli.**
+Konsekwencja projektowa: na stronie głównej mapa powiatu z prawdziwych granic gmin, barwiona
+medianą głębokości; kliknięcie gminy ustawia kartę zlecenia. Na podstronie gminy mała mapa
+pokazuje, gdzie ta gmina leży. Gminy bez danych — szare i podpisane, nie ukryte.

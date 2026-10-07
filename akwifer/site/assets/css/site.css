@@ -509,6 +509,78 @@ select { appearance: none; padding-right: 2.5rem; cursor: pointer;
 .stopka__gminy a, .stopka a { color: var(--kosc); text-decoration-color: var(--noc-3); text-underline-offset: 3px; }
 .wzor { position: fixed; left: 1rem; bottom: 1rem; z-index: 20; margin: 0; padding: .35rem .7rem; border-radius: 999px; background: var(--noc-3); color: var(--popiol); font-size: var(--fs-mini); pointer-events: none; }
 
+
+/* ---------------------------------------------------------------- mapa powiatu (W7) */
+.mapa-u { display: grid; grid-template-columns: minmax(0, 7fr) minmax(16rem, 4fr); gap: clamp(1.5rem, 4vw, 4rem); align-items: start; }
+.mapa-f { margin: 0; }
+.mapa { width: 100%; overflow: visible; }
+.m__g path, path.m__g { stroke: var(--noc); stroke-width: 1.6; stroke-linejoin: round; }
+.m__g path { fill: rgba(124, 196, 214, var(--a, .4)); transition: fill var(--ruch-czas-mikro), stroke var(--ruch-czas-mikro); cursor: pointer; }
+.m__g:hover path, .m__g:focus path { fill: rgba(124, 196, 214, calc(var(--a, .4) + .12)); }
+.m__g.m__g--akt path { fill: var(--sygnal); stroke: var(--kosc); stroke-width: 2.5; }
+.m__g:focus { outline: none; }
+.m__g:focus-visible path { stroke: var(--sygnal); stroke-width: 3; }
+path.m__g--brak { fill: var(--noc-2); stroke: var(--noc-3); }
+.mapa .m__l { fill: var(--kosc); font-family: var(--mono); font-size: var(--fs-mini); font-weight: 500; text-anchor: middle; pointer-events: none; paint-order: stroke; stroke: var(--noc); stroke-width: 4px; stroke-linejoin: round; }
+.mapa__leg { display: grid; gap: .5rem; margin-top: 1.2rem; font-size: var(--fs-mini); color: var(--popiol); }
+.leg-skala { position: relative; display: block; height: .7rem; border-radius: 4px; background: linear-gradient(90deg, rgba(124, 196, 214, .16), rgba(124, 196, 214, .9)); }
+.leg-skala i { position: absolute; top: -.25rem; bottom: -.25rem; width: 2px; background: var(--sygnal); }
+.leg-opis { display: flex; justify-content: space-between; }
+.leg-opis span:nth-child(2) { color: var(--sygnal); }
+.leg--brak { background: var(--noc-2); border: 1px solid var(--noc-3); height: .7rem; width: 1.2rem; }
+.mapa__zr { line-height: 1.6; }
+.mapa__zr a, .mapa-mini a { color: var(--popiol); }
+.mapa__info { position: sticky; top: 6rem; padding: 1.4rem 1.4rem 1.6rem; border: 1px solid var(--noc-3); border-radius: 12px; background: var(--noc-2); }
+.mapa__info .etyk { margin-bottom: .4rem; }
+.mapa__n { font-size: var(--fs-h2); font-weight: 800; font-stretch: 72%; font-variation-settings: 'wdth' 72; line-height: 1; margin-bottom: 1rem; }
+.mapa__info dl { display: grid; grid-template-columns: 1fr 1fr; margin: 0 0 1.4rem; }
+.mapa__info dl > div { padding: .7rem 0; border-top: 1px solid var(--noc-3); }
+.mapa__info dt { font-size: var(--fs-mini); color: var(--popiol); margin-bottom: .2rem; }
+.mapa__info dd { margin: 0; font-size: var(--fs-lead); color: var(--woda); }
+.mapa__info dd:not(.mono) { color: var(--kosc); font-size: var(--fs-maly); font-weight: 600; }
+.mapa__akcje { display: flex; flex-wrap: wrap; gap: 1rem 1.4rem; align-items: center; }
+.btn--gotowe { background: transparent; color: var(--sygnal); }
+
+.glowa__prawa { display: grid; gap: 1.2rem; justify-items: end; }
+.mapa-mini { margin: 0; width: min(100%, 20rem); }
+.mapa--mini path.m__g { fill: var(--noc-3); stroke: var(--noc); stroke-width: 3; }
+.mapa--mini path.m__g--akt { fill: var(--sygnal); }
+.mapa--mini path.m__g--brak { fill: var(--noc-2); }
+.m__pkt { fill: none; stroke: var(--kosc); stroke-width: 3; }
+.mapa-mini figcaption { margin-top: .5rem; font-size: var(--fs-mini); color: var(--popiol); text-align: right; }
+
+/* ---------------------------------------------------------------- rachunek ogrodu (W6) */
+.sek--ogrod { background: linear-gradient(var(--noc), var(--noc-2)); }
+.ogrod { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 2rem 0 1rem; }
+.ogrod label { display: grid; gap: .4rem; align-content: end; font-size: var(--fs-mini); color: var(--popiol); }
+.ogrod input[type="number"] { width: 100%; }
+.ogrod__ch { grid-column: 1 / -1; display: flex !important; align-items: center; gap: .7rem !important; cursor: pointer; color: var(--kosc) !important; font-size: var(--fs-maly) !important; }
+.ogrod__ch input { width: 1.3rem; height: 1.3rem; accent-color: var(--sygnal); flex: none; }
+.ogrod__w { margin: 0; padding: clamp(1.2rem, 3vw, 2rem); border: 1px solid var(--noc-3); border-radius: 14px; background: var(--noc); position: sticky; top: 6rem; }
+.ogrod__liczby { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 0 0 1.4rem; }
+.ogrod__liczby dt { font-size: var(--fs-mini); color: var(--popiol); margin-bottom: .3rem; }
+.ogrod__liczby dd { margin: 0; font-size: var(--fs-lead); }
+.ogrod__zw { grid-column: 1 / -1; padding-top: 1rem; border-top: 1px solid var(--noc-3); }
+.ogrod__zw dd { font-size: var(--fs-liczba); color: var(--sygnal); line-height: 1; }
+.wykres--rachunek text { fill: var(--popiol); font-family: var(--mono); font-size: var(--fs-mini); }
+.wykres--rachunek .r__os { text-anchor: end; }
+.wykres--rachunek .r__os--x { text-anchor: middle; }
+.r__siatka { stroke: var(--noc-3); stroke-width: 1; }
+.r__pas { fill: rgba(124, 196, 214, .22); stroke: var(--woda); stroke-width: 1.5; }
+.wykres--rachunek .r__pt { fill: var(--woda); }
+.r__kran { stroke: var(--sygnal); stroke-width: 3; fill: none; stroke-linecap: round; }
+.wykres--rachunek .r__kt { fill: var(--sygnal); text-anchor: end; }
+.r__zw { fill: var(--noc); stroke: var(--sygnal); stroke-width: 3; }
+.ogrod__leg { display: flex; flex-wrap: wrap; gap: .4rem 1.2rem; margin: .8rem 0 0; font-size: var(--fs-mini); color: var(--popiol); }
+.ogrod__leg .leg { margin: 0 .45rem 0 0; }
+.leg--kran { height: 3px; background: var(--sygnal); vertical-align: .25em; }
+.leg--studnia { background: rgba(124, 196, 214, .22); border: 1.5px solid var(--woda); height: .8rem; width: 1.2rem; }
+.leg--zw { width: .8rem; height: .8rem; border-radius: 50%; border: 3px solid var(--sygnal); }
+.ogrod__w figcaption { margin-top: 1rem; font-size: var(--fs-mini); color: var(--popiol); line-height: 1.6; }
+.ogrod__w figcaption b { color: var(--kosc); font-weight: 500; }
+.ogrod__w figcaption a { color: var(--kosc); }
+.sek--ogrod > .notka { margin-left: max(1.25rem, calc((100% - 78rem) / 2)); }
+
 /* ================================================================ telefon — osobne kompozycje (06-sekcje.tsv) */
 @media (max-width: 960px) {
   .nag__menu { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; gap: 0; padding: .5rem 1.25rem 1.2rem; background: rgba(14, 19, 22, .97); border-bottom: 1px solid var(--noc-3); }
@@ -517,6 +589,8 @@ select { appearance: none; padding-right: 2.5rem; cursor: pointer;
   .nag__wl { margin-left: auto; }
   .nag__przycisk { display: inline-flex; align-items: center; min-height: 2.6rem; padding: .4rem .9rem; border: 1px solid var(--noc-3); border-radius: 999px; background: var(--noc-2); color: var(--kosc); font: 600 var(--fs-mini)/1 var(--sans); cursor: pointer; }
   .sek__uklad, .sek__uklad--odwr { grid-template-columns: 1fr; }
+  .mapa-u { grid-template-columns: 1fr; }
+  .mapa__info, .ogrod__w { position: static; }
   .co__lista { grid-template-columns: 1fr 1fr; }
   .stopka__kol { grid-template-columns: 1fr 1fr; }
   .stopka__kol > div:first-child { grid-column: 1 / -1; }
@@ -551,8 +625,20 @@ select { appearance: none; padding-right: 2.5rem; cursor: pointer;
   .karta__rubryki dd { font-size: var(--fs-lead); }
   .karta__akcje .btn--sygnal { flex: 1 1 auto; justify-content: center; }
 
-  /* Powiat: wykres zastępuje lista z paskami (sekcja „Szybki wybór”) */
-  #powiat .wykres-f { display: none; }
+  /* Powiat: mapa na pełną szerokość, karta gminy pod nią jako pasek; lista z paskami w „Szybkim wyborze” */
+  #powiat .mapa-f { margin-inline: -1rem; }
+  .mapa .m__l { display: none; }
+  .mapa__leg { padding-inline: 1rem; }
+  .mapa__info { padding: 1.1rem; }
+  .mapa__n { font-size: var(--fs-h3); }
+  .mapa__info dl { grid-template-columns: 1fr 1fr; }
+  .mapa__akcje .btn { flex: 1 1 100%; justify-content: center; }
+  /* Rachunek: wynik nad formularzem — najpierw liczba, potem pokrętła */
+  .sek--ogrod .sek__uklad { display: flex; flex-direction: column-reverse; }
+  .ogrod { grid-template-columns: 1fr 1fr; }
+  .ogrod__w { margin-inline: -.5rem; }
+  .glowa__prawa { justify-items: start; grid-template-columns: 7rem 1fr; align-items: end; }
+  .mapa-mini figcaption { display: none; }
   #powiat .sek__t--waski { margin-bottom: 0; }
   .szybko { display: block; padding-top: 0; border-top: 0; }
 

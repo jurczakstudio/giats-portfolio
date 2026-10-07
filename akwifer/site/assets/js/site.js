@@ -292,7 +292,7 @@
    Wycena liczona tak samo jak w build.py: wycena(). Bez JS karta pokazuje wartości z buildu. */
 (function () {
   'use strict';
-  var D = {"gminy": [{"slug": "lubon", "nazwa": "Luboń", "mediana": 14.0, "otworow": 12, "min": 11.9, "gzwp": ""}, {"slug": "poznan", "nazwa": "Poznań", "mediana": 17.0, "otworow": 410, "min": 10.0, "gzwp": ""}, {"slug": "tarnowo-podgorne", "nazwa": "Tarnowo Podgórne", "mediana": 36.0, "otworow": 16, "min": 15.0, "gzwp": ""}, {"slug": "mosina", "nazwa": "Mosina", "mediana": 40.0, "otworow": 66, "min": 17.0, "gzwp": "Pradolina Warszawa – Berlin (GZWP 150)"}, {"slug": "suchy-las", "nazwa": "Suchy Las", "mediana": 43.0, "otworow": 17, "min": 15.0, "gzwp": ""}, {"slug": "buk", "nazwa": "Buk", "mediana": 46.5, "otworow": 6, "min": 10.2, "gzwp": "Dolina Kopalna Wielkopolska (GZWP 144)"}, {"slug": "steszew", "nazwa": "Stęszew", "mediana": 49.6, "otworow": 12, "min": 21.0, "gzwp": "Dolina Kopalna Wielkopolska (GZWP 144)"}, {"slug": "dopiewo", "nazwa": "Dopiewo", "mediana": 51.7, "otworow": 9, "min": 30.0, "gzwp": ""}, {"slug": "rokietnica", "nazwa": "Rokietnica", "mediana": 56.5, "otworow": 20, "min": 19.5, "gzwp": ""}, {"slug": "kleszczewo", "nazwa": "Kleszczewo", "mediana": 64.0, "otworow": 8, "min": 43.0, "gzwp": "Subzbiornik Inowrocław - Gniezno (GZWP 143)"}, {"slug": "swarzedz", "nazwa": "Swarzędz", "mediana": 65.0, "otworow": 35, "min": 10.0, "gzwp": "Subzbiornik Inowrocław - Gniezno (GZWP 143)"}, {"slug": "czerwonak", "nazwa": "Czerwonak", "mediana": 71.5, "otworow": 16, "min": 10.5, "gzwp": ""}, {"slug": "kornik", "nazwa": "Kórnik", "mediana": 100.0, "otworow": 27, "min": 12.5, "gzwp": "Dolina Kopalna Wielkopolska (GZWP 144)"}, {"slug": "komorniki", "nazwa": "Komorniki", "mediana": 110.0, "otworow": 5, "min": 22.0, "gzwp": ""}], "rynek": {"mb": [200, 350], "osprzet": [2500, 8000]}, "zuzycie": 0.1, "cele": {"dom": ["Dom", 1.0], "ogrod": ["Dom i ogród", 2.0], "nawadnianie": ["Ogród / nawadnianie", 3.0]}, "termin": "listopad 2026 — 3 wolne dni", "tel": "+48000000000"};
+  var D = {"gminy": [{"slug": "lubon", "nazwa": "Luboń", "mediana": 14.0, "otworow": 12, "min": 11.9, "gzwp": ""}, {"slug": "poznan", "nazwa": "Poznań", "mediana": 17.0, "otworow": 410, "min": 10.0, "gzwp": ""}, {"slug": "tarnowo-podgorne", "nazwa": "Tarnowo Podgórne", "mediana": 36.0, "otworow": 16, "min": 15.0, "gzwp": ""}, {"slug": "mosina", "nazwa": "Mosina", "mediana": 40.0, "otworow": 66, "min": 17.0, "gzwp": "Pradolina Warszawa – Berlin (GZWP 150)"}, {"slug": "suchy-las", "nazwa": "Suchy Las", "mediana": 43.0, "otworow": 17, "min": 15.0, "gzwp": ""}, {"slug": "buk", "nazwa": "Buk", "mediana": 46.5, "otworow": 6, "min": 10.2, "gzwp": "Dolina Kopalna Wielkopolska (GZWP 144)"}, {"slug": "steszew", "nazwa": "Stęszew", "mediana": 49.6, "otworow": 12, "min": 21.0, "gzwp": "Dolina Kopalna Wielkopolska (GZWP 144)"}, {"slug": "dopiewo", "nazwa": "Dopiewo", "mediana": 51.7, "otworow": 9, "min": 30.0, "gzwp": ""}, {"slug": "rokietnica", "nazwa": "Rokietnica", "mediana": 56.5, "otworow": 20, "min": 19.5, "gzwp": ""}, {"slug": "kleszczewo", "nazwa": "Kleszczewo", "mediana": 64.0, "otworow": 8, "min": 43.0, "gzwp": "Subzbiornik Inowrocław - Gniezno (GZWP 143)"}, {"slug": "swarzedz", "nazwa": "Swarzędz", "mediana": 65.0, "otworow": 35, "min": 10.0, "gzwp": "Subzbiornik Inowrocław - Gniezno (GZWP 143)"}, {"slug": "czerwonak", "nazwa": "Czerwonak", "mediana": 71.5, "otworow": 16, "min": 10.5, "gzwp": ""}, {"slug": "kornik", "nazwa": "Kórnik", "mediana": 100.0, "otworow": 27, "min": 12.5, "gzwp": "Dolina Kopalna Wielkopolska (GZWP 144)"}, {"slug": "komorniki", "nazwa": "Komorniki", "mediana": 110.0, "otworow": 5, "min": 22.0, "gzwp": ""}], "rynek": {"mb": [200, 350], "osprzet": [2500, 8000]}, "zuzycie": 0.1, "cele": {"dom": ["Dom", 1.0], "ogrod": ["Dom i ogród", 2.0], "nawadnianie": ["Ogród / nawadnianie", 3.0]}, "termin": "listopad 2026 — 3 wolne dni", "tel": "+48000000000", "wodociag": {"woda": 6.27, "scieki": 9.91, "zrodlo": "taryfa Aquanet dla gospodarstw domowych, 19.12.2025–18.12.2026 (aquanet.pl)"}, "prad": 0.4};
   var root = document.documentElement;
   var qa = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
   var KLUCZ = 'akwifer-karta', KLUCZ_WL = 'akwifer-wl';
@@ -357,6 +357,16 @@
     ustaw(k, '[data-r-z]', 'zużycie ok. ' + pl(w.zuz, 1) + ' m³/dobę · limit bez pozwolenia: 5 m³/dobę' + (w.zuz > 5 ? ' — przekroczony, potrzebne pozwolenie wodnoprawne' : ''));
   }
 
+  // Inne części strony (mapa, rachunek ogrodu) słuchają zmian karty
+  var poZmianie = [];
+  function ustawGmine(slug) {
+    stan.gmina = slug;
+    pisz(KLUCZ, JSON.stringify(stan));
+    qa('[data-karta]').forEach(function (k) { k.querySelector('[data-gmina]').value = slug; rysuj(k); });
+    odswiezSms();
+    poZmianie.forEach(function (f) { f(); });
+  }
+
   qa('[data-karta]').forEach(function (k) {
     var sel = k.querySelector('[data-gmina]'), os = k.querySelector('[data-osoby]');
     sel.value = stan.gmina;
@@ -371,6 +381,7 @@
       pisz(KLUCZ, JSON.stringify(stan));
       rysuj(k);
       odswiezSms();
+      poZmianie.forEach(function (f) { f(); });
     });
     rysuj(k);
   });
@@ -391,10 +402,7 @@
       var cel = document.getElementById('karta');
       if (!cel) return;
       ev.preventDefault();
-      stan.gmina = s.value;
-      pisz(KLUCZ, JSON.stringify(stan));
-      qa('[data-karta]').forEach(function (k) { k.querySelector('[data-gmina]').value = stan.gmina; rysuj(k); });
-      odswiezSms();
+      ustawGmine(s.value);
       cel.scrollIntoView({ behavior: root.classList.contains('ruch') ? 'smooth' : 'auto' });
     });
   });
@@ -413,6 +421,102 @@
       przelacz(!wl);
       if (wl) { var n = qa('[data-notka]').filter(function (x) { return x.getBoundingClientRect().top > 0; })[0]; if (n && n.getBoundingClientRect().top > innerHeight) n.scrollIntoView({ block: 'center', behavior: 'smooth' }); }
     });
+  });
+
+
+  // ---- mapa powiatu (W7): najazd / dotknięcie wybiera gminę, drugie kliknięcie otwiera jej stronę
+  qa('[data-mapa]').forEach(function (f) {
+    var info = document.querySelector('[data-mapa-info]');
+    var wybrana = null;
+    var pokaz = function (slug) {
+      var g = gmina[slug];
+      if (!g || !info) return;
+      wybrana = slug;
+      qa('.m__g', f).forEach(function (a) { a.classList.toggle('m__g--akt', a.getAttribute('data-g') === slug); });
+      var w = wycena({ gmina: slug, cel: 'dom', osoby: 4 });
+      info.querySelector('[data-mi-n]').textContent = g.nazwa;
+      info.querySelector('[data-mi-med]').textContent = metry(g.mediana) + ' m';
+      info.querySelector('[data-mi-min]').textContent = metry(g.min) + ' m';
+      info.querySelector('[data-mi-otw]').textContent = g.otworow;
+      info.querySelector('[data-mi-f]').textContent = w.f[0];
+      info.querySelector('[data-mi-link]').setAttribute('href', '/gmina/' + slug + '/');
+      var b = info.querySelector('[data-mi-karta]');
+      b.classList.toggle('btn--gotowe', stan.gmina === slug);
+    };
+    qa('.m__g[data-g]', f).forEach(function (a) {
+      var slug = a.getAttribute('data-g');
+      a.addEventListener('pointerenter', function (ev) { if (ev.pointerType === 'mouse') pokaz(slug); });
+      a.addEventListener('focus', function () { pokaz(slug); });
+      // dotyk: pierwsze dotknięcie wybiera, drugie otwiera stronę gminy; mysz i klawiatura: od razu
+      a.addEventListener('pointerdown', function (ev) { a._dotyk = ev.pointerType !== 'mouse'; a._byla = wybrana === slug && a._potw; });
+      a.addEventListener('click', function (ev) {
+        if (a._dotyk && !a._byla) { ev.preventDefault(); qa('.m__g', f).forEach(function (x) { x._potw = false; }); a._potw = true; pokaz(slug); }
+        a._dotyk = false;
+      });
+    });
+    var b = info && info.querySelector('[data-mi-karta]');
+    if (b) b.addEventListener('click', function () {
+      ustawGmine(wybrana);
+      var cel = document.getElementById('karta');
+      if (cel) cel.scrollIntoView({ behavior: root.classList.contains('ruch') ? 'smooth' : 'auto' });
+    });
+    pokaz(stan.gmina);
+    poZmianie.push(function () { pokaz(stan.gmina); });
+  });
+
+  // ---- rachunek ogrodu (W6): to samo, co rachunek_dane() i rachunek_svg() w build.py
+  qa('[data-ogrod]').forEach(function (f) {
+    var fig = document.querySelector('.ogrod__w'), svg = fig && fig.querySelector('[data-rachunek-svg]');
+    var v = function (a) { var x = parseFloat(String(f.querySelector('[' + a + ']').value).replace(',', '.')); return x > 0 ? x : 0; };
+    var NS = 'http://www.w3.org/2000/svg';
+    var el = function (tag, at, txt) {
+      var n = document.createElementNS(NS, tag);
+      for (var k in at) n.setAttribute(k, at[k]);
+      if (txt != null) n.textContent = txt;
+      return n;
+    };
+    function lata(lo, hi) {
+      var r = function (x) { return x >= 1.5 ? String(Math.round(x)) : pl(x, 1); };
+      if (!isFinite(lo) || lo > 30) return 'ponad 30 lat';
+      return hi <= 30 ? r(lo) + '–' + r(hi) + ' lat' : 'od ' + r(lo) + ' lat';
+    }
+    function licz() {
+      var w = wycena(stan);
+      var cena = v('data-o-woda') + (f.querySelector('[data-o-scieki]').checked ? D.wodociag.scieki : 0);
+      var m3 = v('data-o-m2') * v('data-o-dawka') * v('data-o-tyg') / 1000;
+      var roczna = m3 * cena, oszcz = m3 * Math.max(0.01, cena - D.prad);
+      var lo = w.koszt[0], hi = w.koszt[1], z = [lo / oszcz, hi / oszcz];
+      fig.querySelector('[data-o-m3]').textContent = pl(m3, 0) + ' m³';
+      fig.querySelector('[data-o-rok]').textContent = zl(roczna) + ' zł';
+      fig.querySelector('[data-o-zwrot]').textContent = m3 > 0 ? lata(z[0], z[1]) : '—';
+      fig.querySelector('[data-o-gmina]').textContent = w.g.nazwa;
+      fig.querySelector('[data-o-koszt]').textContent = zl(lo) + '–' + zl(hi) + ' zł';
+      // wykres
+      // viewBox = prawdziwa szerokość wykresu, żeby opisy miały pełne 14 px także na telefonie
+      var W = Math.round(svg.getBoundingClientRect().width) || 640, H = W < 500 ? 240 : 300, L = 64, R = 16, T = 16, B = 40, LAT = 15;
+      svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+      var ymax = Math.max(roczna * LAT, hi + m3 * D.prad * LAT) * 1.08;
+      var X = function (t) { return L + t / LAT * (W - L - R); };
+      var Y = function (y) { return T + (1 - y / ymax) * (H - T - B); };
+      while (svg.firstChild) svg.removeChild(svg.firstChild);
+      var krok = Math.pow(10, String(Math.floor(ymax / 4)).length) / 10 || 1;
+      krok = [1, 2, 2.5, 5, 10].map(function (k) { return k * krok; }).filter(function (k) { return ymax / k <= 5; })[0];
+      for (var y = 0; y <= ymax; y += krok) {
+        svg.appendChild(el('line', { 'class': 'r__siatka', x1: L, x2: W - R, y1: Y(y), y2: Y(y) }));
+        svg.appendChild(el('text', { 'class': 'r__os', x: L - 8, y: Y(y) + 5 }, y < 1000 ? zl(y) : pl(y / 1000, y % 1000 ? 1 : 0) + ' tys.'));
+      }
+      for (var t = 0; t <= LAT; t += 5) svg.appendChild(el('text', { 'class': 'r__os r__os--x', x: X(t), y: H - 12 }, t + (t >= 5 ? ' lat' : ' ')));
+      var pr = m3 * D.prad * LAT;
+      svg.appendChild(el('path', { 'class': 'r__pas', d: 'M' + X(0) + ' ' + Y(lo) + 'L' + X(LAT) + ' ' + Y(lo + pr) + 'L' + X(LAT) + ' ' + Y(hi + pr) + 'L' + X(0) + ' ' + Y(hi) + 'Z' }));
+      svg.appendChild(el('path', { 'class': 'r__kran', d: 'M' + X(0) + ' ' + Y(0) + 'L' + X(LAT) + ' ' + Y(roczna * LAT) }));
+      z.forEach(function (x) { if (x <= LAT) svg.appendChild(el('circle', { 'class': 'r__zw', cx: X(x), cy: Y(roczna * x), r: 6 })); });
+    }
+    f.addEventListener('input', licz);
+    f.addEventListener('change', licz);
+    poZmianie.push(licz);
+    var szer = 0;
+    addEventListener('resize', function () { var x = Math.round(svg.getBoundingClientRect().width); if (x !== szer) { szer = x; licz(); } });
+    if (fig && svg) licz();
   });
 
   // ---- kalkulator dla firm

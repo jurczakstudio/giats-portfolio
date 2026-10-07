@@ -18,6 +18,7 @@ from pathlib import Path
 
 import brand
 from content import FIRMA as F, GMINY, SREDNIA_POWIATU, ZRODLO_PIG, RYNEK, ZUZYCIE_OS, CELE, ETAPY, PASZPORT
+from content import WODOCIAG, PRAD_M3, OGROD, BEZ_DANYCH
 
 ROOT = Path(__file__).resolve().parent
 SITE = ROOT / 'site'
@@ -197,12 +198,146 @@ def wykres(akt=None, id_='w'):
             '<span class="leg leg--sr"></span> średnia powiatu %s m · %s</figcaption></figure>' % (''.join(o), pl(SREDNIA_POWIATU, 1), e(ZRODLO_PIG)))
 
 
+# ---------------------------------------------------------------- mapa powiatu (W7)
+GRANICE = json.loads((ROOT / 'dane' / '00-gminy-granice.json').read_text(encoding='utf-8'))
+
+
+def _pierscienie(gj):
+    pol = gj['coordinates'] if gj['type'] == 'MultiPolygon' else [gj['coordinates']]
+    return [p[0] for p in pol]          # tylko obrysy zewnętrzne — dziur w gminach powiatu nie ma (Poznań ma swoją granicę)
+
+
+def _rzut():
+    """Rzut równoodległościowy z poprawką cos(φ) — na skalę powiatu wystarczy. Zwraca funkcję lon,lat → x,y."""
+    import math
+    pts = [p for g in GRANICE.values() for r in _pierscienie(g['geojson']) for p in r]
+    lon0, lon1 = min(p[0] for p in pts), max(p[0] for p in pts)
+    lat0, lat1 = min(p[1] for p in pts), max(p[1] for p in pts)
+    k = math.cos(math.radians((lat0 + lat1) / 2))
+    W = 800
+    s = (W - 20) / ((lon1 - lon0) * k)
+    H = round((lat1 - lat0) * s + 20)
+    return (lambda lon, lat: (10 + (lon - lon0) * k * s, 10 + (lat1 - lat) * s)), W, H
+
+
+RZUT, MAPA_W, MAPA_H = _rzut()
+
+
+def _sciezka(gj, prog=.8):
+    out = []
+    for r in _pierscienie(gj):
+        xy, ost = [], None
+        for lon, lat in r:
+            p = RZUT(lon, lat)
+            p = (round(p[0], 1), round(p[1], 1))
+            if ost is None or abs(p[0] - ost[0]) + abs(p[1] - ost[1]) >= prog:
+                xy.append(p)
+                ost = p
+        out.append('M' + 'L'.join('%g %g' % p for p in xy) + 'Z')
+    return ''.join(out)
+
+
+def _srodek(gj):
+    """Środek ciężkości największego obrysu (wzór na pole wielokąta)."""
+    best = None
+    for r in _pierscienie(gj):
+        xy = [RZUT(*p) for p in r]
+        a = cx = cy = 0
+        for (x0, y0), (x1, y1) in zip(xy, xy[1:]):
+            c = x0 * y1 - x1 * y0
+            a += c
+            cx += (x0 + x1) * c
+            cy += (y0 + y1) * c
+        if a and (best is None or abs(a) > best[0]):
+            best = (abs(a), cx / (3 * a), cy / (3 * a))
+    return best[1], best[2]
+
+
+def barwa(med):
+    """Mediana → krycie barwy wody: płytko jasno-przejrzyście, głęboko pełna barwa (W7)."""
+    return round(.16 + .74 * min(1, max(0, (med - 10) / 100)), 2)
+
+
+def mapa(akt=None, mini=False, id_='m'):
+    o = []
+    for slug, g in GRANICE.items():
+        d = _sciezka(g['geojson'], 2.2 if mini else .8)
+        if slug in PO_SLUGU:
+            x = PO_SLUGU[slug]
+            cls = 'm__g' + (' m__g--akt' if slug == akt else '')
+            if mini:
+                o.append('<path class="%s" d="%s"/>' % (cls, d))
+            else:
+                o.append('<a href="/gmina/%s/" class="%s" data-g="%s" style="--a:%s" aria-label="%s: mediana %s m, najpłytsze ujęcie %s m">'
+                         '<path d="%s"/></a>' % (slug, cls, slug, barwa(x['mediana']), e(x['nazwa']), metry(x['mediana']), metry(x['min']), d))
+        else:
+            o.append('<path class="m__g m__g--brak" d="%s"><title>%s — brak danych w zestawie</title></path>' % (d, e(BEZ_DANYCH.get(slug, slug))))
+    if not mini:
+        for slug, g in GRANICE.items():
+            x, y = _srodek(g['geojson'])
+            if slug in PO_SLUGU:
+                o.append('<text class="m__l" x="%.0f" y="%.0f">%s</text>' % (x, y + 5, metry(PO_SLUGU[slug]['mediana'])))
+    elif akt:
+        x, y = _srodek(GRANICE[akt]['geojson'])
+        o.append('<circle class="m__pkt" cx="%.0f" cy="%.0f" r="9"/>' % (x, y))
+    tytul = ('Mapa powiatu poznańskiego: gmina %s' % PO_SLUGU[akt]['nazwa']) if mini else 'Mapa gmin powiatu poznańskiego barwiona medianą głębokości studni'
+    return ('<svg class="mapa%s" viewBox="0 0 %d %d" role="img" aria-label="%s">%s</svg>'
+            % (' mapa--mini' if mini else '', MAPA_W, MAPA_H, e(tytul), ''.join(o)))
+
+
+OSM = '© współtwórcy <a href="https://www.openstreetmap.org/copyright" rel="noopener">OpenStreetMap</a> (ODbL)'
+
+
+# ---------------------------------------------------------------- rachunek ogrodu (W6) — ta sama matematyka w site.js
+def rachunek_dane(g, m2=OGROD['m2'], dawka=OGROD['dawka'], tyg=OGROD['tygodnie'], cena=WODOCIAG['woda'] + WODOCIAG['scieki']):
+    w = wycena(g)
+    m3 = m2 * dawka * tyg / 1000
+    roczna = m3 * cena
+    oszcz = m3 * max(0.01, cena - PRAD_M3)
+    return {'m3': m3, 'roczna': roczna, 'lo': w['koszt'][0], 'hi': w['koszt'][1],
+            'zwrot': (w['koszt'][0] / oszcz, w['koszt'][1] / oszcz), 'cena': cena}
+
+
+def rachunek_svg(r):
+    W, H, L, R, T, B, LAT = 640, 300, 64, 16, 16, 40, 15
+    ymax = max(r['roczna'] * LAT, r['hi'] + r['m3'] * PRAD_M3 * LAT) * 1.08
+    X = lambda t: L + t / LAT * (W - L - R)
+    Y = lambda v: T + (1 - v / ymax) * (H - T - B)
+    o = []
+    krok = 10 ** len(str(int(ymax / 4))) // 10 or 1
+    krok = next(k * krok for k in (1, 2, 2.5, 5, 10) if ymax / (k * krok) <= 5)
+    v = 0
+    while v <= ymax:
+        o.append('<line class="r__siatka" x1="%d" x2="%d" y1="%.1f" y2="%.1f"/><text class="r__os" x="%d" y="%.1f">%s</text>'
+                 % (L, W - R, Y(v), Y(v), L - 8, Y(v) + 5, zl(v) if v < 1000 else '%s tys.' % pl(v / 1000, 0 if v % 1000 == 0 else 1)))
+        v += krok
+    for t in range(0, LAT + 1, 5):
+        o.append('<text class="r__os r__os--x" x="%.1f" y="%d">%d %s</text>' % (X(t), H - 12, t, 'lat' if t >= 5 else ''))
+    pas = 'M%.1f %.1fL%.1f %.1fL%.1f %.1fL%.1f %.1fZ' % (X(0), Y(r['lo']), X(LAT), Y(r['lo'] + r['m3'] * PRAD_M3 * LAT),
+                                                     X(LAT), Y(r['hi'] + r['m3'] * PRAD_M3 * LAT), X(0), Y(r['hi']))
+    o.append('<path class="r__pas" d="%s"/>' % pas)
+    o.append('<path class="r__kran" d="M%.1f %.1fL%.1f %.1f"/>' % (X(0), Y(0), X(LAT), Y(r['roczna'] * LAT)))
+    for z in r['zwrot']:
+        if z <= LAT:
+            o.append('<circle class="r__zw" cx="%.1f" cy="%.1f" r="6"/>' % (X(z), Y(r['roczna'] * z)))
+    return ('<svg class="wykres wykres--rachunek" viewBox="0 0 %d %d" role="img" aria-label="Skumulowany koszt wody z kranu i koszt studni w ciągu %d lat" data-rachunek-svg>%s</svg>'
+            % (W, H, LAT, ''.join(o)))
+
+
+def lata(z):
+    lo, hi = z
+    f = lambda x: '%d' % round(x) if x >= 1.5 else pl(x, 1)
+    if lo > 30:
+        return 'ponad 30 lat'
+    return '%s–%s lat' % (f(lo), f(hi)) if hi <= 30 else 'od %s lat' % f(lo)
+
+
 def faq(pytania):
     return '<div class="faq">%s</div>' % ''.join('<details><summary>%s</summary><p class="key">%s</p><p>%s</p></details>' % (e(q), e(a), e(b)) for q, a, b in pytania)
 
 
 # ---------------------------------------------------------------- powłoka
-NAV = [('/#karta', 'Wycena'), ('/#powiat', 'Gminy'), ('/paszport-studni/', 'Paszport studni'), ('/dla-firm/', 'Dla firm')]
+NAV = [('/#karta', 'Wycena'), ('/#powiat', 'Mapa gmin'), ('/#ogrod', 'Rachunek ogrodu'), ('/paszport-studni/', 'Paszport studni'), ('/dla-firm/', 'Dla firm')]
 
 
 def powloka(sciezka, tytul, opis, tresc, ld=None):
@@ -258,6 +393,7 @@ def strona_glowna():
                      % (g['slug'], g['min'] / 120, g['mediana'] / 120, e(g['nazwa']), metry(g['mediana']))
                      for g in sorted(GMINY, key=lambda g: g['mediana']))
     pz = PASZPORT
+    R0 = rachunek_dane(PO_SLUGU['mosina'])
     tresc = f'''
 <section id="zmierzch" class="hero">
 <div class="hero__kadr" data-par=".08">{obraz('hero', 'hero', 'Wiertnica studni o zmierzchu na działce z domem w stanie surowym', '100vw', 'hero__img', eager=True, media=('hero-pion', '(max-width: 760px)'))}</div>
@@ -288,10 +424,21 @@ def strona_glowna():
 <div class="sek__t sek__t--waski">
 {split('Powiat.', '<em>Od 14 do 110 metrów.</em>')}
 <p class="key">Pod Luboniem połowa otworów w rejestrze ma mniej niż 14 m, w Komornikach — ponad 110 m; o głębokości studni decyduje gmina i warstwa, nie firma.</p>
-<p>Kliknij gminę — każda ma własną stronę z liczbami: ile otworów jest w rejestrze, najpłytsze ujęcie, mediana i to, co z nich wynika dla domu.</p>
+<p>Najedź na gminę albo ją dotknij — zobaczysz liczby z rejestru i jednym przyciskiem przeniesiesz je do karty zlecenia.</p>
 </div>
-{wykres(id_='w0')}
-{notka('14 gmin to <b>14 podstron, każda z innymi liczbami</b> — Google dostaje na frazę „studnia głębinowa Kórnik” stronę, która naprawdę mówi o Kórniku, a nie szablon z podmienioną nazwą miejscowości. Tak samo zrobimy dla gmin, w których Ty wiercisz.')}
+<div class="mapa-u">
+<figure class="mapa-f" data-mapa data-rv="mask">{mapa()}
+<figcaption class="mapa__leg mono"><span class="leg-skala" aria-hidden="true"><i style="left:{(30 - 10) / 100 * 100:.0f}%"></i></span><span class="leg-opis"><span>10 m</span><span>30 m — granica formalności</span><span>110 m</span></span>
+<span class="leg-brak"><span class="leg leg--brak"></span> brak danych w zestawie</span><span class="mapa__zr">Granice: {OSM}. Głębokości: {e(ZRODLO_PIG)}.</span></figcaption></figure>
+<aside class="mapa__info" data-mapa-info aria-live="polite">
+<p class="etyk mono">wybrana gmina</p>
+<p class="mapa__n" data-mi-n>Mosina</p>
+<dl><div><dt>mediana</dt><dd class="mono" data-mi-med>{metry(PO_SLUGU['mosina']['mediana'])} m</dd></div><div><dt>najpłytsze ujęcie</dt><dd class="mono" data-mi-min>{metry(PO_SLUGU['mosina']['min'])} m</dd></div>
+<div><dt>otworów w rejestrze</dt><dd class="mono" data-mi-otw>{PO_SLUGU['mosina']['otworow']}</dd></div><div><dt>granica 30 m</dt><dd data-mi-f>{e(wycena(PO_SLUGU['mosina'])['formal'][0])}</dd></div></dl>
+<div class="mapa__akcje"><button class="btn btn--sygnal" type="button" data-mi-karta>Przenieś do karty {STRZALKA}</button><a class="link" href="/gmina/mosina/" data-mi-link>Strona gminy {STRZALKA}</a></div>
+</aside>
+</div>
+{notka('Mapa jest z otwartych danych, liczby z rejestru PIG — <b>klient widzi swoją gminę i od razu ma powód, żeby zadzwonić</b>. Dla Twojej firmy zaznaczymy dokładnie te gminy, w których wiercisz, a resztę wyszarzymy.')}
 </div>
 </section>
 
@@ -309,6 +456,34 @@ def strona_glowna():
 {notka('Tu stoją <b>Twoje zdjęcia z budów</b>. Kadr poglądowy trzyma miejsce, dopóki ich nie mamy — przy najbliższym wierceniu robimy sesję albo bierzemy zdjęcia od klientów z opinii Google.')}
 </div>
 </div>
+</section>
+
+<section id="ogrod" class="sek sek--ogrod">
+<div class="wrap sek__uklad">
+<div class="sek__t">
+{split('Rachunek ogrodu.', '<em>Kiedy studnia się zwraca.</em>')}
+<p class="key">Podlewanie z kranu bez osobnego podlicznika kosztuje u Aquanetu {pl(WODOCIAG['woda'] + WODOCIAG['scieki'], 2)} zł za każdy metr sześcienny — {pl(WODOCIAG['woda'], 2)} zł za wodę i {pl(WODOCIAG['scieki'], 2)} zł za ścieki, których z trawnika nie ma.</p>
+<form class="ogrod" data-ogrod onsubmit="return false" aria-label="Rachunek ogrodu">
+<label><span>Ogród do podlewania, m²</span><input type="number" min="0" step="50" value="{OGROD['m2']}" data-o-m2 inputmode="numeric"></label>
+<label><span>Dawka, litrów na m² w tygodniu</span><input type="number" min="0" step="5" value="{OGROD['dawka']}" data-o-dawka inputmode="numeric"></label>
+<label><span>Tygodni podlewania w roku</span><input type="number" min="0" max="52" value="{OGROD['tygodnie']}" data-o-tyg inputmode="numeric"></label>
+<label><span>Cena wody z kranu, zł/m³</span><input type="number" min="0" step="0.01" value="{WODOCIAG['woda']}" data-o-woda inputmode="decimal"></label>
+<label class="ogrod__ch"><input type="checkbox" checked data-o-scieki><span>Bez podlicznika — płacę też za ścieki ({pl(WODOCIAG['scieki'], 2)} zł/m³)</span></label>
+</form>
+<p class="zrodlo">Ceny: {e(WODOCIAG['zrodlo'])}; u innego wodociągu wpisz swoją. Dawka i sezon to założenia — zmień je. Prąd pompy liczymy {pl(PRAD_M3, 2)} zł/m³ (pompa 1,1 kW, 3 m³/h). Bez kosztu serwisu.</p>
+</div>
+<figure class="ogrod__w" data-rv="up">
+<dl class="ogrod__liczby">
+<div><dt>wody w roku</dt><dd class="mono" data-o-m3>{pl(R0['m3'], 0)} m³</dd></div>
+<div><dt>z kranu rocznie</dt><dd class="mono" data-o-rok>{zl(R0['roczna'])} zł</dd></div>
+<div class="ogrod__zw"><dt>studnia się zwraca po</dt><dd class="mono" data-o-zwrot>{lata(R0['zwrot'])}</dd></div>
+</dl>
+{rachunek_svg(R0)}
+<p class="ogrod__leg mono"><span><i class="leg leg--kran"></i>woda z kranu, razem</span><span><i class="leg leg--studnia"></i>studnia: widełki kosztu + prąd pompy</span><span><i class="leg leg--zw"></i>tu się zwraca</span></p>
+<figcaption class="mono">koszt studni z karty zlecenia dla gminy <b data-o-gmina>Mosina</b>: <span data-o-koszt>{zl(R0['lo'])}–{zl(R0['hi'])} zł</span> · <a href="#karta">zmień gminę</a></figcaption>
+</figure>
+</div>
+{notka('Klient, który ma ogród, <b>sam sobie policzy, że studnia jest tańsza od wodociągu</b> — i przychodzi już przekonany. Ty nie musisz go namawiać, tylko potwierdzić widełki.')}
 </section>
 
 <section id="paszport" class="sek sek--paszport">
@@ -395,7 +570,8 @@ def strona_gminy(g):
 {split('Studnia głębinowa', '<em>%s</em>' % e(g['nazwa']), tag='h1')}
 <p class="lead">{akap[0]}</p>
 </div>
-<p class="glowa__liczba mono" aria-label="Mediana głębokości {metry(g['mediana'])} metra"><span>{metry(g['mediana'])}</span><small>m · mediana</small></p>
+<div class="glowa__prawa"><figure class="mapa-mini" data-rv="scale">{mapa(g['slug'], mini=True)}<figcaption class="mono">powiat poznański · granice {OSM}</figcaption></figure>
+<p class="glowa__liczba mono" aria-label="Mediana głębokości {metry(g['mediana'])} metra"><span>{metry(g['mediana'])}</span><small>m · mediana</small></p></div>
 </div>
 {notka('Ta podstrona powstała automatycznie z danych rejestru PIG — <b>dla każdej gminy, w której wiercisz, inna treść i inne liczby</b>. Nie ma tu „Studnie %s — zapraszamy”, jest odpowiedź na pytanie, które klient wpisuje w Google.' % e(g['nazwa']))}
 </section>
@@ -545,6 +721,8 @@ def strona_dla_firm():
 <li><b>Wycena dla gmin</b><span>z danych PIG dla gmin, w których wiercisz</span></li>
 <li><b>Karta zlecenia SMS-em</b><span>zgłoszenia z gminą, celem i widełkami</span></li>
 <li><b>Podstrona na każdą gminę</b><span>pod lokalne wyszukiwania w Google</span></li>
+<li><b>Mapa Twojego zasięgu</b><span>gminy, w których wiercisz, z danymi głębokości</span></li>
+<li><b>Rachunek ogrodu</b><span>klient sam liczy, kiedy studnia się zwraca</span></li>
 <li><b>Paszport studni</b><span>dokument dla klienta i powód, żeby wrócił</span></li>
 <li><b>Twoje zdjęcia i opinie</b><span>z wizytówki Google; sesja przy wierceniu na życzenie</span></li>
 <li><b>Demo za darmo</b><span>najpierw oglądasz swoją stronę, potem decydujesz</span></li>
@@ -577,7 +755,7 @@ def main():
         (SITE / d).mkdir(parents=True, exist_ok=True)
     css = brand.css_root() + (WZORCE / 'ruch' / 'ruch.css').read_text(encoding='utf-8') + (ROOT / 'src' / 'site.css').read_text(encoding='utf-8')
     dane_js = json.dumps({'gminy': GMINY, 'rynek': RYNEK, 'zuzycie': ZUZYCIE_OS, 'cele': {k: [n, m] for k, n, m in CELE},
-                          'termin': F['termin'], 'tel': F['tel_e164']}, ensure_ascii=False)
+                          'termin': F['termin'], 'tel': F['tel_e164'], 'wodociag': WODOCIAG, 'prad': PRAD_M3}, ensure_ascii=False)
     js = (WZORCE / 'ruch' / 'ruch.js').read_text(encoding='utf-8') + (ROOT / 'src' / 'site.js').read_text(encoding='utf-8').replace('__DANE__', dane_js)
     (SITE / 'assets/css/site.css').write_text(css, encoding='utf-8')
     (SITE / 'assets/js/site.js').write_text(js, encoding='utf-8')

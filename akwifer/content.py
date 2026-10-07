@@ -46,3 +46,13 @@ PASZPORT = {   # PRZYKŁADOWY paszport (dane wymyślone, oznaczone)
     'przeglady': [('2027-05', 'kontrola ciśnienia w zbiorniku'), ('2028-05', 'przegląd pompy, pomiar zwierciadła'),
                   ('2029-05', 'badanie wody')],
 }
+
+# Rachunek ogrodu (W6, F18). Cena wody: Aquanet, gospodarstwa domowe, 19.12.2025–18.12.2026.
+WODOCIAG = {'woda': 6.27, 'scieki': 9.91,
+            'zrodlo': 'taryfa Aquanet dla gospodarstw domowych, 19.12.2025–18.12.2026 (aquanet.pl)'}
+PRAD_M3 = 0.40    # ZAŁOŻENIE: pompa 1,1 kW przy 3 m³/h ≈ 0,37 kWh/m³ × ok. 1,1 zł/kWh — pokazane na stronie
+OGROD = {'m2': 300, 'dawka': 20, 'tygodnie': 20}   # ZAŁOŻENIA domyślne, edytowalne: l/m² na tydzień, tygodni sezonu
+
+# Mapa (W7, F19): granice OSM (ODbL) z dane/00-gminy-granice.json; gminy bez danych PIG w zestawie
+BEZ_DANYCH = {'kostrzyn': 'Kostrzyn', 'murowana-goslina': 'Murowana Goślina', 'pobiedziska': 'Pobiedziska',
+              'puszczykowo': 'Puszczykowo'}

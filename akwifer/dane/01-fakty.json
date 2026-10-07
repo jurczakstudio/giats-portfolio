@@ -116,6 +116,18 @@
    "tresc": "Pytania klienta przed telefonem: ile metrów, ile kosztuje, czy trzeba zgłaszać, kiedy termin. Konkurencja odpowiada „bezpłatna wycena” (F11).",
    "status": "WNIOSKOWANE",
    "zrodlo": "F11 + struktura formularzy konkurencji (Hydro2000, Kopiemy Studnie, PROWIERT)"
+  },
+  {
+   "id": "F18",
+   "tresc": "Aquanet (Poznań i gminy obsługiwane przez spółkę), gospodarstwa domowe, 19.12.2025–18.12.2026: woda 6,27 zł/m³ brutto, ścieki 9,91 zł/m³ brutto — razem 16,18 zł/m³. Woda do podlewania bez podlicznika jest rozliczana także jako ścieki.",
+   "status": "POTWIERDZONE",
+   "zrodlo": "aquanet.pl/dla-klienta/taryfy-cennik (odczyt 07.10.2026); bip.poznan.pl — ogłoszenie zatwierdzonej taryfy"
+  },
+  {
+   "id": "F19",
+   "tresc": "Granice 18 gmin powiatu poznańskiego i Poznania są dostępne jako otwarte dane OpenStreetMap (ODbL, wymaga podpisu „© współtwórcy OpenStreetMap”). Dla 4 gmin (Kostrzyn, Murowana Goślina, Pobiedziska, Puszczykowo) nie mamy w zestawie danych PIG.",
+   "status": "POTWIERDZONE",
+   "zrodlo": "nominatim.openstreetmap.org, pobranie 07.10.2026 (mapa_pobierz.py → dane/00-gminy-granice.json)"
   }
  ],
  "pytania_do_klienta": [
@@ -125,6 +137,6 @@
   "zdjecia_od_klienta": 0,
   "zdjecia_z_jego_zrodel": 0,
   "film": false,
-  "uwagi": "Zero zdjęć z założenia — firma fikcyjna. Rejestr musi to udźwignąć: obrazem jest żywa mapa hydroizohips (shader WebGL) i rysunki przekrojów (SVG). Żadnych zdjęć stockowych udających realizacje."
+  "uwagi": "v2: dwa kadry generowane (Higgsfield / lokalny generator) podpisane „ilustracja poglądowa”; do tego czasu plansze wektorowe. Obrazem są też dane: mapa gmin z granic OSM i wykresy z PIG. Żadnych zdjęć stockowych udających realizacje."
  }
 }
