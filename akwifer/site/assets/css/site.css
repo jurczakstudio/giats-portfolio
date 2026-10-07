@@ -1,0 +1,440 @@
+:root {
+  --papier: #f1ede3;
+  --papier-2: #e7e1d2;
+  --papier-3: #d8d0bc;
+  --atrament: #1a232b;
+  --olowek: #4e5861;
+  --izolinia: #1f5f9e;
+  --izolinia-jasna: #9ab9d8;
+  --glina: #9b7a52;
+  --piasek: #d9c7a0;
+  --wodonosny: #b9c6cf;
+  --fs-mini: 0.875rem;
+  --fs-maly: 0.9375rem;
+  --fs-tekst: 1.0625rem;
+  --fs-lead: clamp(1.125rem, 1rem + .5vw, 1.375rem);
+  --fs-h3: clamp(1.25rem, 1.1rem + .7vw, 1.625rem);
+  --fs-h2: clamp(2rem, 1.3rem + 2.6vw, 3.5rem);
+  --fs-h1: clamp(2.75rem, 1.4rem + 5.4vw, 6.5rem);
+  --fs-liczba: clamp(2.5rem, 1.6rem + 3.6vw, 5rem);
+  --serif: 'Spectral', Georgia, serif;
+  --sans: 'Onest', system-ui, sans-serif;
+  --mono: 'IBM Plex Mono', ui-monospace, monospace;
+}
+/* ruch.css — stany warstwy ruchu Jurczak Studio.
+   Para do ruch.js. Kopiuj bez zmian; wartości dostrajaj zmiennymi na :root.
+
+   Reguła bramki: WSZYSTKIE stany ukrywające są zagnieżdżone w `.ruch`,
+   którą dokłada dopiero JS. Bez JS-a strona jest kompletna i nieruchoma.  */
+
+:root {
+  --ruch-czas: 900ms;          /* podstawowy czas wejścia                */
+  --ruch-czas-mikro: 220ms;    /* najazdy, stany przycisków              */
+  --ruch-krzywa: cubic-bezier(.16, .84, .3, 1);
+  --ruch-dystans: 22px;        /* ile jedzie „up"                        */
+  --ruch-swiatlo: rgba(255, 255, 255, .10);
+}
+
+/* ============ 1. odsłanianie ============================================ */
+
+.ruch [data-rv] {
+  transition:
+    opacity var(--ruch-czas) var(--ruch-krzywa) var(--rvd, 0ms),
+    transform var(--ruch-czas) var(--ruch-krzywa) var(--rvd, 0ms),
+    clip-path var(--ruch-czas) var(--ruch-krzywa) var(--rvd, 0ms);
+  will-change: opacity, transform;
+}
+.ruch [data-rv].in { will-change: auto; }
+
+/* up — domyślne. Sam ruch, bez wygaszania do zera: tekst nie miga.        */
+.ruch [data-rv="up"],
+.ruch [data-rv=""] {
+  opacity: 0;
+  transform: translate3d(0, var(--ruch-dystans), 0);
+}
+.ruch [data-rv="up"].in,
+.ruch [data-rv=""].in { opacity: 1; transform: none; }
+
+/* mask — treść wyjeżdża spod krawędzi. Do zdjęć i bloków pełnoszerokościowych. */
+.ruch [data-rv="mask"] {
+  /* NIE clip-path. Chrome liczy pole przecięcia w IntersectionObserver na
+     prostokącie WIZUALNYM, więc element przycięty do zerowej wysokości ma
+     intersectionRatio równy 0 i przy progu 0,05 nie odsłania się NIGDY:
+     stan ukryty blokował własne odsłonięcie. Zmierzone 22.09.2026 na dwóch
+     niezależnych stanowiskach (KUBAR Łomża, GŁAZ Pruszków) — patrz
+     _wzorce/skill-observations/observation-log/0023-clip-path-zabija-
+     intersection-observer.md, tam pełna tabela pomiarów.
+     Maska CSS wygląda identycznie, a jest efektem czysto malarskim:
+     obserwator widzi pełne pole (ratio 1), więc próg działa jak dla reszty
+     wariantów i mask odsłania się w tym samym momencie co up czy scale. */
+  clip-path: none;
+  -webkit-mask-image: linear-gradient(#000, #000); mask-image: linear-gradient(#000, #000);
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 0%; mask-size: 100% 0%;
+  opacity: 1;
+  transition: -webkit-mask-size var(--ruch-czas) var(--ruch-krzywa) var(--rvd, 0ms),
+              mask-size var(--ruch-czas) var(--ruch-krzywa) var(--rvd, 0ms);
+}
+.ruch [data-rv="mask"].in {
+  -webkit-mask-size: 100% 100%; mask-size: 100% 100%;
+}
+
+/* scale — kadr „dojeżdża". Tylko do mediów, nigdy do tekstu.             */
+.ruch [data-rv="scale"] { opacity: 0; transform: scale(1.06); }
+.ruch [data-rv="scale"].in { opacity: 1; transform: none; }
+
+/* split — nagłówek wierszami. Wymaga struktury:
+   <h2 data-rv="split"><span class="w"><i>wiersz</i></span>…</h2>          */
+.ruch [data-rv="split"] { opacity: 1; }
+.ruch [data-rv="split"] .w { display: block; overflow: hidden; }
+/* zapas na diakrytyki (ą ę ł) i podcięcia — bez tego overflow ucina ogonki */
+.ruch [data-rv="split"] .w > i {
+  display: block;
+  font-style: inherit;
+  padding-block: .12em;
+  margin-block: -.12em;
+  transform: translate3d(0, 105%, 0);
+  transition: transform var(--ruch-czas) var(--ruch-krzywa) var(--rvd, 0ms);
+}
+.ruch [data-rv="split"].in .w > i { transform: none; }
+.ruch [data-rv="split"] .w:nth-child(2) > i { transition-delay: calc(var(--rvd, 0ms) + 70ms); }
+.ruch [data-rv="split"] .w:nth-child(3) > i { transition-delay: calc(var(--rvd, 0ms) + 140ms); }
+.ruch [data-rv="split"] .w:nth-child(4) > i { transition-delay: calc(var(--rvd, 0ms) + 210ms); }
+
+/* ============ 2. paralaksa ============================================== */
+
+[data-par] { transform: translate3d(0, var(--par, 0px), 0); }
+
+/* ============ 3. przypięcie i postęp ==================================== */
+
+/* <section data-pin="220"><div class="pin__w">…</div></section>            */
+[data-pin] { height: var(--pin, 200vh); position: relative; }
+[data-pin] > .pin__w {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: clip;
+}
+/* Telefon: przypięcie na małym ekranie częściej przeszkadza, niż pomaga.  */
+@media (max-width: 760px) {
+  [data-pin] { height: auto; }
+  [data-pin] > .pin__w { position: static; height: auto; }
+}
+
+/* --p (0..1) jest do użycia w projekcie, np.
+   .warstwa { transform: translateY(calc(var(--p) * -40vh)); }
+   .ryt     { opacity: var(--p); }                                          */
+[data-scrub] { --p: 0; }
+
+/* ============ 4. światło pod kursorem =================================== */
+
+[data-hover] { position: relative; isolation: isolate; }
+[data-hover]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--ruch-czas-mikro) ease;
+  background: radial-gradient(
+    60% 70% at var(--mx, 50%) var(--my, 50%),
+    var(--ruch-swiatlo), transparent 70%);
+}
+[data-hover]:hover::after,
+[data-hover]:focus-within::after { opacity: 1; }
+
+/* ============ 5. przeciąganie =========================================== */
+
+[data-drag] {
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+  cursor: grab;
+  overscroll-behavior-x: contain;
+  /* Bez tego dryf walczy z płynnym przewijaniem przeglądarki. */
+  scroll-behavior: auto;
+}
+[data-drag]::-webkit-scrollbar { display: none; }
+[data-drag].ciagnie { cursor: grabbing; user-select: none; }
+[data-drag].ciagnie a,
+[data-drag].ciagnie img { pointer-events: none; }
+[data-drag] > * { flex: 0 0 auto; }
+
+/* ============ 6. bezpieczniki ==========================================
+   Kolejność ma znaczenie: to musi być na końcu pliku i wygrywać z resztą. */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+  [data-par] { transform: none !important; }
+  [data-pin] { height: auto !important; }
+  [data-pin] > .pin__w { position: static !important; height: auto !important; }
+  .ruch [data-rv] { opacity: 1 !important; transform: none !important; clip-path: none !important; }
+  .ruch [data-rv="split"] .w > i { transform: none !important; }
+}
+
+/* ?static=1 oraz brak JS — ruch.js dokłada `ruch-off` zamiast `ruch`      */
+.ruch-off [data-par] { transform: none; }
+.ruch-off [data-pin] { height: auto; }
+.ruch-off [data-pin] > .pin__w { position: static; height: auto; }
+/* AKWIFER — koncept LEJ. Arkusz mapy hydrogeologicznej z oknami na żywe pole wody.
+   Jedyny akcent: --izolinia. Tokeny: brand.py. */
+
+*, *::before, *::after { box-sizing: border-box; }
+html { overflow-x: clip; background: var(--papier); scroll-padding-top: 80px; -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; overflow-x: clip; color: var(--atrament);
+  font: 400 var(--fs-tekst)/1.6 var(--sans);
+  /* tło zapasowe bez WebGL: koncentryczne izolinie wokół „studni” */
+  background:
+    repeating-radial-gradient(circle at 72% 38%, transparent 0 22px, rgba(31, 95, 158, .22) 22px 23px),
+    var(--papier);
+}
+html.mapa-on, html.mapa-on body { background: transparent; }
+img, svg { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+h1, h2, h3 { font-family: var(--serif); font-weight: 400; line-height: 1.05; margin: 0 0 .5em; letter-spacing: -.015em; text-wrap: balance; }
+h1 { font-size: var(--fs-h1); font-weight: 300; }
+h2 { font-size: var(--fs-h2); font-weight: 300; }
+h3 { font-size: var(--fs-h3); line-height: 1.2; }
+h1 em, h2 em { color: var(--izolinia); font-style: italic; }
+p { margin: 0 0 1em; max-width: 62ch; }
+small { font-size: var(--fs-mini); }
+.mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.wrap { width: min(1240px, 100% - 48px); margin-inline: auto; }
+.skip { position: absolute; left: -999px; top: 8px; background: var(--atrament); color: var(--papier); padding: 10px 16px; z-index: 100; }
+.skip:focus { left: 8px; }
+:focus-visible { outline: 3px solid var(--izolinia); outline-offset: 3px; }
+.kicker, .etyk { font-size: var(--fs-maly); color: var(--olowek); letter-spacing: .02em; }
+.lead, .key { font-size: var(--fs-lead); line-height: 1.5; max-width: 50ch; }
+.zrodlo { font-size: var(--fs-mini); color: var(--olowek); }
+.znak { font-size: var(--fs-maly); color: var(--izolinia); margin-bottom: 1em; }
+.link { color: var(--izolinia); display: inline-flex; gap: .35em; align-items: center; text-underline-offset: .2em; transition: gap var(--ruch-czas-mikro) ease; }
+.link:hover { gap: .6em; }
+.ikona { width: 20px; height: 20px; flex: 0 0 auto; }
+.btn {
+  display: inline-flex; align-items: center; gap: .7em; min-height: 52px; padding: .65em 1.3em; border-radius: 999px;
+  border: 1px solid var(--atrament); background: transparent; color: var(--atrament); text-decoration: none; cursor: pointer;
+  font: 500 var(--fs-tekst)/1.2 var(--sans); transition: background var(--ruch-czas-mikro) ease, color var(--ruch-czas-mikro) ease;
+}
+.btn small { display: block; font-size: var(--fs-mini); font-weight: 400; opacity: .85; }
+.btn--akcent { background: var(--izolinia); border-color: var(--izolinia); color: var(--papier); }
+.btn--akcent:hover { background: var(--atrament); border-color: var(--atrament); }
+.btn--szeroki { width: 100%; justify-content: center; }
+
+/* baner wzorca — uczciwość: firma fikcyjna */
+.wzor { position: fixed; z-index: 60; left: 50%; bottom: 14px; translate: -50% 0; margin: 0; padding: 6px 14px; border-radius: 999px;
+  background: var(--atrament); color: var(--papier); font-size: var(--fs-mini); white-space: nowrap; pointer-events: none; opacity: .9; }
+
+/* ============ nagłówek =============================================== */
+.nag { position: fixed; inset: 0 0 auto; z-index: 50; height: 64px; display: flex; align-items: center; gap: 28px; padding: 0 24px;
+  background: rgba(241, 237, 227, .82); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(26, 35, 43, .08); }
+.nag__logo { display: flex; gap: 10px; align-items: center; text-decoration: none; font-family: var(--mono); font-weight: 500; letter-spacing: .14em; }
+.sygnet { width: 30px; height: 30px; }
+.nag__menu { display: flex; gap: 24px; margin-left: auto; }
+.nag__menu a { text-decoration: none; font-size: var(--fs-maly); color: var(--olowek); padding: 6px 0; border-bottom: 1px solid transparent; }
+.nag__menu a:hover, .nag__menu a[aria-current] { color: var(--atrament); border-bottom-color: var(--izolinia); }
+.nag__tel { color: var(--izolinia); text-decoration: none; font-size: var(--fs-maly); }
+.nag__przycisk { display: none; }
+@media (max-width: 860px) {
+  .nag { padding: 0 16px; gap: 12px; }
+  .nag__przycisk { display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--atrament);
+    background: transparent; font: 500 var(--fs-maly) var(--sans); color: var(--atrament); }
+  .nag__tel { margin-left: auto; }
+  .nag__menu { position: fixed; inset: 64px 0 auto; flex-direction: column; gap: 0; padding: 8px 16px 20px; background: var(--papier);
+    border-bottom: 1px solid var(--papier-3); visibility: hidden; transform: translateY(-110%); transition: transform .3s var(--ruch-krzywa), visibility 0s .3s; }
+  .nag__menu.otwarte { visibility: visible; transform: none; transition: transform .3s var(--ruch-krzywa); }
+  .nag__menu a { font-size: var(--fs-lead); padding: 12px 0; border-bottom: 1px solid var(--papier-3); color: var(--atrament); }
+}
+
+/* ============ 1. MAPA — otwarte pole wody ============================ */
+.mapa { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: -1; display: block; touch-action: pan-y; }
+.mapa-sek { min-height: 100svh; display: grid; align-content: end; padding: 120px 24px 96px; }
+.mapa-sek__w { width: min(1240px, 100%); margin-inline: auto; }
+.mapa-sek h1 { max-width: 12ch; text-shadow: 0 0 18px var(--papier), 0 0 4px var(--papier); }
+.mapa-sek .lead { background: rgba(241, 237, 227, .86); padding: 14px 18px; border-left: 3px solid var(--izolinia); max-width: 46ch; }
+.mapa-sek .kicker { background: rgba(241, 237, 227, .86); display: inline-block; padding: 4px 8px; }
+.mapa-sek__skala { display: flex; align-items: center; gap: 8px; font-size: var(--fs-mini); color: var(--olowek); }
+.mapa-sek__skala span { display: inline-block; width: 100px; height: 6px; border: 1.5px solid var(--atrament); border-top: 0; }
+.mapa-sek__legenda { position: absolute; right: 24px; bottom: 96px; margin: 0; font-size: var(--fs-mini); color: var(--olowek);
+  background: rgba(241, 237, 227, .86); padding: 6px 10px; display: flex; gap: 10px; align-items: center; }
+.leg { display: inline-block; width: 22px; height: 0; border-top: 1px solid var(--izolinia); }
+.leg--g { border-top-width: 2.5px; }
+.tylko-dotyk { display: none; }
+@media (hover: none) { .tylko-kursor { display: none; } .tylko-dotyk { display: inline; } }
+@media (max-width: 760px) {
+  .mapa-sek { padding: 96px 16px 72px; min-height: 92svh; }
+  .mapa-sek__legenda { position: static; margin-top: 14px; width: max-content; }
+}
+
+/* ============ 2. POMPA — tylko telefon =============================== */
+.pompa { display: none; }
+@media (hover: none) and (max-width: 760px) {
+  .pompa { display: block; padding: 28px 16px 32px; }
+  .pompa details { margin-top: 12px; font-size: var(--fs-maly); }
+  .pompa summary { min-height: 44px; display: flex; align-items: center; color: var(--olowek); cursor: pointer; }
+}
+
+/* ============ arkusze z oknami (sygnatura) =========================== */
+.arkusz { position: relative; isolation: isolate; padding: 112px 0; }
+.arkusz::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--papier);
+  box-shadow: 0 -1px 0 rgba(26, 35, 43, .1); }
+/* otwór wycinany w papierze — pozycję i promień podaje site.js (--ox, --oy, --or) */
+html.okna .arkusz.ma-okno::before {
+  -webkit-mask-image: radial-gradient(circle var(--or) at var(--ox) var(--oy), transparent 99%, #000 100%);
+  mask-image: radial-gradient(circle var(--or) at var(--ox) var(--oy), transparent 99%, #000 100%);
+}
+.arkusz__uklad { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 72px; align-items: center; }
+.arkusz__uklad--odwr { grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); }
+.okno { position: relative; width: min(100%, 360px); aspect-ratio: 1; border-radius: 50%; justify-self: center;
+  border: 1.5px dashed var(--izolinia); display: grid; place-items: center;
+  /* bez JS/WebGL: wzór izolinii w samym oknie */
+  background: repeating-radial-gradient(circle at 50% 50%, transparent 0 14px, rgba(31, 95, 158, .35) 14px 15px), var(--papier-2); }
+html.okna .okno { background: transparent; }
+.okno--duze { width: min(100%, 460px); }
+.okno--male { width: min(100%, 240px); }
+.okno__nr { position: absolute; top: -2.2em; left: 50%; translate: -50% 0; font-size: var(--fs-mini); color: var(--izolinia); white-space: nowrap; }
+.okno__odczyt { background: var(--papier); padding: 4px 10px; border-radius: 999px; font-size: var(--fs-maly); box-shadow: 0 0 0 1px rgba(26, 35, 43, .12); }
+.okno__etyk { position: absolute; bottom: -3.4em; left: 50%; translate: -50% 0; width: max(100%, 260px); text-align: center; font-size: var(--fs-mini); color: var(--olowek); line-height: 1.4; }
+.arkusz__rys { margin: 72px auto 0; }
+.arkusz__rys figcaption, .arkusz__karta figcaption { font-size: var(--fs-mini); color: var(--olowek); margin-top: 8px; }
+.arkusz__rys2 { margin: 0; }
+.arkusz__karta { margin: 0; }
+.arkusz__karta .okno { margin: 2.6em auto 4.4em; }
+
+/* rysunki */
+.rys text { font-family: var(--mono); font-size: var(--fs-mini); fill: var(--atrament); }
+.rys .panel-t { font-family: var(--serif); font-style: italic; font-size: var(--fs-h3); fill: var(--izolinia); }
+.rura { fill: #e9e6de; stroke: var(--atrament); stroke-width: 1.5; }
+.filtr { fill: var(--izolinia); fill-opacity: .25; stroke: var(--atrament); stroke-width: 1.5; stroke-dasharray: 3 3; }
+.woda-w-rurze { fill: var(--izolinia); fill-opacity: .55; }
+.zw-linia { stroke: var(--atrament); stroke-width: 1.5; stroke-dasharray: 4 4; }
+.zw-linia--w { stroke: var(--izolinia); stroke-width: 2.5; stroke-dasharray: none; }
+.kreska { stroke: var(--atrament); stroke-width: 1.2; }
+.k__m { fill: var(--olowek) !important; }
+.k__z { fill: var(--izolinia) !important; font-weight: 500; }
+.plan__krag { fill: none; stroke: var(--olowek); stroke-width: 1.2; stroke-dasharray: 3 5; }
+.kd__woda { fill: var(--izolinia); fill-opacity: .22; stroke: var(--izolinia); stroke-width: 2.5; }
+.kd__H { stroke: var(--atrament); stroke-width: 1.2; stroke-dasharray: 5 5; }
+.kd__s, .kd__R { fill: var(--izolinia) !important; }
+
+/* etapy */
+.etapy { list-style: none; padding: 0; margin: 1.6em 0 0; display: grid; gap: 22px; }
+.etapy li { border-top: 1px solid var(--papier-3); padding-top: 14px; }
+.etapy li > .mono { font-size: var(--fs-mini); color: var(--izolinia); }
+.etapy h3 { margin: .2em 0 .3em; }
+.etapy p { color: var(--olowek); margin: 0; }
+
+/* rachunek / tabele */
+.tlo { position: absolute; inset: 0; z-index: -1; }
+.tekstura-kratka {
+  background:
+    linear-gradient(rgba(31, 95, 158, .09) 1px, transparent 1px) 0 0 / 100% 28px,
+    linear-gradient(90deg, rgba(31, 95, 158, .06) 1px, transparent 1px) 0 0 / 28px 100%,
+    var(--papier-2);
+}
+.rach { max-width: 900px; }
+.cennik { width: 100%; border-collapse: collapse; margin: 1.6em 0; background: var(--papier); }
+.cennik caption { text-align: left; font-size: var(--fs-mini); color: var(--izolinia); padding-bottom: 8px; caption-side: top; }
+.cennik th { text-align: left; font: 500 var(--fs-mini) var(--mono); color: var(--olowek); border-bottom: 1.5px solid var(--atrament); padding: 10px 12px; }
+.cennik td { border-bottom: 1px solid var(--papier-3); padding: 12px; vertical-align: top; }
+.cennik td:last-child { text-align: right; white-space: nowrap; }
+.inwentarz { list-style: none; padding: 0; margin: 1.6em 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0 32px; }
+.inwentarz li { border-top: 1px solid var(--papier-3); padding: 12px 0; }
+.inwentarz b { display: block; font-weight: 500; }
+.inwentarz span { color: var(--olowek); font-size: var(--fs-maly); }
+
+/* symulator */
+.sym { background: var(--papier); border: 1px solid var(--papier-3); border-radius: 6px; padding: 26px; margin: 1.4em 0; display: grid; gap: 8px; }
+.sym__etyk { display: flex; justify-content: space-between; gap: 12px; font-size: var(--fs-maly); color: var(--olowek); margin-top: 6px; }
+.sym__etyk b { color: var(--atrament); font-weight: 500; }
+.sym__suwak { width: 100%; height: 44px; accent-color: var(--izolinia); cursor: pointer; }
+.sym__grunt, .kz__pole input { font: 400 var(--fs-tekst) var(--sans); min-height: 48px; padding: 10px 12px; border: 1px solid var(--papier-3); border-radius: 4px; background: var(--papier-2); color: var(--atrament); width: 100%; }
+.sym__wynik { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 14px 0 6px; }
+.sym__wynik div { border-top: 2px solid var(--izolinia); padding-top: 8px; }
+.sym__wynik dt { font-size: var(--fs-mini); color: var(--olowek); }
+.sym__wynik dd { margin: 0; font-size: var(--fs-h3); }
+.sym--duzy .sym__wynik dd { font-size: var(--fs-h3); white-space: nowrap; }
+.sym__wynik dd { white-space: nowrap; }
+.sym__uwaga { background: var(--papier-2); border-left: 3px solid var(--glina); padding: 10px 12px; margin: 0; }
+.sym .zrodlo { margin: 8px 0 0; }
+
+/* karta zgłoszenia */
+.kz { background: var(--papier); border: 1px solid var(--papier-3); border-radius: 6px; padding: 26px; display: grid; gap: 4px; margin: 1.4em 0; }
+.kz__t { font-family: var(--serif); font-size: var(--fs-h3); margin-bottom: .4em; }
+.kz__t .mono { display: block; font-size: var(--fs-mini); color: var(--izolinia); }
+.kz__pole { display: grid; gap: 6px; padding: 8px 0; }
+.kz__pole span { font-size: var(--fs-maly); color: var(--olowek); }
+.kz__znak { display: flex; gap: 14px; align-items: center; min-height: 52px; border-top: 1px solid var(--papier-3); cursor: pointer; }
+.kz__znak input { width: 22px; height: 22px; accent-color: var(--izolinia); flex: 0 0 auto; }
+.kz__znak:has(input:checked) span { text-decoration: line-through; text-decoration-color: var(--izolinia); color: var(--olowek); }
+.kz__szac { color: var(--izolinia); margin: 12px 0 0; }
+.kz__podglad { white-space: pre-wrap; background: var(--papier-2); border-radius: 4px; padding: 12px; font-size: var(--fs-mini); margin: 8px 0 12px; }
+.kz .zrodlo { margin: 10px 0 0; }
+
+/* faq */
+.faq { border-bottom: 1px solid var(--papier-3); max-width: 900px; margin-top: 1.4em; }
+.faq details { border-top: 1px solid var(--papier-3); }
+.faq summary { list-style: none; cursor: pointer; min-height: 64px; padding: 14px 0; display: flex; justify-content: space-between; gap: 16px; align-items: center;
+  font-family: var(--serif); font-size: var(--fs-h3); line-height: 1.25; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font-family: var(--mono); color: var(--izolinia); transition: rotate var(--ruch-czas-mikro) ease; }
+.faq details[open] summary::after { rotate: 45deg; }
+.faq details p { color: var(--olowek); }
+.faq details .key { color: var(--atrament); }
+
+/* głowa podstron */
+.glowa { position: relative; isolation: isolate; padding: 128px 0 80px; }
+.glowa__uklad { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, .6fr); gap: 48px; align-items: end; }
+.glowa__liczba { margin: 0; font-size: var(--fs-h1); color: var(--izolinia); opacity: .35; justify-self: end; white-space: nowrap; letter-spacing: -.04em; }
+
+/* stopka */
+.stopka { padding: 64px 0 96px; }
+.stopka__kol { display: grid; grid-template-columns: 1.1fr .7fr 1.2fr; gap: 40px; }
+.stopka p { font-size: var(--fs-maly); color: var(--olowek); }
+.stopka nav { display: grid; gap: 6px; }
+.stopka nav a { text-decoration: none; }
+.stopka nav a:hover { color: var(--izolinia); }
+
+@media (max-width: 760px) {
+  .wrap { width: calc(100% - 32px); }
+  .arkusz { padding: 72px 0; }
+  .arkusz__uklad, .arkusz__uklad--odwr { grid-template-columns: 1fr; gap: 56px; }
+  .arkusz__uklad--odwr .okno { order: 2; }
+  .okno, .okno--duze { width: 74vw; }
+  .okno--male { width: 56vw; }
+  .sym, .kz { padding: 20px 16px; }
+  .sym__wynik { grid-template-columns: 1fr 1fr; }
+  .inwentarz { grid-template-columns: 1fr; }
+  .glowa { padding: 104px 0 56px; }
+  .glowa__uklad { grid-template-columns: 1fr; }
+  .glowa__liczba { justify-self: start; order: -1; font-size: var(--fs-h2); }
+  .stopka__kol { grid-template-columns: 1fr; gap: 24px; }
+  .cennik td, .cennik th { padding: 10px 6px; }
+  .wzor { bottom: 8px; }
+  .rys--zwierciadlo { overflow: visible; }
+}
+
+.rys--zwierciadlo { max-width: 900px; }
+.mapa-sek__legenda { white-space: nowrap; }
+.arkusz__karta { position: sticky; top: 96px; align-self: start; }
+.arkusz__uklad:has(.arkusz__karta) { align-items: start; }
+@media (max-width: 760px) {
+  .arkusz__karta { position: static; }
+  .mapa-sek__legenda { white-space: normal; width: auto; }
+}
+
+@media (max-width: 560px) { .wzor__dlugie { display: none; } }
+.okno__odczyt { align-self: end; margin-bottom: 9%; }
+@media (max-width: 560px) {
+  .cennik thead { display: none; }
+  .cennik tr { display: grid; grid-template-columns: 1fr auto; border-bottom: 1px solid var(--papier-3); padding: 10px 0; }
+  .cennik td { border: 0; padding: 2px 8px; }
+  .cennik td:first-child { grid-column: 1 / -1; font-weight: 500; }
+  .cennik td:nth-child(2) { color: var(--olowek); }
+}

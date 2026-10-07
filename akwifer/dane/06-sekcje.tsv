@@ -1,0 +1,26 @@
+# 06 — SEKCJE · AKWIFER. Tabulatory. Czytane przez audyt.py.
+akt	podstrona	obiekt	ruch	mobil	typ	fraza	sygnatura
+Mapa	/	bryla	rv:split+hover	inna-kompozycja	pole-pelnoekranowe	studnia głębinowa jak działa	tak
+Pompa w kieszeni	/	sterowanie	brak	tylko-mobil	przycisk-pompy	-	nie
+Zwierciadło	/	rysunek	rv:mask+rv:split	inna-kompozycja	arkusz-z-oknami	zwierciadło wody swobodne napięte	tak
+Próba	/	sterowanie	rv:up	inna-kompozycja	symulator	próbne pompowanie studni	tak
+Karta otworu	/	rysunek	seq	inna-kompozycja	karta	jak wygląda wiercenie studni	nie
+Rachunek	/	material	seq+rv:split	ta-sama:tabela czyta się w kolumnie	rubryka	ile kosztuje studnia głębinowa	nie
+Granica	/	rysunek	rv:mask	inna-kompozycja	przekroj-z-linia	studnia do 30 m bez zgłoszenia	nie
+Zgłoszenie	/	sterowanie	rv:split	inna-kompozycja	karta-sms	-	tak
+Głowa	/proba-pompowania/	material	rv:split	inna-kompozycja	tytul	próbne pompowanie studni wzór	nie
+Symulator	/proba-pompowania/	sterowanie	rv:up	inna-kompozycja	symulator	wydajność studni obliczenie	tak
+Krzywa	/proba-pompowania/	rysunek	scrub	inna-kompozycja	wykres	lej depresji	nie
+Grunty	/proba-pompowania/	material	seq	ta-sama:tabela	tabela	współczynnik filtracji	nie
+Pytania	/proba-pompowania/	sterowanie	brak	ta-sama:rozwijane	faq	-	nie
+Głowa	/przebieg/	material	rv:split	inna-kompozycja	tytul	etapy wiercenia studni	nie
+Karta otworu	/przebieg/	rysunek	seq+scrub	inna-kompozycja	karta	-	tak
+Na działce	/przebieg/	material	rv:mask	inna-kompozycja	inwentarz	co wchodzi w cenę studni	nie
+Pytania	/przebieg/	sterowanie	brak	ta-sama:rozwijane	faq	-	nie
+Głowa	/formalnosci/	material	rv:split	inna-kompozycja	tytul	studnia głębinowa zgłoszenie	nie
+Trzydzieści metrów	/formalnosci/	rysunek	scrub	inna-kompozycja	przekroj-z-linia	studnia do 30 m	tak
+Lista	/formalnosci/	sterowanie	seq	ta-sama:lista	lista	-	nie
+Odległości	/formalnosci/	rysunek	rv:mask	inna-kompozycja	plan	odległość studni od szamba	nie
+Głowa	/kontakt/	material	rv:split	inna-kompozycja	tytul	-	nie
+Karta zgłoszenia	/kontakt/	sterowanie	rv:up	inna-kompozycja	karta-sms	-	nie
+Okno	/kontakt/	rysunek	rv:mask	inna-kompozycja	okno	-	tak

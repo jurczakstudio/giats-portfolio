@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Próbne pompowanie studni — wzór Dupuita i&nbsp;lej depresji | AKWIFER (wzorzec)</title>
+<meta name="description" content="Jak z&nbsp;próbnego pompowania wychodzi wydajność studni: model Dupuita i&nbsp;Sichardta, krzywa depresji, współczynnik filtracji gruntów.">
+<meta name="robots" content="noindex,nofollow">
+<link rel="canonical" href="https://akwifer.jurczakstudio.pl/proba-pompowania/">
+<meta property="og:title" content="Próbne pompowanie studni — wzór Dupuita i&nbsp;lej depresji | AKWIFER (wzorzec)">
+<meta property="og:description" content="Jak z&nbsp;próbnego pompowania wychodzi wydajność studni: model Dupuita i&nbsp;Sichardta, krzywa depresji, współczynnik filtracji gruntów.">
+<meta name="theme-color" content="#f1ede3">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/assets/fonts/spectral-300-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/css/fonts.css?v=85f61c02">
+<link rel="stylesheet" href="/assets/css/site.css?v=83e448fc">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Próbne pompowanie studni — wzór Dupuita i lej depresji | AKWIFER (wzorzec)", "description": "Jak z próbnego pompowania wychodzi wydajność studni: model Dupuita i Sichardta, krzywa depresji, współczynnik filtracji gruntów.", "url": "https://akwifer.jurczakstudio.pl/proba-pompowania/", "isPartOf": {"@type": "WebSite", "name": "AKWIFER — strona wzorcowa Jurczak Studio"}}</script>
+<script src="/assets/js/site.js?v=83e448fc" defer></script>
+</head>
+<body>
+<a class="skip" href="#tresc">Przejdź do treści</a>
+<p class="wzor mono">strona wzorcowa · firma fikcyjna<span class="wzor__dlugie"> · Jurczak Studio</span></p>
+<header class="nag">
+<a class="nag__logo" href="/" aria-label="AKWIFER — strona główna"><svg class="sygnet" viewBox="0 0 32 32" aria-hidden="true" fill="none" stroke="#1f5f9e" stroke-width="1.6"><path d="M2 8c8 0 10 6 14 6s6-6 14-6"/><path d="M2 15c9 0 11 5 14 5s5-5 14-5"/><path d="M2 22c9 0 12 3 14 3s5-3 14-3"/><circle cx="16" cy="27" r="2.2" fill="#1a232b" stroke="none"/></svg><span>AKWIFER</span></a>
+<nav class="nag__menu" id="menu" aria-label="Główna"><a href="/proba-pompowania/" aria-current="page">Próba pompowania</a><a href="/przebieg/">Przebieg</a><a href="/formalnosci/">Formalności</a><a href="/kontakt/">Zgłoszenie</a></nav>
+<a class="nag__tel mono" href="tel:+48600000000">600 000 000</a>
+<button class="nag__przycisk" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
+</header>
+<canvas class="mapa" aria-hidden="true"></canvas>
+<main id="tresc">
+<section id="glowa" class="glowa">
+<div class="tlo tekstura-kratka" aria-hidden="true"></div>
+<div class="wrap glowa__uklad">
+<div><p class="kicker mono">Próbne pompowanie · model</p><h1 data-rv="split"><span class="w"><i>Ile wody odda studnia</i></span> <span class="w"><i><em>— i&nbsp;skąd to wiadomo</em></i></span></h1><p class="lead">Dwie liczby z&nbsp;pompowania i&nbsp;dwa wzory sprzed stu lat. Poniżej możesz nimi poruszać — lej na mapie pod stroną liczy się z&nbsp;tych samych wartości.</p></div>
+<p class="glowa__liczba mono" aria-hidden="true">Q/s</p>
+</div>
+</section>
+<section id="symulator" class="arkusz arkusz--p">
+<div class="wrap arkusz__uklad arkusz__uklad--odwr">
+<div class="okno okno--duze okno--sym" data-okno data-sygnatura="okno" data-rv="mask"><span class="okno__nr mono">otwór 4</span><span class="okno__odczyt mono" data-odczyt aria-live="off">zwierciadło — m</span><span class="okno__etyk">Lej depresji w&nbsp;tym otworze odpowiada suwakom obok.</span></div>
+<div class="arkusz__t">
+<p class="znak mono">2 / 5 · okno na lej</p>
+<h2>Model próby pompowania</h2>
+<p class="key">Przy wydajności 2,5 m³/h w&nbsp;piasku średnim model daje depresję ok. 1,2 m i&nbsp;lej o&nbsp;promieniu ok. 25 m — w&nbsp;piasku gruboziarnistym ten sam pobór to ok. 0,5 m, a&nbsp;w&nbsp;drobnym warstwa w&nbsp;modelu się odwadnia.</p>
+<form class="sym sym--duzy" data-sym data-H="12.0" data-r="0.0625" aria-label="Model próby pompowania" onsubmit="return false">
+<label class="sym__etyk" for="s1-q">Wydajność pompowania <b class="mono"><output data-q-out for="s1-q">2,5</output> m³/h</b></label>
+<input class="sym__suwak" id="s1-q" type="range" min="0.5" max="8.0" step="0.1" value="2.5" data-q>
+<label class="sym__etyk" for="s1-k">Grunt warstwy wodonośnej</label>
+<select class="sym__grunt" id="s1-k" data-k><option value="1e-05">piasek drobny · k = 10⁻⁵ m/s</option><option value="5e-05" selected>piasek średni · k = 5·10⁻⁵ m/s</option><option value="0.0001">piasek gruboziarnisty · k = 10⁻⁴ m/s</option><option value="0.0005">piasek ze żwirem · k = 5·10⁻⁴ m/s</option></select>
+<dl class="sym__wynik">
+<div><dt>depresja s</dt><dd class="mono" data-s>1,16 m</dd></div>
+<div><dt>promień leja R</dt><dd class="mono" data-rl>25 m</dd></div>
+<div><dt>wydajność jednostkowa q</dt><dd class="mono" data-qj>2,2 m³/h·m</dd></div>
+</dl>
+<p class="sym__uwaga" data-sym-uwaga hidden>Przy tej wydajności warstwa w&nbsp;modelu się odwadnia — studnia nie da tyle wody. W&nbsp;praktyce: mniejsza pompa albo inna warstwa.</p>
+<p class="zrodlo mono">Q = π·k·(H² − h²) / ln(R/r) · R = 3000·s·√k · H = 12 m, r = 62 mm · model poglądowy, nie pomiar</p>
+</form>
+</div>
+</div>
+</section>
+
+<section id="krzywa" class="arkusz arkusz--k">
+<div class="wrap">
+<h2>Krzywa depresji</h2>
+<p class="key">Krzywa depresji to przekrój leja: zwierciadło opada najmocniej przy rurze i&nbsp;wypłaszcza się aż do promienia R, gdzie pompa przestaje mieć wpływ.</p>
+<figure data-scrub><svg class="rys rys--krzywa" id="kd" viewBox="0 0 640 300" role="img" aria-label="Krzywa depresji: przekrój zwierciadła wody wokół pompowanej studni" data-krzywa><rect x="0" y="30" width="640" height="260" fill="var(--wodonosny)" opacity=".55"/><path class="kd__woda" d="" /><line class="kd__H" x1="0" x2="640" y1="40" y2="40"/><rect class="rura" x="314" y="10" width="12" height="260"/><text class="kd__t" x="10" y="32">zwierciadło przed pompowaniem</text><text class="kd__s mono" x="336" y="80" data-kd-s>s = —</text><text class="kd__R mono" x="490" y="290" data-kd-R>R = —</text></svg><figcaption class="mono">h(x)² = h_w² + Q·ln(x/r)/(π·k) · skala pionowa przesadzona</figcaption></figure>
+<p>Dlatego dwie studnie wiercone za blisko siebie zabierają sobie wodę: ich leje nakładają się i&nbsp;każda pompuje z&nbsp;głębszym zwierciadłem. Na mapie u&nbsp;góry widać to, gdy wywiercisz kliknięciem dwie studnie obok siebie.</p>
+</div>
+</section>
+
+<section id="grunty" class="arkusz arkusz--r">
+<div class="tlo tekstura-kratka" aria-hidden="true"></div>
+<div class="wrap rach">
+<h2>Grunt decyduje</h2>
+<p class="key">Współczynnik filtracji k mówi, jak łatwo woda przepływa przez grunt — piasek gruboziarnisty przepuszcza ją sto razy szybciej niż zwarty.</p>
+<table class="cennik" data-seq="60"><caption class="mono">orientacyjny współczynnik filtracji</caption><thead><tr><th>grunt</th><th>k</th></tr></thead><tbody><tr><td>piasek gruboziarnisty</td><td class="mono">≈ 10⁻⁴ m/s</td></tr><tr><td>piasek</td><td class="mono">≈ 10⁻⁵ m/s</td></tr><tr><td>piasek zwarty</td><td class="mono">≈ 10⁻⁶ m/s</td></tr><tr><td>glina piaszczysta</td><td class="mono">≈ 10⁻⁷ m/s</td></tr><tr><td>glina</td><td class="mono">≈ 10⁻⁸ m/s</td></tr></tbody></table>
+<p class="zrodlo mono">Uniwersytet Przyrodniczy w&nbsp;Poznaniu, hydraulika, wykład 8 (wartości w&nbsp;cm/s przeliczone na m/s)</p>
+</div>
+</section>
+
+<section id="pytania" class="arkusz">
+<div class="wrap"><h2>Pytania o&nbsp;pompowanie</h2><div class="faq"><details><summary>Po co próbne pompowanie, skoro woda leci?</summary><p class="key">Bo „leci” nie mówi, ile studnia odda bez osuszenia — dopiero stała wydajność Q i&nbsp;zmierzona depresja s pozwalają dobrać pompę.</p><p>Z&nbsp;tych dwóch liczb wychodzi wydajność jednostkowa q = Q/s. Pompa większa niż możliwości studni będzie ją osuszać i&nbsp;pracować na sucho.</p></details><details><summary>Czy ten symulator mówi, ile da moja studnia?</summary><p class="key">Nie — to model poglądowy: wzór Dupuita dla zwierciadła swobodnego i&nbsp;promień leja ze wzoru Sichardta, przy założonej miąższości warstwy 12 m.</p><p>Prawdziwy wynik daje dopiero pompowanie na działce. Model pokazuje zależności: ten sam pobór w&nbsp;drobnym piasku robi dużo głębszy lej niż w&nbsp;żwirze.</p></details><details><summary>Czym jest lej depresji?</summary><p class="key">To obniżenie zwierciadła wody wokół pompowanej studni — najgłębsze przy rurze, coraz płytsze aż do promienia R, gdzie znika.</p><p>Na mapie hydroizohips widać go jako koncentryczne linie wokół otworu. Dwie studnie zbyt blisko siebie mają nakładające się leje i&nbsp;odbierają sobie wodę.</p></details></div></div>
+</section>
+
+</main>
+<footer class="stopka arkusz">
+<div class="wrap stopka__kol">
+<div><p class="etyk mono">AKWIFER — studnie głębinowe</p><p>Firma fikcyjna. Telefon, godziny i&nbsp;cennik są przykładowe — do podmiany na dane klienta.</p><p class="mono">600 000 000 · pn–sob 7–19 · do 60 km od bazy</p></div>
+<div><p class="etyk mono">Strona</p><nav aria-label="Stopka"><a href="/">Mapa</a><a href="/proba-pompowania/" aria-current="page">Próba pompowania</a><a href="/przebieg/">Przebieg</a><a href="/formalnosci/">Formalności</a><a href="/kontakt/">Zgłoszenie</a></nav></div>
+<div><p class="etyk mono">Źródła i&nbsp;licencje</p><p>Wzory: Dupuit, Sichardt (Uniwersytet Przyrodniczy w&nbsp;Poznaniu, hydraulika, wykład 8). Przepisy: Prawo wodne art. 395, Prawo budowlane art. 29, Pgig art. 3 pkt 2a. Ceny rynkowe: kb.pl, 08.2026.</p><p>Okna w&nbsp;treści i&nbsp;tło z&nbsp;liniami w&nbsp;shaderze — technika za giats.me (E. Giatsidis, MIT). Szum: S. Gustavson (MIT).</p></div>
+</div>
+</footer>
+</body>
+</html>

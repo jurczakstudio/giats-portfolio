@@ -1,0 +1,161 @@
+/* ruch.css — stany warstwy ruchu Jurczak Studio.
+   Para do ruch.js. Kopiuj bez zmian; wartości dostrajaj zmiennymi na :root.
+
+   Reguła bramki: WSZYSTKIE stany ukrywające są zagnieżdżone w `.ruch`,
+   którą dokłada dopiero JS. Bez JS-a strona jest kompletna i nieruchoma.  */
+
+:root {
+  --ruch-czas: 900ms;          /* podstawowy czas wejścia                */
+  --ruch-czas-mikro: 220ms;    /* najazdy, stany przycisków              */
+  --ruch-krzywa: cubic-bezier(.16, .84, .3, 1);
+  --ruch-dystans: 22px;        /* ile jedzie „up"                        */
+  --ruch-swiatlo: rgba(255, 255, 255, .10);
+}
+
+/* ============ 1. odsłanianie ============================================ */
+
+.ruch [data-rv] {
+  transition:
+    opacity var(--ruch-czas) var(--ruch-krzywa) var(--rvd, 0ms),
+    transform var(--ruch-czas) var(--ruch-krzywa) var(--rvd, 0ms),
+    clip-path var(--ruch-czas) var(--ruch-krzywa) var(--rvd, 0ms);
+  will-change: opacity, transform;
+}
+.ruch [data-rv].in { will-change: auto; }
+
+/* up — domyślne. Sam ruch, bez wygaszania do zera: tekst nie miga.        */
+.ruch [data-rv="up"],
+.ruch [data-rv=""] {
+  opacity: 0;
+  transform: translate3d(0, var(--ruch-dystans), 0);
+}
+.ruch [data-rv="up"].in,
+.ruch [data-rv=""].in { opacity: 1; transform: none; }
+
+/* mask — treść wyjeżdża spod krawędzi. Do zdjęć i bloków pełnoszerokościowych. */
+.ruch [data-rv="mask"] {
+  /* NIE clip-path. Chrome liczy pole przecięcia w IntersectionObserver na
+     prostokącie WIZUALNYM, więc element przycięty do zerowej wysokości ma
+     intersectionRatio równy 0 i przy progu 0,05 nie odsłania się NIGDY:
+     stan ukryty blokował własne odsłonięcie. Zmierzone 22.09.2026 na dwóch
+     niezależnych stanowiskach (KUBAR Łomża, GŁAZ Pruszków) — patrz
+     _wzorce/skill-observations/observation-log/0023-clip-path-zabija-
+     intersection-observer.md, tam pełna tabela pomiarów.
+     Maska CSS wygląda identycznie, a jest efektem czysto malarskim:
+     obserwator widzi pełne pole (ratio 1), więc próg działa jak dla reszty
+     wariantów i mask odsłania się w tym samym momencie co up czy scale. */
+  clip-path: none;
+  -webkit-mask-image: linear-gradient(#000, #000); mask-image: linear-gradient(#000, #000);
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 0%; mask-size: 100% 0%;
+  opacity: 1;
+  transition: -webkit-mask-size var(--ruch-czas) var(--ruch-krzywa) var(--rvd, 0ms),
+              mask-size var(--ruch-czas) var(--ruch-krzywa) var(--rvd, 0ms);
+}
+.ruch [data-rv="mask"].in {
+  -webkit-mask-size: 100% 100%; mask-size: 100% 100%;
+}
+
+/* scale — kadr „dojeżdża". Tylko do mediów, nigdy do tekstu.             */
+.ruch [data-rv="scale"] { opacity: 0; transform: scale(1.06); }
+.ruch [data-rv="scale"].in { opacity: 1; transform: none; }
+
+/* split — nagłówek wierszami. Wymaga struktury:
+   <h2 data-rv="split"><span class="w"><i>wiersz</i></span>…</h2>          */
+.ruch [data-rv="split"] { opacity: 1; }
+.ruch [data-rv="split"] .w { display: block; overflow: hidden; }
+/* zapas na diakrytyki (ą ę ł) i podcięcia — bez tego overflow ucina ogonki */
+.ruch [data-rv="split"] .w > i {
+  display: block;
+  font-style: inherit;
+  padding-block: .12em;
+  margin-block: -.12em;
+  transform: translate3d(0, 105%, 0);
+  transition: transform var(--ruch-czas) var(--ruch-krzywa) var(--rvd, 0ms);
+}
+.ruch [data-rv="split"].in .w > i { transform: none; }
+.ruch [data-rv="split"] .w:nth-child(2) > i { transition-delay: calc(var(--rvd, 0ms) + 70ms); }
+.ruch [data-rv="split"] .w:nth-child(3) > i { transition-delay: calc(var(--rvd, 0ms) + 140ms); }
+.ruch [data-rv="split"] .w:nth-child(4) > i { transition-delay: calc(var(--rvd, 0ms) + 210ms); }
+
+/* ============ 2. paralaksa ============================================== */
+
+[data-par] { transform: translate3d(0, var(--par, 0px), 0); }
+
+/* ============ 3. przypięcie i postęp ==================================== */
+
+/* <section data-pin="220"><div class="pin__w">…</div></section>            */
+[data-pin] { height: var(--pin, 200vh); position: relative; }
+[data-pin] > .pin__w {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: clip;
+}
+/* Telefon: przypięcie na małym ekranie częściej przeszkadza, niż pomaga.  */
+@media (max-width: 760px) {
+  [data-pin] { height: auto; }
+  [data-pin] > .pin__w { position: static; height: auto; }
+}
+
+/* --p (0..1) jest do użycia w projekcie, np.
+   .warstwa { transform: translateY(calc(var(--p) * -40vh)); }
+   .ryt     { opacity: var(--p); }                                          */
+[data-scrub] { --p: 0; }
+
+/* ============ 4. światło pod kursorem =================================== */
+
+[data-hover] { position: relative; isolation: isolate; }
+[data-hover]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--ruch-czas-mikro) ease;
+  background: radial-gradient(
+    60% 70% at var(--mx, 50%) var(--my, 50%),
+    var(--ruch-swiatlo), transparent 70%);
+}
+[data-hover]:hover::after,
+[data-hover]:focus-within::after { opacity: 1; }
+
+/* ============ 5. przeciąganie =========================================== */
+
+[data-drag] {
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+  cursor: grab;
+  overscroll-behavior-x: contain;
+  /* Bez tego dryf walczy z płynnym przewijaniem przeglądarki. */
+  scroll-behavior: auto;
+}
+[data-drag]::-webkit-scrollbar { display: none; }
+[data-drag].ciagnie { cursor: grabbing; user-select: none; }
+[data-drag].ciagnie a,
+[data-drag].ciagnie img { pointer-events: none; }
+[data-drag] > * { flex: 0 0 auto; }
+
+/* ============ 6. bezpieczniki ==========================================
+   Kolejność ma znaczenie: to musi być na końcu pliku i wygrywać z resztą. */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+  [data-par] { transform: none !important; }
+  [data-pin] { height: auto !important; }
+  [data-pin] > .pin__w { position: static !important; height: auto !important; }
+  .ruch [data-rv] { opacity: 1 !important; transform: none !important; clip-path: none !important; }
+  .ruch [data-rv="split"] .w > i { transform: none !important; }
+}
+
+/* ?static=1 oraz brak JS — ruch.js dokłada `ruch-off` zamiast `ruch`      */
+.ruch-off [data-par] { transform: none; }
+.ruch-off [data-pin] { height: auto; }
+.ruch-off [data-pin] > .pin__w { position: static; height: auto; }

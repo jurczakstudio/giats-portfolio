@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>ruch.js — stanowisko kontrolne</title>
+<link rel="stylesheet" href="ruch.css">
+<style>
+  :root { --tlo:#12100e; --tlo2:#1b1815; --tekst:#e8e3dc; --slaby:#8c8479; --akcent:#b8925a; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--tlo); color:var(--tekst);
+         font:16px/1.6 ui-sans-serif, system-ui, sans-serif; }
+  section { padding:18vh 6vw; border-top:1px solid #2a2622; }
+  h1 { font-size:clamp(2.4rem,7vw,5rem); line-height:1.02; margin:0 0 .4em; font-weight:500; }
+  h2 { font-size:clamp(1.6rem,3.6vw,2.6rem); line-height:1.1; margin:0 0 .6em; font-weight:500; }
+  .etykieta { font-size:.72rem; letter-spacing:.18em; text-transform:uppercase;
+              color:var(--slaby); margin:0 0 1.4em; }
+  p { max-width:54ch; color:#cfc7bd; }
+  code { color:var(--akcent); font-size:.9em; }
+  .plyta { width:min(34vw,300px); aspect-ratio:3/4; background:var(--tlo2);
+           border:1px solid #332e28; display:grid; place-items:center; color:var(--slaby); }
+  .rzad { display:flex; gap:18px; flex-wrap:wrap; }
+  .rzad > * { flex:0 0 auto; }
+  .liczby { display:flex; gap:clamp(24px,6vw,80px); flex-wrap:wrap; }
+  .liczby b { display:block; font-size:clamp(2rem,5vw,3.4rem); font-weight:500; color:var(--akcent); }
+  .liczby span { color:var(--slaby); font-size:.85rem; }
+  .pin__w { display:grid; place-items:center; }
+  .obiekt { width:min(40vw,260px); aspect-ratio:1; background:var(--tlo2);
+            border:1px solid #3a342c;
+            transform: rotate(calc(var(--p) * 180deg)) scale(calc(.7 + var(--p) * .5)); }
+  .postep { position:absolute; left:6vw; right:6vw; bottom:12vh; height:2px;
+            background:#2a2622; }
+  .postep::after { content:""; display:block; height:100%; background:var(--akcent);
+                   width:calc(var(--p) * 100%); }
+  .warstwa { height:40vh; background:var(--tlo2); border:1px solid #2a2622;
+             display:grid; place-items:center; color:var(--slaby); }
+</style>
+</head>
+<body>
+
+<section>
+  <p class="etykieta">Stanowisko kontrolne</p>
+  <h1 data-rv="split"><span class="w"><i>Ruch, który</i></span><span class="w"><i>gdzieś prowadzi.</i></span></h1>
+  <p data-rv data-rvd="300">Otwórz tę stronę też z <code>?static=1</code> — obie wersje muszą być
+     kompletne i czytelne. To jest warunek, nie życzenie.</p>
+</section>
+
+<section data-seq="90">
+  <p class="etykieta">data-seq — wejście po kolei</p>
+  <div class="rzad">
+    <div class="plyta" data-rv="mask">mask</div>
+    <div class="plyta" data-rv="up">up</div>
+    <div class="plyta" data-rv="scale">scale</div>
+  </div>
+</section>
+
+<section>
+  <p class="etykieta">data-hover — światło pod kursorem</p>
+  <div class="rzad">
+    <div class="plyta" data-hover data-rv>najedź</div>
+    <div class="plyta" data-hover data-rv data-rvd="120">najedź</div>
+  </div>
+</section>
+
+<section>
+  <p class="etykieta">data-drag — stojak z dryfem</p>
+  <div data-drag data-drift="0.35" style="gap:16px">
+    <div class="plyta">01</div><div class="plyta">02</div><div class="plyta">03</div>
+    <div class="plyta">04</div><div class="plyta">05</div><div class="plyta">06</div>
+  </div>
+</section>
+
+<section>
+  <p class="etykieta">data-count — liczniki</p>
+  <div class="liczby">
+    <div><b data-count="1991">0</b><span>rok założenia</span></div>
+    <div><b data-count="4,9">0</b><span>ocena Google</span></div>
+    <div><b data-count="238">0</b><span>realizacji</span></div>
+  </div>
+</section>
+
+<section data-pin="260" data-scrub>
+  <div class="pin__w">
+    <h2>data-pin + data-scrub</h2>
+    <div class="obiekt"></div>
+    <div class="postep" aria-hidden="true"></div>
+  </div>
+</section>
+
+<section>
+  <p class="etykieta">data-par — paralaksa</p>
+  <div class="warstwa" data-par="0.35">0.35</div>
+  <div class="warstwa" data-par="-0.2" style="margin-top:20px">-0.2</div>
+</section>
+
+<section>
+  <h2 data-rv>Koniec</h2>
+  <p data-rv data-rvd="150">Przewiń szybko w górę i w dół. Żaden ekran nie ma prawa zostać pusty.</p>
+</section>
+
+<script src="ruch.js" defer></script>
+</body>
+</html>

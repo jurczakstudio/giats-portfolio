@@ -1,0 +1,8 @@
+// AKWIFER — strona wzorcowa na Cloudflare Workers (statyczne pliki z site/).
+// custom_domain zakłada rekord DNS sam (lekcja z VIJACH 07.10.2026: trasa wymaga istniejącego rekordu).
+{
+  "name": "akwifer-wzorzec",
+  "compatibility_date": "2026-10-01",
+  "assets": { "directory": "./site", "not_found_handling": "404-page", "html_handling": "auto-trailing-slash" },
+  "routes": [ { "pattern": "akwifer.jurczakstudio.pl", "custom_domain": true } ]
+}
