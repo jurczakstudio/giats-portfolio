@@ -22,6 +22,7 @@ katalog `akwifer/` jest niezależny od aplikacji Next.js w korzeniu repo.
 
 Obrazy: dwa kadry z Higgsfield wg `dane/zamowienie-obrazow.md` (`hero-wiertnica.png`, `woda-szklanka.png`).
 Do czasu ich wrzucenia strona używa plansz wektorowych podpisanych „plansza zastępcza”.
+Alternatywa bez Higgsfield: lokalny generator (FLUX.1-schnell / SDXL) — `generator/README.md`.
 
 Zrzuty i testy: `python3 -m http.server 8788 --directory site`, potem `node dane/zrzuty/zrzut.mjs / /gmina/kornik/`
 i `node dane/zrzuty/kadr.mjs`.

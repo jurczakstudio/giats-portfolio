@@ -1,3 +1,6 @@
 __pycache__/
 *.pyc
 dane/zrzuty/*.png
+
+# generator: warianty zostają lokalnie, do repo idą tylko wybrane kadry
+zrodla/gen/warianty/
