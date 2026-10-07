@@ -470,7 +470,7 @@ def strona_glowna():
     R0 = rachunek_dane(PO_SLUGU['mosina'])
     tresc = f'''
 <section id="start" class="hero3">
-<div class="hero3__tlo" data-par=".06">{obraz('hero', 'hero', 'Wiertnica studni o zmierzchu na działce z domem w stanie surowym', '100vw', 'hero3__img', eager=True, media=('hero-pion', '(max-width: 760px)'))}</div>
+<div class="hero3__tlo" data-par=".06">{obraz('hero', 'hero', 'Wiertnica studzienna nocą w świetle lamp roboczych' if MAN.get('hero', {}).get('podpis', '').startswith('zdjęcie') else 'Wiertnica studni o zmierzchu na działce z domem w stanie surowym', '(max-width: 760px) 100vw, 56vw', 'hero3__img', eager=True, media=('hero-pion', '(max-width: 760px)'))}</div>
 <div class="wrap hero3__u">
 <div class="hero3__t">
 <p class="kicker mono">Studnie głębinowe · {F['baza']}</p>
@@ -480,7 +480,7 @@ def strona_glowna():
 </div>
 {linijka(PO_SLUGU['mosina'])}
 </div>
-<p class="hero3__podpis mono">{'ilustracja poglądowa' if 'hero' in MAN else 'plansza zastępcza · docelowo kadr z generatora'}</p>
+<p class="hero3__podpis mono">{MAN['hero'].get('podpis', 'ilustracja poglądowa') if 'hero' in MAN else 'plansza zastępcza · docelowo kadr z generatora'}</p>
 {notka('Klient wchodzi wieczorem z telefonu i <b>w pierwszym ekranie dostaje odpowiedź, z którą dziś dzwoni do pięciu firm</b>: ile metrów, ile złotych, czy są papiery. 93% klientów mówi, że natychmiastowa wycena wpływa na wybór wykonawcy — a żadna z 18 sprawdzonych polskich firm jej nie ma.')}
 </section>
 
@@ -552,7 +552,7 @@ def strona_glowna():
 
 <section id="robota" class="sek sek--robota">
 <div class="wrap sek__uklad sek__uklad--odwr">
-<figure class="robota__kadr" data-rv="mask">{obraz('woda', 'woda', 'Czysta woda nalewana do szklanki z kranu przy nowej studni', '(max-width: 760px) 100vw, 40vw', 'robota__img')}<figcaption class="mono">{'ilustracja poglądowa' if 'woda' in MAN else 'plansza zastępcza · docelowo kadr z Higgsfield'}</figcaption></figure>
+<figure class="robota__kadr" data-rv="mask">{obraz('woda', 'woda', 'Ekipa przy wiertnicy studziennej na osiedlu domów jednorodzinnych' if MAN.get('woda', {}).get('podpis', '').startswith('zdjęcie') else 'Czysta woda nalewana do szklanki z kranu przy nowej studni', '(max-width: 760px) 100vw, 40vw', 'robota__img')}<figcaption class="mono">{MAN['woda'].get('podpis', 'ilustracja poglądowa') if 'woda' in MAN else 'plansza zastępcza · docelowo kadr z generatora'}</figcaption></figure>
 <div class="sek__t">
 {split('Robota.', '<em>Pięć kroków, jeden dzień wiercenia.</em>')}
 <p class="key">Od karty do wody: rozmowa, oględziny z papierami, wiercenie, próbne pompowanie i odbiór z paszportem studni.</p>

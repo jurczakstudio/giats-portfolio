@@ -158,6 +158,12 @@
    "tresc": "Zwycięzcy Awwwards 2025–26 z branż przemysł/energia/budownictwo używają dwóch barw (ciemna lub kremowa baza + jeden głośny akcent), narracji przypiętej do przewijania (przekroje, odwierty), ogromnych liczb. RapidKert (lokalna firma nawadniająca, HU, Awwwards HM 08.2026) łączy zejście pod ziemię z prostą konwersją.",
    "status": "POTWIERDZONE (metadane Awwwards, nie oglądane w przeglądarce)",
    "zrodlo": "dane/research/03-konwersja-wyglad.md §3"
+  },
+  {
+   "id": "F25",
+   "tresc": "Zdjęcia v3: hero — wiertnica nocą (Rahul Bokhare, Pexels 21047659); Robota — ekipa przy wiertnicy na osiedlu (Freek Wolsink, Pexels 31249554). Licencja Pexels: użycie komercyjne bez obowiązku podpisu, bez sugerowania poparcia przez osoby na zdjęciu. Na stronie podpisane „zdjęcie poglądowe · fot. autor / Pexels”. Kadry z generatora (zrodla/gen/) mają pierwszeństwo, jeśli się pojawią.",
+   "status": "POTWIERDZONE",
+   "zrodlo": "dane/research/04-materialy.md (P1–P3); zrodla/foto/zrodla.json"
   }
  ],
  "pytania_do_klienta": [
@@ -167,6 +173,6 @@
   "zdjecia_od_klienta": 0,
   "zdjecia_z_jego_zrodel": 0,
   "film": false,
-  "uwagi": "v2: dwa kadry generowane (Higgsfield / lokalny generator) podpisane „ilustracja poglądowa”; do tego czasu plansze wektorowe. Obrazem są też dane: mapa gmin z granic OSM i wykresy z PIG. Żadnych zdjęć stockowych udających realizacje."
+  "uwagi": "v3: dwa zdjęcia z Pexels (podpisane autorem, „zdjęcie poglądowe”) do czasu zdjęć firmy; generator lokalny może je zastąpić. Obrazem są też dane: mapa OSM, zejście pod ziemię, wykresy PIG. Żadnych zdjęć udających realizacje firmy."
  }
 }

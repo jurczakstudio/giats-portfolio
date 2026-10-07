@@ -28,8 +28,8 @@ katalog `akwifer/` jest niezależny od aplikacji Next.js w korzeniu repo.
     python images.py    # po wrzuceniu obrazów do zrodla/gen/
     python build.py     # zawsze — na końcu bramka _pracownia/_wzorce/audyt/audyt.py
 
-Obrazy: dwa kadry z Higgsfield wg `dane/zamowienie-obrazow.md` (`hero-wiertnica.png`, `woda-szklanka.png`).
-Do czasu ich wrzucenia strona używa plansz wektorowych podpisanych „plansza zastępcza”.
+Obrazy: `images.py` bierze najpierw kadry z generatora (`zrodla/gen/`, patrz `generator/README.md`), a gdy ich nie ma —
+zdjęcia z Pexels z `zrodla/foto/` (autor i licencja w `zrodla/foto/zrodla.json`, podpis na stronie dodaje build).
 Alternatywa bez Higgsfield: lokalny generator (FLUX.1-schnell / SDXL) — `generator/README.md`.
 
 Zrzuty i testy: `python3 -m http.server 8788 --directory site`, potem `node dane/zrzuty/zrzut.mjs / /gmina/kornik/`

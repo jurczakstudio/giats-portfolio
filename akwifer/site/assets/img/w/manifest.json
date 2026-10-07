@@ -1,1 +1,28 @@
-{}
+{
+ "hero": {
+  "w": [
+   720,
+   1100,
+   1500
+  ],
+  "ratio": 1.25,
+  "podpis": "zdj\u0119cie pogl\u0105dowe \u00b7 fot. Rahul Bokhare / Pexels"
+ },
+ "hero-pion": {
+  "w": [
+   480,
+   900
+  ],
+  "ratio": 1.25,
+  "podpis": "zdj\u0119cie pogl\u0105dowe \u00b7 fot. Rahul Bokhare / Pexels"
+ },
+ "woda": {
+  "w": [
+   480,
+   900,
+   1300
+  ],
+  "ratio": 1.25,
+  "podpis": "zdj\u0119cie pogl\u0105dowe \u00b7 fot. Freek Wolsink / Pexels"
+ }
+}
