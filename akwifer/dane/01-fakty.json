@@ -1,40 +1,130 @@
 {
-  "_instrukcja": "Strona WZORCOWA zawodu (studnie głębinowe) — firma AKWIFER jest fikcyjna (decyzja Szymona 07.10.2026: „strona wzorcowa bez klienta”). Fakty dotyczą ZAWODU i fizyki wód podziemnych, nie firmy. Dane firmy: wyłącznie przykładowe, oznaczone na stronie.",
-
-  "firma": {
-    "nazwa": "AKWIFER — studnie głębinowe (FIKCYJNA, nazwa sprawdzona 07.10.2026: brak firmy o tej nazwie w wynikach wyszukiwania)",
-    "forma_prawna": "—",
-    "adres": "PRZYKŁAD — bez adresu",
-    "telefon": "PRZYKŁAD — 600 000 000, oznaczony na stronie",
-    "wlasciciel": "—",
-    "rok_zalozenia": "—",
-    "ocena_google": "—",
-    "strona_www": "strona wzorcowa Jurczak Studio"
+ "_instrukcja": "Strona WZORCOWA zawodu (studnie głębinowe), wersja 2 „ZLECENIE” (07.10.2026, po ocenie Szymona: v1 „LEJ” była bajerem bez celu i powtarzała przekroje z VIJACH). Firma AKWIFER fikcyjna, osadzona w powiecie poznańskim; dane gmin PRAWDZIWE (rejestr PIG przez mapastudni.pl).",
+ "firma": {
+  "nazwa": "AKWIFER — studnie głębinowe (FIKCYJNA, nazwa sprawdzona 07.10.2026: brak firmy o tej nazwie w wynikach wyszukiwania)",
+  "forma_prawna": "—",
+  "adres": "PRZYKŁAD — bez adresu",
+  "telefon": "PRZYKŁAD — 600 000 000, oznaczony na stronie",
+  "wlasciciel": "—",
+  "rok_zalozenia": "—",
+  "ocena_google": "—",
+  "strona_www": "strona wzorcowa Jurczak Studio"
+ },
+ "fakty": [
+  {
+   "id": "F1",
+   "tresc": "Hydroizohipsa to linia łącząca punkty o jednakowej rzędnej zwierciadła wody podziemnej — odpowiednik poziomicy na mapie topograficznej. Woda płynie prostopadle do hydroizohips, od wyższych do niższych.",
+   "status": "POTWIERDZONE",
+   "zrodlo": "Przegląd Geologiczny (geojournals.pgi.gov.pl), opracowania AGH o warunkach hydrogeologicznych zlewni; legenda MhP 1:50 000",
+   "waga": "wysoka"
   },
-
-  "fakty": [
-    {"id": "F1", "tresc": "Hydroizohipsa to linia łącząca punkty o jednakowej rzędnej zwierciadła wody podziemnej — odpowiednik poziomicy na mapie topograficznej. Woda płynie prostopadle do hydroizohips, od wyższych do niższych.", "status": "POTWIERDZONE", "zrodlo": "Przegląd Geologiczny (geojournals.pgi.gov.pl), opracowania AGH o warunkach hydrogeologicznych zlewni; legenda MhP 1:50 000", "waga": "wysoka"},
-    {"id": "F2", "tresc": "Pompowanie studni obniża zwierciadło wokół niej i tworzy lej depresji, który zakłóca naturalny układ hydroizohips — mapy pokazują go jako osobny element.", "status": "POTWIERDZONE", "zrodlo": "jw. — opisy map hydroizohips i leja depresji", "waga": "wysoka"},
-    {"id": "F3", "tresc": "Wzór Dupuita (studnia zupełna, zwierciadło swobodne, przepływ ustalony): Q = π·k·(H² − h²) / ln(R/r).", "status": "POTWIERDZONE", "zrodlo": "Uniwersytet Przyrodniczy w Poznaniu, hydraulika, wykład 8 (sparrow.up.poznan.pl); repo AGH „Dopływy wody do studni pojedynczej”"},
-    {"id": "F4", "tresc": "Promień leja depresji wg Sichardta: R = 3000 · s · √k (s w m, k w m/s). Przykład dydaktyczny: s = 6 m, k = 4·10⁻⁴ m/s → R = 360 m. Wzór jest empiryczny i przybliżony.", "status": "POTWIERDZONE", "zrodlo": "UP Poznań, wykład 8; przykład liczbowy przeliczony: 3000·6·0,02 = 360"},
-    {"id": "F5", "tresc": "Wydajność jednostkowa q = Q/s; w warstwie swobodnej nie jest stała — trzeba ją odnosić do konkretnej depresji. Próbne pompowanie daje Q i s, z których wylicza się k.", "status": "POTWIERDZONE", "zrodlo": "UP Poznań, wykład 8; opracowania PIG (geojournals)"},
-    {"id": "F6", "tresc": "Orientacyjny współczynnik filtracji: piasek gruboziarnisty ok. 10⁻⁴ m/s, piasek ok. 10⁻⁵ m/s, piasek zwarty ok. 10⁻⁶ m/s, glina piaszczysta ok. 10⁻⁷ m/s, glina ok. 10⁻⁸ m/s.", "status": "POTWIERDZONE", "zrodlo": "UP Poznań, wykład 8 (tabela w cm/s, przeliczona na m/s)"},
-    {"id": "F7", "tresc": "Studnia do 30 m na potrzeby zwykłego korzystania z wód, pobór do 5 m³/d: bez pozwolenia i zgłoszenia (Prawo wodne art. 395, Prawo budowlane art. 29, Prawo geologiczne i górnicze art. 3 pkt 2a). Głębiej: projekt robót geologicznych zatwierdzony przez starostę, dokumentacja hydrogeologiczna, pozwolenie wodnoprawne.", "status": "POTWIERDZONE", "zrodlo": "rp.pl; profivo.pl (akt. 08.08.2026) — sprawdzone przy projekcie VIJACH (F23, F24)"},
-    {"id": "F8", "tresc": "Ceny rynkowe 2026: wiercenie 200–350 zł/mb (trudny grunt >400 zł/mb), typowa studnia 25–35 m to 8 000–15 000 zł, pompa głębinowa 1 500–5 000 zł, zestaw hydroforowy 1 000–3 000 zł.", "status": "POTWIERDZONE", "zrodlo": "kb.pl, 01.08.2026"},
-    {"id": "F9", "tresc": "Wody podziemne występują w dwóch odmianach zwierciadła: swobodnym (woda pod ciśnieniem atmosferycznym, poziom w otworze = strop wody) i napiętym (woda pod przykryciem nieprzepuszczalnym, po nawierceniu podnosi się w rurze).", "status": "POTWIERDZONE", "zrodlo": "JCWPd nr 41 (GIOŚ) — „zwierciadło ma charakter naporowy”; przykład z Przyłubia: strop 38 m → zwierciadło 9,5 m (MhP 320, przy VIJACH)"},
-    {"id": "F10", "tresc": "Średnia głębokość ujęć w GZWP 144 (Wielkopolska Dolina Kopalna) wynosi 60 m; w GZWP 138 (pradolina Toruń–Eberswalde) 30 m, w GZWP 141 (dolna Wisła) 40 m — głębokość studni to cecha miejsca, nie zawodu.", "status": "WNIOSKOWANE", "zrodlo": "WIOŚ Poznań, raport 2002 (przez streszczenie wyszukiwarki, źródło niedostępne 07.10.2026); POŚ Solec 2021–2022"},
-    {"id": "F11", "tresc": "Konkurencja w zawodzie (przegląd 7 stron przy VIJACH): niebiesko-białe szablony, strony pod miasto z tym samym tekstem, „bezpłatna wycena”, zero cen, zero fizyki wody, zero opinii z Google.", "status": "POTWIERDZONE", "zrodlo": "vijach/dane/01-fakty.json, F26–F28"},
-    {"id": "F12", "tresc": "Technika „okien” (wycięcia w treści, przez które widać animowane tło) i tło z liniami szumu Perlina w shaderze — giats.me (Evangelos Giatsidis), kod MIT; szum Perlina 2D — Stefan Gustavson (MIT).", "status": "POTWIERDZONE", "zrodlo": "repo jurczakstudio/giats-portfolio, LICENSE (MIT), src/components/canvas/background/shaders/fragmentShader.js"}
-  ],
-
-  "pytania_do_klienta": [
-    "Strona wzorcowa — przy sprzedaży konkretnej firmie: podmienić nazwę, telefon, zasięg, cennik przykładowy, dodać opinie i zdjęcia (lista z VIJACH)."
-  ],
-
-  "material_wizualny": {
-    "zdjecia_od_klienta": 0,
-    "zdjecia_z_jego_zrodel": 0,
-    "film": false,
-    "uwagi": "Zero zdjęć z założenia — firma fikcyjna. Rejestr musi to udźwignąć: obrazem jest żywa mapa hydroizohips (shader WebGL) i rysunki przekrojów (SVG). Żadnych zdjęć stockowych udających realizacje."
+  {
+   "id": "F2",
+   "tresc": "Pompowanie studni obniża zwierciadło wokół niej i tworzy lej depresji, który zakłóca naturalny układ hydroizohips — mapy pokazują go jako osobny element.",
+   "status": "POTWIERDZONE",
+   "zrodlo": "jw. — opisy map hydroizohips i leja depresji",
+   "waga": "wysoka"
+  },
+  {
+   "id": "F3",
+   "tresc": "Wzór Dupuita (studnia zupełna, zwierciadło swobodne, przepływ ustalony): Q = π·k·(H² − h²) / ln(R/r).",
+   "status": "POTWIERDZONE",
+   "zrodlo": "Uniwersytet Przyrodniczy w Poznaniu, hydraulika, wykład 8 (sparrow.up.poznan.pl); repo AGH „Dopływy wody do studni pojedynczej”"
+  },
+  {
+   "id": "F4",
+   "tresc": "Promień leja depresji wg Sichardta: R = 3000 · s · √k (s w m, k w m/s). Przykład dydaktyczny: s = 6 m, k = 4·10⁻⁴ m/s → R = 360 m. Wzór jest empiryczny i przybliżony.",
+   "status": "POTWIERDZONE",
+   "zrodlo": "UP Poznań, wykład 8; przykład liczbowy przeliczony: 3000·6·0,02 = 360"
+  },
+  {
+   "id": "F5",
+   "tresc": "Wydajność jednostkowa q = Q/s; w warstwie swobodnej nie jest stała — trzeba ją odnosić do konkretnej depresji. Próbne pompowanie daje Q i s, z których wylicza się k.",
+   "status": "POTWIERDZONE",
+   "zrodlo": "UP Poznań, wykład 8; opracowania PIG (geojournals)"
+  },
+  {
+   "id": "F6",
+   "tresc": "Orientacyjny współczynnik filtracji: piasek gruboziarnisty ok. 10⁻⁴ m/s, piasek ok. 10⁻⁵ m/s, piasek zwarty ok. 10⁻⁶ m/s, glina piaszczysta ok. 10⁻⁷ m/s, glina ok. 10⁻⁸ m/s.",
+   "status": "POTWIERDZONE",
+   "zrodlo": "UP Poznań, wykład 8 (tabela w cm/s, przeliczona na m/s)"
+  },
+  {
+   "id": "F7",
+   "tresc": "Studnia do 30 m na potrzeby zwykłego korzystania z wód, pobór do 5 m³/d: bez pozwolenia i zgłoszenia (Prawo wodne art. 395, Prawo budowlane art. 29, Prawo geologiczne i górnicze art. 3 pkt 2a). Głębiej: projekt robót geologicznych zatwierdzony przez starostę, dokumentacja hydrogeologiczna, pozwolenie wodnoprawne.",
+   "status": "POTWIERDZONE",
+   "zrodlo": "rp.pl; profivo.pl (akt. 08.08.2026) — sprawdzone przy projekcie VIJACH (F23, F24)"
+  },
+  {
+   "id": "F8",
+   "tresc": "Ceny rynkowe 2026: wiercenie 200–350 zł/mb (trudny grunt >400 zł/mb), typowa studnia 25–35 m to 8 000–15 000 zł, pompa głębinowa 1 500–5 000 zł, zestaw hydroforowy 1 000–3 000 zł.",
+   "status": "POTWIERDZONE",
+   "zrodlo": "kb.pl, 01.08.2026"
+  },
+  {
+   "id": "F9",
+   "tresc": "Wody podziemne występują w dwóch odmianach zwierciadła: swobodnym (woda pod ciśnieniem atmosferycznym, poziom w otworze = strop wody) i napiętym (woda pod przykryciem nieprzepuszczalnym, po nawierceniu podnosi się w rurze).",
+   "status": "POTWIERDZONE",
+   "zrodlo": "JCWPd nr 41 (GIOŚ) — „zwierciadło ma charakter naporowy”; przykład z Przyłubia: strop 38 m → zwierciadło 9,5 m (MhP 320, przy VIJACH)"
+  },
+  {
+   "id": "F10",
+   "tresc": "Średnia głębokość ujęć w GZWP 144 (Wielkopolska Dolina Kopalna) wynosi 60 m; w GZWP 138 (pradolina Toruń–Eberswalde) 30 m, w GZWP 141 (dolna Wisła) 40 m — głębokość studni to cecha miejsca, nie zawodu.",
+   "status": "WNIOSKOWANE",
+   "zrodlo": "WIOŚ Poznań, raport 2002 (przez streszczenie wyszukiwarki, źródło niedostępne 07.10.2026); POŚ Solec 2021–2022"
+  },
+  {
+   "id": "F11",
+   "tresc": "Konkurencja w zawodzie (przegląd 7 stron przy VIJACH): niebiesko-białe szablony, strony pod miasto z tym samym tekstem, „bezpłatna wycena”, zero cen, zero fizyki wody, zero opinii z Google.",
+   "status": "POTWIERDZONE",
+   "zrodlo": "vijach/dane/01-fakty.json, F26–F28"
+  },
+  {
+   "id": "F12",
+   "tresc": "Technika „okien” (wycięcia w treści, przez które widać animowane tło) i tło z liniami szumu Perlina w shaderze — giats.me (Evangelos Giatsidis), kod MIT; szum Perlina 2D — Stefan Gustavson (MIT).",
+   "status": "POTWIERDZONE",
+   "zrodlo": "repo jurczakstudio/giats-portfolio, LICENSE (MIT), src/components/canvas/background/shaders/fragmentShader.js"
+  },
+  {
+   "id": "F13",
+   "tresc": "Dla 14 gmin powiatu poznańskiego rejestr PIG-PIB (przez mapastudni.pl, dane z 08.06.2026) podaje medianę głębokości otworów, liczbę otworów i najpłytsze ujęcie — od Lubonia (mediana 14 m, 12 otworów) po Komorniki (110 m, 5 otworów) i Kórnik (100 m, 27 otworów). Plik: dane/00-gminy-pig.json.",
+   "status": "POTWIERDZONE",
+   "zrodlo": "mapastudni.pl/studnie-glebinowe/wielkopolskie/poznan/<gmina>, pobrane 07.10.2026",
+   "waga": "wysoka"
+  },
+  {
+   "id": "F14",
+   "tresc": "Rejestr PIG obejmuje głównie studnie komunalne i zakładowe, więc mediany są zawyżone względem studni przydomowych; najpłytsze ujęcie w gminie to dolna granica, mediana — górna.",
+   "status": "WNIOSKOWANE",
+   "zrodlo": "opis bazy CBDH; to samo zastrzeżenie przy VIJACH (F19)"
+  },
+  {
+   "id": "F15",
+   "tresc": "W 11 z 14 gmin mediana przekracza 30 m — dla wielu działek pod Poznaniem studnia wejdzie w procedurę (projekt robót geologicznych, dokumentacja, pozwolenie wodnoprawne).",
+   "status": "WNIOSKOWANE",
+   "zrodlo": "00-gminy-pig.json + F7"
+  },
+  {
+   "id": "F16",
+   "tresc": "Portale-agregatory (mapastudni.pl, Oferteo) zbierają zapytania od klientów z gmin i SPRZEDAJĄ je wykonawcom — strona firmy, która sama daje wycenę z danymi gminy, przejmuje ten ruch bez pośrednika.",
+   "status": "POTWIERDZONE",
+   "zrodlo": "mapastudni.pl: „przekazanie mojego zapytania do lokalnego wykonawcy”; oferteo.pl — model zleceń",
+   "waga": "wysoka"
+  },
+  {
+   "id": "F17",
+   "tresc": "Pytania klienta przed telefonem: ile metrów, ile kosztuje, czy trzeba zgłaszać, kiedy termin. Konkurencja odpowiada „bezpłatna wycena” (F11).",
+   "status": "WNIOSKOWANE",
+   "zrodlo": "F11 + struktura formularzy konkurencji (Hydro2000, Kopiemy Studnie, PROWIERT)"
   }
+ ],
+ "pytania_do_klienta": [
+  "Strona wzorcowa — przy sprzedaży konkretnej firmie: podmienić nazwę, telefon, zasięg, cennik przykładowy, dodać opinie i zdjęcia (lista z VIJACH)."
+ ],
+ "material_wizualny": {
+  "zdjecia_od_klienta": 0,
+  "zdjecia_z_jego_zrodel": 0,
+  "film": false,
+  "uwagi": "Zero zdjęć z założenia — firma fikcyjna. Rejestr musi to udźwignąć: obrazem jest żywa mapa hydroizohips (shader WebGL) i rysunki przekrojów (SVG). Żadnych zdjęć stockowych udających realizacje."
+ }
 }

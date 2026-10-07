@@ -1,29 +1,14 @@
-# 07 — MOBILE · AKWIFER
+# 07 — MOBILE · AKWIFER v2 „ZLECENIE”
 
-Zrzuty: `dane/zrzuty/*-390.jpg` (całe strony, `?static=1`). Test: `node dane/zrzuty/test.mjs` —
-5 adresów × 390/1440: 0 nieodsłoniętych, okna wycięte, WebGL działa, 0 poziomego scrolla, 0 błędów.
+Telefon to główny kanał (W1: klient pyta wieczorem z telefonu). Każda sekcja z `inna-kompozycja` w 06-sekcje.tsv:
 
-## Sygnatura na 390 px
-| | |
-|---|---|
-| **Jak działa** | nie ma kursora: przytrzymanie palca na mapie = pompa w tym miejscu; sekcja „Pompa w kieszeni” (tylko telefon) ma przycisk, który włącza pompę na środku mapy na 7 s i przewija na górę |
-| **Dlaczego inaczej** | `hover: none` — na dotyku nie ma ruchu kursora, a przytrzymanie koliduje z przewijaniem; przycisk jest jedynym pewnym sterowaniem (W4) |
-| **Wydajność** | płótno w DPR 1 na telefonie (desktop maks. 1,5), ok. 30 kl./s, zatrzymane w karcie w tle; jeden shader, zero tekstur. **Pomiar z dławieniem CPU 6× — do zrobienia lokalnie** |
+- **Zmierzch** — kadr pionowy (40svh) na górze, pod nim H1, lead i wybór gminy z przyciskiem na całą szerokość; wycena mieści się w pierwszym ekranie 390×844 (W1).
+- **Karta** — rubryki jedna pod drugą (etykieta | wartość), przycisk SMS na całą szerokość pod kciukiem (W4).
+- **Powiat** — wykres SVG ukryty; zastępuje go sekcja „Szybki wybór” (tylko-mobil): 14 gmin z paskiem od najpłytszego ujęcia do mediany i kreską 30 m, każda linkuje do podstrony (W2).
+- **Robota** — kadr kwadratowy od krawędzi do krawędzi, etapy pod nim (W5).
+- **Paszport** — karta paszportu bez obrotu, pełna szerokość.
+- **Zgłoszenie** — podgląd SMS jak dymek w telefonie, dwa przyciski pełnej szerokości (W4).
+- **Podstrony** — liczba (mediana) nad tytułem; wykres gmin, badanie wody i schemat drogi zgłoszenia przewijane w bok z podpisem „przewiń w bok” — tekst w SVG zostaje czytelny (≥14 px).
+- **Pasek „strona wzorcowa”** — na telefonie statyczny na końcu strony, nie zasłania treści.
 
-## Sekcje tylko na jednym urządzeniu
-| Sekcja | Gdzie | Po co |
-|---|---|---|
-| Pompa w kieszeni (`#pompa`) | telefon (`hover: none`) | przycisk pompy zamiast kursora |
-| podpowiedź „Rusz kursorem / kliknij” | desktop | na telefonie: „Przytrzymaj palec” |
-
-## Zapis decyzji
-| Akt | Desktop | Telefon |
-|---|---|---|
-| Mapa | tytuł na otwartej mapie, legenda w rogu | legenda pod tekstem, mapa w kadrze 92 svh |
-| Arkusze | dwie kolumny: tekst + okno | okno pod tekstem, 74 vw; przy próbie okno pod symulatorem |
-| Próba | wyniki w trzech kolumnach | dwie kolumny |
-| Rachunek | tabela | wiersze tabeli jako karty (pozycja nad jednostką i ceną) |
-| Baner wzorca | pełny | skrócony („strona wzorcowa · firma fikcyjna”) |
-
-Znany artefakt narzędzia: zrzut `fullPage` w Playwright na 390 px rozciąga płótno do ~10 000 px
-i przekracza limit tekstury — w zrzutach okna są puste, na żywym kadrze (`kadr.mjs`) mapa działa.
+Sprawdzone: zrzuty 390 i 1440 (`dane/zrzuty/`), bez poziomego scrolla strony, bez błędów konsoli; `kadr.mjs` testuje kartę, SMS, pamięć karty między stronami, tryb właściciela i kalkulator.

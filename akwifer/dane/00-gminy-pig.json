@@ -1,0 +1,100 @@
+{
+ "buk": {
+  "nazwa": "Buk",
+  "mediana": 46.5,
+  "otworow": 6,
+  "najplytsze": 10.2,
+  "gzwp": "Główny Zbiornik Wód Podziemnych Działki w gminie Buk znajdują się w obrębie zbiornika: Dolina Kopalna Wielkopolska (GZWP 144 )"
+ },
+ "czerwonak": {
+  "nazwa": "Czerwonak",
+  "mediana": 71.5,
+  "otworow": 16,
+  "najplytsze": 10.5,
+  "gzwp": ""
+ },
+ "dopiewo": {
+  "nazwa": "Dopiewo",
+  "mediana": 51.7,
+  "otworow": 9,
+  "najplytsze": 30.0,
+  "gzwp": ""
+ },
+ "kleszczewo": {
+  "nazwa": "Kleszczewo",
+  "mediana": 64.0,
+  "otworow": 8,
+  "najplytsze": 43.0,
+  "gzwp": "Główny Zbiornik Wód Podziemnych Działki w gminie Kleszczewo znajdują się w obrębie zbiornika: Subzbiornik Inowrocław - Gniezno (GZWP 143 )"
+ },
+ "komorniki": {
+  "nazwa": "Komorniki",
+  "mediana": 110.0,
+  "otworow": 5,
+  "najplytsze": 22.0,
+  "gzwp": ""
+ },
+ "kornik": {
+  "nazwa": "Kórnik",
+  "mediana": 100.0,
+  "otworow": 27,
+  "najplytsze": 12.5,
+  "gzwp": "Główny Zbiornik Wód Podziemnych Działki w gminie Kórnik znajdują się w obrębie zbiornika: Dolina Kopalna Wielkopolska (GZWP 144 )"
+ },
+ "lubon": {
+  "nazwa": "Luboń",
+  "mediana": 14.0,
+  "otworow": 12,
+  "najplytsze": 11.9,
+  "gzwp": ""
+ },
+ "mosina": {
+  "nazwa": "Mosina",
+  "mediana": 40.0,
+  "otworow": 66,
+  "najplytsze": 17.0,
+  "gzwp": "Główny Zbiornik Wód Podziemnych Działki w gminie Mosina znajdują się w obrębie zbiornika: Pradolina Warszawa – Berlin (GZWP 150 )"
+ },
+ "poznan": {
+  "nazwa": "Poznań",
+  "mediana": 17.0,
+  "otworow": 410,
+  "najplytsze": 10.0,
+  "gzwp": ""
+ },
+ "rokietnica": {
+  "nazwa": "Rokietnica",
+  "mediana": 56.5,
+  "otworow": 20,
+  "najplytsze": 19.5,
+  "gzwp": ""
+ },
+ "steszew": {
+  "nazwa": "Stęszew",
+  "mediana": 49.6,
+  "otworow": 12,
+  "najplytsze": 21.0,
+  "gzwp": "Główny Zbiornik Wód Podziemnych Działki w gminie Stęszew znajdują się w obrębie zbiornika: Dolina Kopalna Wielkopolska (GZWP 144 )"
+ },
+ "suchy-las": {
+  "nazwa": "Suchy Las",
+  "mediana": 43.0,
+  "otworow": 17,
+  "najplytsze": 15.0,
+  "gzwp": ""
+ },
+ "swarzedz": {
+  "nazwa": "Swarzędz",
+  "mediana": 65.0,
+  "otworow": 35,
+  "najplytsze": 10.0,
+  "gzwp": "Główny Zbiornik Wód Podziemnych Działki w gminie Swarzędz znajdują się w obrębie zbiornika: Subzbiornik Inowrocław - Gniezno (GZWP 143 )"
+ },
+ "tarnowo-podgorne": {
+  "nazwa": "Tarnowo Podgórne",
+  "mediana": 36.0,
+  "otworow": 16,
+  "najplytsze": 15.0,
+  "gzwp": ""
+ }
+}

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """AKWIFER (strona wzorcowa) — pobranie krojów z Google Fonts do własnego hostingu.
 
-Spectral (nagłówki, szeryf z kursywą — tekst mapy) + Onest (tekst) + IBM Plex Mono (rzędne, metry).
+Archivo (oś szerokości 62–125: nagłówki wąskie i ciężkie, tekst normalny) + Source Serif 4 kursywa (cytaty) + DM Mono (liczby).
 Zostawiamy tylko podzbiory `latin` i `latin-ext` (polskie znaki — sprawdzone 28.09.2026).
 Uruchamiane raz na projekt.
 """
@@ -13,9 +13,9 @@ CSS = os.path.join(ROOT, 'site/assets/css/fonts.css')
 UA = ('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
       '(KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36')
 API = ('https://fonts.googleapis.com/css2'
-       '?family=Spectral:ital,wght@0,300;0,400;0,500;1,300;1,400'
-       '&family=Onest:wght@400;500;600'
-       '&family=IBM+Plex+Mono:wght@400;500'
+       '?family=Archivo:wdth,wght@62..125,400..800'
+       '&family=Source+Serif+4:ital,opsz,wght@1,8..60,300..500'
+       '&family=DM+Mono:wght@400;500'
        '&display=swap')
 KEEP = ('latin', 'latin-ext')
 
@@ -48,10 +48,12 @@ def main():
             seen[url] = name
             print('  %-32s %6.1f kB' % (name, os.path.getsize(os.path.join(OUT, name)) / 1024))
         rng = re.search(r'unicode-range: ([^;]+);', body).group(1)
+        st = re.search(r'font-stretch: ([^;]+);', body)
+        stretch = '  font-stretch: %s;\n' % st.group(1) if st else ''
         out.append(
             "@font-face {\n  font-family: '%s';\n  font-style: %s;\n  font-weight: %s;\n"
-            "  font-display: swap;\n  src: url(../fonts/%s) format('woff2');\n"
-            "  unicode-range: %s;\n}" % (fam, style, weight, name, rng))
+            "%s  font-display: swap;\n  src: url(../fonts/%s) format('woff2');\n"
+            "  unicode-range: %s;\n}" % (fam, style, weight, stretch, name, rng))
     header = ('/* Kroje hostowane lokalnie — pobrane skryptem fonts.py z Google Fonts\n'
               '   (licencja OFL). Bez połączeń do fonts.googleapis.com. */\n')
     open(CSS, 'w', encoding='utf-8').write(header + '\n'.join(out) + '\n')

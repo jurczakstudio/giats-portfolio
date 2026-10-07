@@ -1,78 +1,33 @@
-# 03 — KONCEPT · AKWIFER (strona wzorcowa zawodu „studnie głębinowe”)
+# 03 — KONCEPT · AKWIFER v2 „ZLECENIE”
 
-Druga strona studniarska pracowni, po VIJACH „ZWIERCIADŁO” (jasna mgła, zdjęcia klientów,
-zejście przez przekrój). Zadanie Szymona: „wejdź na wyższy poziom, strona poglądowa dla zawodu,
-bez klienta”. Repo: `giats-portfolio` — z niego bierzemy **techniki** (okna w treści, tło
-z liniami w shaderze), nie kod Nexta i nie grafiki.
+## Dziesięć pytań (skrót)
+1. **Za co branża bierze pieniądze, czego nie widać:** za metry, które nie są znane przed wierceniem — klient kupuje w ciemno (W2).
+2. **Co robi lepiej wzorcowa firma:** mówi z góry, ile metrów zwykle jest w danej gminie i co z tego wynika (W2, W3).
+3. **Kto czyta:** (a) inwestor z gminy pod Poznaniem, wieczorem, telefon; (b) właściciel firmy studniarskiej, któremu Szymon wysłał link (W5).
+4. **Zdanie w głowie:** inwestor — „wiem, ile mnie to mniej więcej czeka”; właściciel — „ta strona przyprowadza mi klientów, za których dziś płacę portalom”.
+5. **Czynność jako interakcja:** wycena: wybór gminy i celu → karta zlecenia (W1, W4).
+6. **Bohater:** karta zlecenia — cztery rubryki: metry, złotówki, formalności, termin (W4).
+7. **Zmiana rytmu:** po wycenie — strona przestaje pytać, zaczyna udowadniać (praca, paszport, gminy).
+8. **Decyzja nie do uzasadnienia stylem:** tryb „Oczami właściciela” — strona sprzedaje samą siebie (W5).
+9. **Czego nie ma:** formularza „bezpłatna wycena”, listy 200 miast, przekrojów warstw, fałszywych opinii.
+10. **Dlaczego nie inny zawód:** karta zlecenia liczy metry studni z danych PIG gminy i granicę 30 m — to istnieje tylko tu.
 
-## 1. Dziesięć pytań
-
-1. **Za co ten zawód bierze pieniądze i czego nie widać?** Za trafienie w warstwę, która odda
-   wodę, i sprawdzenie tego pompowaniem. Nie widać pola wody pod działką i tego, jak studnia
-   je zmienia (W1).
-2. **Co robi lepiej niż sąsiad?** Wzorzec: firma, która liczy i pokazuje — Q, s, R zamiast
-   „woda będzie” (W2).
-3. **Kto czyta?** Inwestor budujący dom, wieczorem, często na telefonie; drugi raz z partnerem
-   przy komputerze. Racjonalny, chce zrozumieć, za co płaci 10–20 tys. zł (W4).
-4. **Zdanie w głowie:** „Każda studnia zmienia mapę wody — oni to umieją policzyć.”
-5. **Czynność jako interakcja:** pompowanie. Kursor/palec = pompa; suwak = wydajność (W1, W2).
-6. **Fizyczny bohater:** pole zwierciadła wody — hydroizohipsy (W1).
-7. **Gdzie zmienia się rytm:** na próbie pompowania — przed nią strona tłumaczy (arkusze
-   z oknami, wolno), od niej liczy i załatwia (sterowanie, gęsto, mono) (W2).
-8. **Decyzja nie do uzasadnienia stylem pracowni:** cała strona leży na żywej mapie
-   hydroizohips, którą odkształca pompa — czyli na fizyce wody podziemnej (W1).
-9. **Czego nie ma, a ma konkurencja:** zdjęć wiertnic, listy miast, „bezpłatnej wyceny”,
-   liczników „500+ studni”. Zyskuje: jedną rzecz, której nikt nie pokazuje (W5).
-10. **Dlaczego nie mogłaby należeć do kamieniarza czy dekarza:** bo jej obraz to pole wody,
-    a interakcja to lej depresji — oba istnieją wyłącznie w tym zawodzie.
-
-## 2. Koncept
-
+## Koncept
 | | |
 |---|---|
-| **Nazwa** | **LEJ** |
-| **Metafora** | Strona jest arkuszem mapy hydrogeologicznej, a Ty stoisz na nim z pompą. |
-| **Zdanie pamięciowe** | „Każda studnia zmienia mapę wody.” |
-| **Fizyczny bohater** | hydroizohipsy i lej depresji |
-| **Rejestr** | **arkusz mapy** (dom.md B, wniosek Matczak) — papier, niebieskie izolinie, okna-otwory wycięte w arkuszach (W5). Inny niż VIJACH na pięciu osiach: zero zdjęć, papier zamiast mgły, kroje, nośnik (shader), ruch (pole zamiast przypięcia). |
+| **Nazwa** | **ZLECENIE** |
+| **Metafora** | Strona jest biurem firmy otwartym o 22:00 — przyjmuje klienta, wycenia i zapisuje. |
+| **Rejestr** | **ciemny warsztatowy** (wariant ciemnego kina): zmierzch, sygnałowy pomarańcz lamp roboczych jako jedyny akcent, ciężki wąski grotesk Archivo. Różni się od VIJACH (jasna mgła) i v1 (papier). |
+| **Sygnatura** | karta zlecenia: powstaje w hero, idzie z klientem na każdą podstronę (localStorage), na stronach gmin wypełnia się sama. |
 
-### Sygnatura
+## Trzy konsekwencje strukturalne
+1. Pierwszy ekran to sterowanie (wybór gminy), nie hasło — wycena jest nad zgięciem.
+2. 14 podstron gmin generowanych z danych — każda inna, bo inne liczby (W2).
+3. Każda sekcja ma notkę właściciela; bez trybu jest niewidoczna, z trybem — strona jest ofertą (W5).
 
-| | Co to jest | Gdzie wraca |
-|---|---|---|
-| **interakcja** | kursor/palec pompuje → lej depresji na mapie; klik = wiercenie stałej studni | każda strona: okna w arkuszach pokazują to samo pole |
-| **ruch** | pole wody pod spodem przesuwa się z przewijaniem (mapa jedzie), lej rośnie z suwakiem Q | wszystkie podstrony |
-| **materiał** | papier mapy, niebieskie hydroizohipsy co 0,5 m, co piąta pogrubiona | okna z odczytem rzędnej na żywo |
+## Decyzja własna
+Tryb „Oczami właściciela” (W5) — u innego klienta byłby zbędny; tu odbiorcą demo jest firma, której sprzedajemy stronę.
 
-## 3. Trzy konsekwencje strukturalne
-
-1. **Tło nie jest dekoracją, tylko modelem.** Te same funkcje liczą obraz w shaderze i liczby
-   w odczytach okien — odczyt „zwierciadło 4,8 m” pod oknem jest wartością tego pola.
-2. **Każda sekcja to arkusz z co najmniej jednym otworem** albo otwarta mapa. Nie ma sekcji
-   na pełnym kolorze tła.
-3. **Każda liczba ma wzór albo źródło** — symulator pokazuje wzór, z którego liczy; cennik
-   jest jawnie przykładowy, ceny rynkowe mają źródło.
-
-## 4. Decyzja własna
-
-| | |
-|---|---|
-| **Decyzja** | Kursor jako pompa: interakcja, która jest fizycznie prawdziwa (lej depresji wg Dupuita/Sichardta), a nie efektem. |
-| **Wniosek** | W1, W2 |
-| **Czego nie da się przenieść** | Na stronie kamieniarza „pole, które ugina się wokół kursora” jest tapetą; tutaj jest tym, co studnia naprawdę robi z wodą. |
-
-## 5. Różnica wobec konkurencji (F11)
-
-| Oś | Oni | My |
-|---|---|---|
-| układ | hero + usługi + miasta | otwarta mapa → arkusze z oknami |
-| paleta | niebieski + biel | papier mapy + niebieskie izolinie |
-| typografia | systemowy grotesk | Spectral + Onest + IBM Plex Mono |
-| nośnik | zdjęcia maszyn | shader pola wody, przekroje SVG |
-| ruch | slider | lej depresji pod kursorem, mapa jedzie z przewijaniem |
-
-## 6. Z giats-portfolio biorę (MIT, przypisane w stopce)
-
-1. **Okna w treści** — wycięcia, przez które widać animowane tło. U nas okno = otwór studni.
-2. **Tło z liniami szumu w shaderze** — u nas linie mają znaczenie: to hydroizohipsy.
-3. Nie biorę: Nexta, R3F, symulacji płynu (za ciężka na telefon klienta), żadnych grafik.
+## Różnica wobec konkurencji (F11) i wobec nas
+Konkurencja: niebiesko-biały szablon, formularz. My: ciemny wieczorny kadr, wycena z danymi gminy, karta zlecenia.
+Wobec VIJACH i v1: zero przekrojów, zero mgły i papieru, inne kroje (Archivo, Source Serif 4, DM Mono), akcent pomarańczowy.

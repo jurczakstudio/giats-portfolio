@@ -1,36 +1,36 @@
-# 04 — KIERUNEK · AKWIFER
-
-Każda decyzja cytuje wniosek.
+# 04 — KIERUNEK · AKWIFER v2 „ZLECENIE”
 
 ## Paleta i kroje
-- Tło: papier mapy `--papier #f1ede3`, druga warstwa `--papier-2 #e7e1d2` — jak arkusz MhP (W5).
-- Tekst: atrament `--atrament #1a232b`, drugi stopień `--olowek #4e5861` (W5).
-- Jedyny akcent: niebieski hydroizohips `--izolinia #1f5f9e` — ten sam kolor rysuje linie i przyciski (W1).
-- Lej depresji barwi pole odrobinę głębszym błękitem — tylko tam, gdzie woda jest naprawdę obniżona (W1, W2).
-- Spectral (szeryf z kursywą) w nagłówkach — rejestr opisu mapy, nie reklamy (W5).
-- Onest w tekście, IBM Plex Mono dla rzędnych, wzorów i liczb (W2).
+- Tło zmierzchu `--noc #0e1316`, druga warstwa `--noc-2 #161d21` — kadry generowane są o zmierzchu, strona je przedłuża (W5).
+- Tekst `--kosc #ece6da`, drugi `--popiol #a7a69f` — kontrast ≥ 4,5:1 na nocy (W4).
+- Jedyny akcent: pomarańcz lamp roboczych `--sygnal #ff6b2c` — przyciski, karta zlecenia, liczby wyceny (W1, W4).
+- Woda w danych (słupki gmin) w chłodnym `--woda #7cc4d6` jako barwa informacyjna, nigdy na przyciskach (W2).
+- Archivo w szerokości 75 i wadze 800 w nagłówkach — industrialne, jak tabliczka wiertnicy (W5).
+- Source Serif 4 kursywa tylko w notkach właściciela — głos „z boku”, odróżniony od strony klienta (W5).
+- DM Mono dla metrów, złotówek i dat (W4).
 - Skala tokenami `--fs-*`, nic poniżej 14 px (W4).
 
 ## Sygnatura
-- Pełnoekranowe płótno WebGL z polem zwierciadła wody i hydroizohipsami co 0,5 m (W1).
-- Kursor/palec = pompa; lej depresji liczony kształtem Dupuita, promień Sichardtem (W1, W2).
-- Klik/tap na otwartej mapie = wiercenie stałej studni (maks. 6), z numerem otworu (W1).
-- Arkusze z oknami-otworami; pod każdym oknem odczyt rzędnej z tego samego pola (W1, W5).
-- Mapa przesuwa się z przewijaniem, więc przez kolejne okna widać kolejne fragmenty tej samej mapy (W1).
-- Na telefonie przycisk „Pompuj” zamiast kursora; bez WebGL statyczny wzór izolinii w CSS (W4).
+- Karta zlecenia: gmina, cel, osoby → metry (najpłytsze–mediana PIG), złotówki (rynek × metry + osprzęt), formalności (≤ / > 30 m), termin (przykład) (W1, W2, W3, W4).
+- Karta zapisuje się w przeglądarce i wraca na każdej podstronie; na stronie gminy wypełnia się nią sama (W4).
+- Przycisk „Wyślij zgłoszenie” składa SMS z rubryk karty — firma dostaje gotowe zlecenie (W1).
 
 ## Struktura
-- `/` — otwarta mapa → zwierciadło → próba pompowania → przebieg → rachunek → 30 m → karta zgłoszenia (W1–W4).
-- `/proba-pompowania/` — pełny symulator, krzywa depresji, tabela gruntów (W2).
-- `/przebieg/` — karta otworu: etapy od pomiaru do protokołu pompowania (W2, W3).
-- `/formalnosci/` — granica 30 m i 5 m³/d, odległości (W4).
-- `/kontakt/` — karta zgłoszenia składana w SMS (W4).
+- `/` — hero z wyceną → karta → gminy (wykres) → przebieg ze zdjęciem → paszport studni → zgłoszenie (W1–W4).
+- `/gmina/<slug>/` ×14 — dane PIG gminy, karta wypełniona, pytania lokalne, sąsiednie gminy (W2).
+- `/paszport-studni/` — przykładowy paszport po odbiorze: dane studni, badanie wody, przeglądy (W5).
+- `/dla-firm/` — oferta dla właściciela firmy: co robi każda część strony (W5).
 
-## Treść
-- Każda liczba ze wzorem albo źródłem; model podpisany „poglądowy” (W2, W3).
-- Cennik firmy oznaczony „PRZYKŁAD — do podmiany” obok cen rynkowych ze źródłem (W4).
-- Baner „strona wzorcowa · firma fikcyjna” na każdej stronie; telefon przykładowy (W5).
+## Obraz
+- Hero: wiertnica o zmierzchu na działce z domem w stanie surowym — generowana, podpisana „ilustracja poglądowa” (W5).
+- Przebieg: woda nalewana do szklanki z nowej studni — generowana, podpisana (W5).
+- Do czasu wygenerowania: plansza zastępcza z gotowym promptem w README (W5).
 
-## Ruch
-- `rv:split` na nagłówkach arkuszy, `rv:mask` na oknach, `seq` na listach, `scrub` na krzywej depresji (W1).
-- Bezpieczniki z biblioteki + shader zatrzymany przy `prefers-reduced-motion` i `?static=1` — mapa stoi, lej pokazany w stanie końcowym (W4).
+## Tryb właściciela
+- Przełącznik w nagłówku „Oczami właściciela”, `?wlasciciel=1` otwiera stronę od razu w tym trybie — link do wysłania firmie (W5).
+- Notki w kursywie szeryfowej, przy każdej sekcji: co sekcja robi dla firmy, liczbowo, jeśli się da (W5).
+
+## Uczciwość
+- Baner „strona wzorcowa · firma fikcyjna”; telefon `000 000 000` (nie da się połączyć) (W5).
+- Dane gmin z rejestru PIG z zastrzeżeniem, że mediany są zawyżone (W2).
+- Brak opinii — nie zmyślamy; notka właściciela mówi, gdzie pojawią się prawdziwe (W5).

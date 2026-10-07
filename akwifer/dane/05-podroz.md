@@ -1,28 +1,16 @@
-# 05 — PODRÓŻ · AKWIFER
+# 05 — PODRÓŻ · AKWIFER v2 „ZLECENIE”
 
-| # | Akt | Wchodzi wiedząc | Wychodzi wiedząc | Czuje | Światło |
-|---|---|---|---|---|---|
-| 1 | **Mapa** | nic | pod działką jest pole wody z liniami; kursor to pompa i ugina je w lej | zaskoczenie, zabawa | otwarta mapa |
-| 2 | **Pompa w kieszeni** *(telefon)* | że jest mapa | jak pompować palcem | — | otwarta mapa |
-| 3 | **Zwierciadło** | że woda ma kształt | że zwierciadło bywa swobodne albo napięte i dlatego głębokość to cecha miejsca | zrozumienie | arkusz z dwoma oknami |
-| 4 | **Próba** | że studnia ciągnie wodę z warstwy | jak z Q i gruntu wychodzi depresja, lej i wydajność — i że lej na mapie to te liczby | „to się da policzyć” | arkusz, okno na lej |
-| 5 | **Karta otworu** | ile woda „kosztuje” fizycznie | co dzieje się na działce krok po kroku | spokój | arkusz-karta |
-| 6 | **Rachunek** | przebieg | ile to kosztuje (rynek + przykład) | trzeźwość | papier w linie |
-| 7 | **Granica** | ile kosztuje | że do 30 m i 5 m³/d nic się nie zgłasza | ulga | arkusz z linią 30 m |
-| 8 | **Zgłoszenie** | że może działać | co podać i jak wysłać | gotowość | arkusz z oknem |
+| # | Akt | Wchodzi wiedząc | Wychodzi wiedząc | Czuje |
+|---|---|---|---|---|
+| 1 | **Zmierzch** | szuka studni | ta firma od razu pyta o gminę | „ktoś wreszcie odpowiada” |
+| 2 | **Karta** | gminę i cel | metry, złotówki, formalności, termin — swoje | pewność |
+| 3 | **Powiat** | swoje liczby | dlaczego w Kórniku 100 m, a w Luboniu 14 | zrozumienie |
+| 4 | **Robota** | ile i dlaczego | jak przebiega wiercenie i co dostaje na koniec | spokój |
+| 5 | **Paszport** | że studnia będzie | że dostanie dokument studni na lata | zaufanie |
+| 6 | **Zgłoszenie** | wszystko | jak jednym SMS-em wysłać kartę | gotowość |
 
-**Punkt zwrotny:** akt 4 — przed nim strona tłumaczy (szerokie arkusze, kursywa, okna),
-od niego liczy i załatwia (sterowanie, mono, gęściej).
-
-**Moment kulminacyjny:** suwak Q w próbie pompowania — lej na mapie, widoczny w oknie arkusza,
-pogłębia się na oczach, a pod oknem odczyt „depresja s = 3,4 m · R = 204 m”. Na 390 px: suwak
-pod oknem, okno 72 vw, odczyt duży mono.
-
-**Powrót sygnatury:** okno na mapę na każdej stronie — `/` (n 1/5), `/proba-pompowania/` 2/5,
-`/przebieg/` 3/5, `/formalnosci/` 4/5, `/kontakt/` 5/5.
-
-| Nie ma | Bo | W zamian |
-|---|---|---|
-| zdjęć | firma fikcyjna (W5) | shader + przekroje |
-| opinii | nie zmyślamy | miejsce na opinie opisane jako „do podmiany” w README |
-| listy miast | F11 | zdanie: głębokość jest cechą miejsca (W3) |
+**Punkt zwrotny:** akt 2 — po karcie strona przestaje pytać i zaczyna udowadniać.
+**Kulminacja:** karta zlecenia wypełnia się po wyborze gminy: cztery liczby naraz, pomarańczowe na ciemnym.
+Na 390 px: karta pełnej szerokości, przycisk SMS w zasięgu kciuka.
+**Powrót sygnatury:** karta na każdej podstronie (gminy — wypełniona gminą; paszport — z danymi z karty; dla firm — jako zgłoszenie, które dostaje firma).
+**Tryb właściciela:** ta sama podróż, z notką przy każdym akcie — co ten akt daje firmie.

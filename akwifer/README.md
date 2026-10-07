@@ -1,49 +1,29 @@
 # AKWIFER — strona wzorcowa zawodu „studnie głębinowe” (Jurczak Studio)
 
-**Status:** zbudowana (etapy 1–9), bramka `audyt.py` otwarta 12/12. Nie wdrożona.
-**Firma fikcyjna** — telefon (`600 000 000`), godziny, zasięg i cennik są PRZYKŁADOWE, oznaczone na stronie.
-Adres planowany: `akwifer.jurczakstudio.pl` (DEMO = noindex). Gałąź `studnie-wzorzec` w repo `giats-portfolio`
-— katalog `akwifer/` jest niezależny od aplikacji Next.js w korzeniu repo i jej nie dotyka.
+**Koncept v2: ZLECENIE.** Strona, która przyjmuje zlecenia, zamiast tylko ładnie wyglądać.
+Firma jest **fikcyjna** (telefon `000 000 000`, termin, paszport — przykłady, oznaczone na stronie);
+**dane gmin są prawdziwe**: rejestr PIG-PIB przez mapastudni.pl (14 gmin powiatu poznańskiego, 08.06.2026).
 
-## Koncept: LEJ
-Tło każdej strony to żywa mapa hydroizohips (WebGL): poziomice zwierciadła wody co 0,25 m.
-**Kursor jest pompą** — wokół niego zwierciadło opada w lej depresji (kształt Dupuita, promień Sichardta,
-przewyższenie ×3, podpisane w legendzie). Klik wierci studnię. Arkusze z treścią mają **okna-otwory**,
-przez które widać tę samą mapę, a pod oknem odczyt głębokości liczony z tego samego pola, co obraz.
-**Kulminacja:** model próby pompowania — suwak Q i grunt (k) liczą depresję s, R i wydajność jednostkową,
-a lej w oknie obok rośnie razem z liczbami.
+Adres: `akwifer.jurczakstudio.pl` (DEMO = noindex). Gałąź `studnie-wzorzec` w repo `giats-portfolio`;
+katalog `akwifer/` jest niezależny od aplikacji Next.js w korzeniu repo.
 
-Z `giats-portfolio` (MIT, E. Giatsidis) wzięte są **techniki**: okna w treści i tło z liniami w shaderze.
-Kod jest własny, bez Nexta/R3F/GSAP i bez grafik — przypisanie w stopce strony.
+## Co pokazuje klientowi (firmie studniarskiej)
+- **Karta zlecenia** (sygnatura) — gmina + cel + liczba osób → metry, złotówki, formalności (granica 30 m), termin.
+  Przelicza się na żywo, pamięta się między stronami, wysyła się **SMS-em** z gotową treścią.
+- **14 podstron gmin** z innymi liczbami i tekstem (FAQ + JSON-LD) — pod frazy „studnia głębinowa <gmina>”.
+- **Paszport studni** — dokument po odbiorze: głębokość, filtr, zwierciadło, wydajność, badanie wody, przeglądy.
+- **Tryb „Oczami właściciela”** (przycisk w nagłówku, `/?wlasciciel=1`) — żółte notki tłumaczą, co każda sekcja robi dla firmy.
+- **/dla-firm/** — droga zgłoszenia i kalkulator kosztu leadów z portali.
 
-Druga strona studniarska pracowni, po VIJACH „ZWIERCIADŁO” (jasna mgła + zdjęcia klientów). Tu: papier mapy,
-zero zdjęć (firma fikcyjna — nie udajemy realizacji), obrazem jest fizyka wody.
+## Budowa
+    python fonts.py     # raz (Archivo wdth/wght, Source Serif 4 italic, DM Mono)
+    python images.py    # po wrzuceniu obrazów do zrodla/gen/
+    python build.py     # zawsze — na końcu bramka _pracownia/_wzorce/audyt/audyt.py
 
-## Pliki
-| | |
-|---|---|
-| `dane/01–07` | fakty zawodu ze źródłami, wnioski W1–W5, koncept, kierunek, podróż, sekcje, mobile |
-| `content.py` | dane (model, cennik przykładowy, etapy, pytania) |
-| `brand.py` | paleta, tokeny `--fs-*`, sygnet |
-| `build.py` | generator 5 adresów + 404, `_headers` (noindex), bramka |
-| `src/site.css`, `src/site.js` | jeden CSS, jeden JS (shader w JS) |
-| `_pracownia/` | kopia warsztatu: `_wzorce/ruch`, `_wzorce/audyt`, NASTART, plugin |
+Obrazy: dwa kadry z Higgsfield wg `dane/zamowienie-obrazow.md` (`hero-wiertnica.png`, `woda-szklanka.png`).
+Do czasu ich wrzucenia strona używa plansz wektorowych podpisanych „plansza zastępcza”.
 
-## Komendy
-```bash
-python fonts.py     # raz (zrobione)
-python build.py     # zawsze — kończy się bramką
-python -m http.server 8788 --directory site
-node dane/zrzuty/zrzut.mjs / /kontakt/      # całe strony 390 i 1440 (?static=1)
-node dane/zrzuty/kadr.mjs / 1440            # kadr z pompą pod kursorem i oknem próby
-node dane/zrzuty/test.mjs                   # odsłonięcia, okna, symulator, karta, poziomy scroll
-```
-Wdrożenie (lokalnie, `wrangler` zalogowany): dwuklik `WDROZ.cmd`.
+Zrzuty i testy: `python3 -m http.server 8788 --directory site`, potem `node dane/zrzuty/zrzut.mjs / /gmina/kornik/`
+i `node dane/zrzuty/kadr.mjs`.
 
-## Do zrobienia lokalnie
-`podobienstwo.py` (porównanie z innymi projektami), Lighthouse i pomiar z dławieniem CPU 6× (shader na telefonie),
-`js-krytyk-designu`. Przy sprzedaży konkretnej firmie: nazwa, telefon, zasięg, cennik, opinie, zdjęcia realizacji.
-
-## Zauważone przy okazji
-`fonts.py` z VIJACH nazywał pliki bez wagi — przy krojach statycznych (JetBrains Mono 400/500) druga waga
-nadpisywała pierwszą. Tu poprawione (waga w nazwie pliku); w VIJACH do sprawdzenia.
+Wdrożenie (lokalnie, wymaga zalogowanego wranglera): `WDROZ.cmd`.

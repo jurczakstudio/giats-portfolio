@@ -1,79 +1,48 @@
 # -*- coding: utf-8 -*-
-"""AKWIFER — wyłącznie dane. Firma FIKCYJNA (strona wzorcowa zawodu). Źródła: dane/01-fakty.json."""
+"""AKWIFER v2 „ZLECENIE” — wyłącznie dane. Firma FIKCYJNA, dane gmin PRAWDZIWE (dane/00-gminy-pig.json, F13)."""
+import json
+from pathlib import Path
 
 FIRMA = {
     'nazwa': 'AKWIFER — studnie głębinowe',
-    'krotka': 'AKWIFER',
-    'tel': '600 000 000',          # PRZYKŁAD — oznaczony na stronie
-    'tel_e164': '+48600000000',
+    'tel': '000 000 000',          # numer niemożliwy do wybrania — firma fikcyjna
+    'tel_e164': '+48000000000',
     'godziny': 'pn–sob 7–19',      # PRZYKŁAD
-    'zasieg': 'do 60 km od bazy',  # PRZYKŁAD
+    'baza': 'powiat poznański',
+    'termin': 'listopad 2026 — 3 wolne dni',   # PRZYKŁAD — właściciel wpisuje sam
 }
 
-# Model próby pompowania (F3–F6). Jednostki SI.
-MODEL = {
-    'r_studni': 0.0625,        # m — otwór 125 mm
-    'H': 12.0,                 # m — miąższość warstwy nad spągiem (przykład)
-    'grunty': [                # (etykieta, k m/s) — F6, UP Poznań wykład 8
-        ('piasek drobny', 1e-5),
-        ('piasek średni', 5e-5),
-        ('piasek gruboziarnisty', 1e-4),
-        ('piasek ze żwirem', 5e-4),
-    ],
-    'Q_min': 0.5, 'Q_max': 8.0, 'Q_dom': 2.5,   # m³/h
-}
+_SUROWE = json.loads((Path(__file__).parent / 'dane' / '00-gminy-pig.json').read_text(encoding='utf-8'))
+# GZWP wycięte z opisu agregatora (tylko tam, gdzie go podał)
+GMINY = []
+for slug, g in sorted(_SUROWE.items(), key=lambda kv: kv[1]['mediana']):
+    gz = ''
+    if '(GZWP' in g['gzwp']:
+        gz = ' '.join(g['gzwp'].split('zbiornika: ')[1].split()).replace(' )', ')')
+    GMINY.append({'slug': slug, 'nazwa': g['nazwa'], 'mediana': g['mediana'], 'otworow': g['otworow'],
+                  'min': g['najplytsze'], 'gzwp': gz})
+SREDNIA_POWIATU = 52.5    # mapastudni.pl, „Średnia dla powiatu Poznań”
+ZRODLO_PIG = 'rejestr PIG-PIB (Centralna Baza Danych Geologicznych) przez mapastudni.pl, dane z 08.06.2026'
 
-RYNEK = {'mb': (200, 350), 'pompa': (1500, 5000), 'hydrofor': (1000, 3000),
-         'zrodlo': 'kb.pl, „Wiercenie studni głębinowej w 2026 roku”, 1 sierpnia 2026'}
+# Rynek (F8, kb.pl 01.08.2026)
+RYNEK = {'mb': (200, 350), 'osprzet': (2500, 8000)}   # osprzęt = pompa 1,5–5 tys. + hydrofor 1–3 tys.
+ZUZYCIE_OS = 0.1   # m³ na osobę na dobę — przyjęte ok. 100 l (oznaczone na stronie jako założenie)
 
-# Cennik PRZYKŁADOWY (do podmiany na cennik klienta) — wartości mieszczą się w widełkach rynku F8.
-CENNIK = [
-    ('Wiercenie Ø 125 mm, piaski', 'za metr', '240 zł'),
-    ('Rura PVC z filtrem szczelinowym', 'za metr', 'w cenie wiercenia'),
-    ('Pompa głębinowa 1,1 kW z montażem', 'komplet', '2 900 zł'),
-    ('Zbiornik hydroforowy 100 l + automatyka', 'komplet', '1 900 zł'),
-    ('Studzienka z pokrywą i wyprowadzenie do 10 m', 'komplet', '1 600 zł'),
-    ('Próbne pompowanie z protokołem', 'za otwór', 'w cenie'),
-]
+CELE = [('dom', 'Dom', 1.0), ('ogrod', 'Dom i ogród', 2.0), ('nawadnianie', 'Ogród / nawadnianie', 3.0)]
 
 ETAPY = [
-    ('0 m', 'Rozpoznanie', 'Mapa hydrogeologiczna arkusza, otwory w okolicy z bazy PIG, rozmowa o zużyciu wody. Z tego bierze się przewidywana głębokość — zanim ktokolwiek wjedzie na działkę.'),
-    ('0 m', 'Miejsce otworu', 'Odległość od granicy, szamba i budynków; dojazd dla wiertnicy. Miejsca nie wybiera się „gdzie wygodnie”, tylko tam, gdzie przepisy i grunt pozwalają.'),
-    ('0 → strop', 'Wiercenie i próbki', 'Co metr albo przy każdej zmianie gruntu próbka urobku do karty otworu. Karta to dowód, przez co wiercono — dostajesz ją po robocie.'),
-    ('strop → spąg', 'Rura i filtr', 'Filtr staje naprzeciw najlepiej przepuszczalnej warstwy, obsypka żwirowa wokół, uszczelnienie nad warstwą wodonośną — żeby woda z góry nie spływała do studni.'),
-    ('cała głębokość', 'Próbne pompowanie', 'Pompowanie ze stałą wydajnością i pomiar depresji: z Q i s wynika wydajność jednostkowa i dobór pompy. Tę liczbę dostajesz na piśmie.'),
-    ('0 m', 'Pompa, zbiornik, odbiór', 'Pompa dobrana do wydajności studni, nie odwrotnie. Próbka wody do laboratorium i protokół: głębokość, filtr, zwierciadło, Q, s.'),
+    ('Telefon albo karta', 'Dzwonisz albo wysyłasz kartę z tej strony. Oddzwaniamy z pytaniami o działkę — gmina i cel już są.'),
+    ('Oględziny i papiery', 'Miejsce otworu, dojazd, odległości. Jeśli w Twojej gminie studnia wyjdzie ponad 30 m — przygotowujemy projekt robót geologicznych.'),
+    ('Wiercenie', 'Zwykle jeden dzień na działce. Karta otworu: co metr opis gruntu.'),
+    ('Próbne pompowanie', 'Stała wydajność, pomiar depresji — z tego dobór pompy, nie z katalogu.'),
+    ('Odbiór i paszport', 'Pompa, zbiornik, studzienka, próbka wody do laboratorium. Dostajesz paszport studni.'),
 ]
 
-PYTANIA_PROBA = [
-    ('Po co próbne pompowanie, skoro woda leci?',
-     'Bo „leci” nie mówi, ile studnia odda bez osuszenia — dopiero stała wydajność Q i zmierzona depresja s pozwalają dobrać pompę.',
-     'Z tych dwóch liczb wychodzi wydajność jednostkowa q = Q/s. Pompa większa niż możliwości studni będzie ją osuszać i pracować na sucho.'),
-    ('Czy ten symulator mówi, ile da moja studnia?',
-     'Nie — to model poglądowy: wzór Dupuita dla zwierciadła swobodnego i promień leja ze wzoru Sichardta, przy założonej miąższości warstwy 12 m.',
-     'Prawdziwy wynik daje dopiero pompowanie na działce. Model pokazuje zależności: ten sam pobór w drobnym piasku robi dużo głębszy lej niż w żwirze.'),
-    ('Czym jest lej depresji?',
-     'To obniżenie zwierciadła wody wokół pompowanej studni — najgłębsze przy rurze, coraz płytsze aż do promienia R, gdzie znika.',
-     'Na mapie hydroizohips widać go jako koncentryczne linie wokół otworu. Dwie studnie zbyt blisko siebie mają nakładające się leje i odbierają sobie wodę.'),
-]
-
-PYTANIA_PRZEBIEG = [
-    ('Co dostanę na piśmie po wierceniu?',
-     'Kartę otworu (przez jakie warstwy wiercono), opis konstrukcji studni (rura, filtr, głębokości) i protokół próbnego pompowania (Q, s, zwierciadło).',
-     'To dokumenty, które przydadzą się przy każdej wymianie pompy i każdym serwisie — także u innej firmy.'),
-    ('Ile metrów będzie miała studnia?',
-     'Tyle, ile wynika z budowy warstw w tym miejscu — średnie głębokości ujęć różnią się między zbiornikami wód podziemnych od 30 do 60 m.',
-     'Przykładowo: GZWP 138 (pradolina Toruń–Eberswalde) — średnio 30 m, GZWP 141 (dolna Wisła) — 40 m, GZWP 144 (Wielkopolska Dolina Kopalna) — 60 m.'),
-    ('Czy wodę trzeba badać?',
-     'Tak — po wykonaniu studni próbka idzie do laboratorium, bo żelaza i manganu nie widać, dopóki nie zabrudzą armatury.',
-     'Od wyniku zależy, czy potrzebny jest odżelaziacz, zmiękczacz albo lampa UV.'),
-]
-
-PYTANIA_FORMAL = [
-    ('Czy studnię do 30 m trzeba zgłaszać?',
-     'Nie — studnia do 30 m na potrzeby domu, z poborem do 5 m³ na dobę, nie wymaga ani zgłoszenia, ani pozwolenia.',
-     'Podstawa: Prawo wodne art. 395, Prawo budowlane art. 29, Prawo geologiczne i górnicze art. 3 pkt 2a.'),
-    ('A głębiej niż 30 m?',
-     'Głębiej potrzebny jest projekt robót geologicznych zatwierdzony przez starostę przed wierceniem, dokumentacja hydrogeologiczna po nim i pozwolenie wodnoprawne.',
-     'To samo dotyczy płytszej studni dla działalności gospodarczej albo poboru ponad 5 m³ na dobę.'),
-]
+PASZPORT = {   # PRZYKŁADOWY paszport (dane wymyślone, oznaczone)
+    'numer': 'AKW-2026-041', 'gmina': 'Kórnik', 'data': '14.05.2026',
+    'glebokosc': 62.0, 'filtr': '54–60 m', 'zw_stat': 18.4, 'zw_dyn': 21.9, 'Q': 3.0,
+    'pompa': 'pompa głębinowa 4″, 1,1 kW', 'zbiornik': 'hydrofor 100 l',
+    'woda': [('żelazo', 0.38, 0.2, 'mg/l'), ('mangan', 0.04, 0.05, 'mg/l'), ('azotany', 6.0, 50, 'mg/l')],
+    'przeglady': [('2027-05', 'kontrola ciśnienia w zbiorniku'), ('2028-05', 'przegląd pompy, pomiar zwierciadła'),
+                  ('2029-05', 'badanie wody')],
+}
